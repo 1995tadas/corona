@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use App\Services\DateTimeService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,7 +16,8 @@ class Corona extends Model
 
     public function setDateAttribute($value)
     {
-        $this->attributes['date'] = Carbon::parse($value);
+        $dateTimeService = new DateTimeService();
+        $this->attributes['date'] = $dateTimeService->extractDate($value);
     }
 
     public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo

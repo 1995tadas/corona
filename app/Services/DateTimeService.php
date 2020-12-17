@@ -6,10 +6,6 @@ use Carbon\Carbon;
 
 class DateTimeService
 {
-    public function convertToISO8601DateTime(string $dateTime): string
-    {
-        return Carbon::parse($dateTime)->format('Y-m-d\TH:i:s\Z');
-    }
 
     public function addDays(string $dateTime, int $days): string
     {
@@ -19,14 +15,17 @@ class DateTimeService
     public function prepareIntervalDates(string $startingDate, string $endingDate = ''): array
     {
         if (!$endingDate) {
-            $endingDate = Carbon::today('UTC');
+            $endingDate = $this->extractDate(Carbon::today('UTC'));
         }
 
-        $startingDate = $this->convertToISO8601DateTime($startingDate);
-        $today = $this->convertToISO8601DateTime($endingDate);
         return [
             'from' => $startingDate,
-            'to' => $today
+            'to' => $endingDate
         ];
+    }
+
+    public function extractDate(string $timestamp): string
+    {
+        return Carbon::parse($timestamp)->format('Y-m-d');
     }
 }
