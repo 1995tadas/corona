@@ -7,14 +7,19 @@
     <title>{{config('app.name')}}</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?familyc d=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-
     <link rel="stylesheet" href="{{asset('css/normalize.css')}}">
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+
+    <!-- JS -->
+
+    <script src="{{asset('js/app.js')}}" defer></script>
+
 </head>
 <body class="antialiased">
-<div id="app">
+<div class="center" id="app">
     @yield('content')
 </div>
 </body>

@@ -1,0 +1,27 @@
+.no-data {
+
+}
+
+.case-table, th, tr, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 5px 10px;
+}
+
+.cases-diagrams {
+    canvas {
+        max-width: 90%;
+        margin: 0 auto;
+    }
+}
+
+.diagram-title {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 32pt;
+    @media screen and (max-width: $small) {
+        font-size: 20pt;
+    }
+}

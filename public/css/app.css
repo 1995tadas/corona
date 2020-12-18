@@ -10903,3 +10903,50 @@ a.text-dark:focus {
   }
 }
 
+.case-table,
+th,
+tr,
+td {
+  border: 1px solid black;
+}
+
+th,
+td {
+  padding: 5px 10px;
+}
+
+.cases-diagrams canvas {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.diagram-title {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 32pt;
+}
+
+@media screen and (max-width: 576px) {
+  .diagram-title {
+    font-size: 20pt;
+  }
+}
+
+#app {
+  margin: 0 auto;
+}
+
+.center {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  width: 80%;
+}
+
+@media screen and (max-width: 576px) {
+  .center {
+    width: 100%;
+  }
+}
+

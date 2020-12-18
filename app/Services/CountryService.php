@@ -26,7 +26,7 @@ class CountryService
 
     public function getCountry(string $slug): \App\Models\Country
     {
-        if (!$this->checkIfCountryExistsInDatabase($slug)) {
+        if ($this->checkIfCountryTableIsEmpty()) {
             $this->fetchCountriesFromApiAndStore();
         }
 
@@ -67,9 +67,13 @@ class CountryService
         return Country::where('slug', $slug)->exists();
     }
 
+    public function checkIfCountryTableIsEmpty(): bool
+    {
+        return Country::all()->isEmpty();
+    }
+
     public function fetchCountryFromDatabase(string $slug): \App\Models\Country
     {
         return Country::where('slug', $slug)->firstOrFail();
     }
-
 }

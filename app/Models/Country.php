@@ -15,7 +15,9 @@ class Country extends Model
 
     public function cases(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Corona::class)->orderBy('date', 'DESC');
+        return $this->hasMany(Corona::class)
+            ->select('id', 'active', 'confirmed', 'deaths', 'date')
+            ->orderBy('date', 'DESC');
     }
 
 }
