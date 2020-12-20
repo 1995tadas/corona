@@ -1,0 +1,22 @@
+.error-image {
+    height: 20%;
+    width: 20%;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, to {
+        transform: translateY(-25%);
+        -webkit-animation-timing-function: cubic-bezier(.8, 0, 1, 1);
+        animation-timing-function: cubic-bezier(.8, 0, 1, 1)
+    }
+    50% {
+        transform: translateY(0);
+        -webkit-animation-timing-function: cubic-bezier(0, 0, .2, 1);
+        animation-timing-function: cubic-bezier(0, 0, .2, 1)
+    }
+}
+
+.flex-col {
+    flex-direction: column;
+}
