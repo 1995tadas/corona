@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::name('case.')->group(function () {
-    return Route::get('/{slug}', [CoronaController::class, 'show'])
-        ->where('slug','[a-z-]+')->name('show');
+Route::name('corona.')->group(function () {
+    Route::get('cases/{slug}/{provinceId?}', [CoronaController::class, 'cases'])
+        ->where(['slug' => '[a-z-]+', 'provinceId' => '[0-9]+'])->name('cases');
+    Route::get('/{slug}', [CoronaController::class, 'show'])
+        ->where('slug', '[a-z-]+')->name('show');
 });

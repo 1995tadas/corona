@@ -1,22 +1,24 @@
 <template>
-    <table class="case-table">
+    <table class="cases-table">
         <tr>
             <th>{{ translation.date }}</th>
             <th>{{ translation.confirmed + ' ' + translation.cases }}</th>
-            <th>{{ translation.confirmedPerDay + ' ' + translation.cases }}</th>
+            <th>{{ translation.confirmed + ' ' + translation.cases + ' ' + translation.per_day }}</th>
+            <th>{{ translation.death_plural + ' ' + translation.cases }}</th>
+            <th>{{ translation.death_plural + ' ' + translation.cases + ' ' + translation.per_day }}</th>
             <th>{{ translation.active + ' ' + translation.cases }}</th>
-            <th>{{ translation.deaths + ' ' + translation.cases }}</th>
+
         </tr>
         <tr v-for="value in cases">
             <td>{{ value.date }}</td>
             <td>{{ value.confirmed }}</td>
             <td>{{ value.confirmedPerDay }}</td>
-            <td>{{ value.active }}</td>
             <td>{{ value.deaths }}</td>
+            <td>{{ value.deathsPerDay }}</td>
+            <td>{{ value.active }}</td>
         </tr>
     </table>
 </template>
-
 <script>
 export default {
     props: {
@@ -28,12 +30,6 @@ export default {
             type: Object,
             required: true
         }
-    },
-    created() {
-    },
-    data() {
-        return {}
-    },
-    methods: {}
+    }
 }
 </script>

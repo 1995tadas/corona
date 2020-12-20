@@ -1,7 +1,6 @@
 <template>
     <canvas :id="canvasId" width="400" height="400"></canvas>
 </template>
-
 <script>
 export default {
     props: {
@@ -22,7 +21,8 @@ export default {
             required: true
         },
         colors: {
-            type: Object
+            type: Object,
+            required: true
         },
         cases: {
             type: Object,
@@ -65,10 +65,10 @@ export default {
         },
         addDatasets(cases) {
             let datasets = [];
-            let caseTypes = ['confirmed', 'deaths', 'active']
-            for (let i = 0; i < caseTypes.length; i++) {
+            let names = ['confirmed', 'deaths', 'active']
+            for (let i = 0; i < names.length; i++) {
                 let blueprint = {};
-                if (cases[caseTypes[i]].length && (this.filter === caseTypes[i] || this.filter === 'all')) {
+                if (cases[names[i]].length && (this.filter === names[i] || this.filter === 'all')) {
                     blueprint = {
                         label: [],
                         backgroundColor: '',
@@ -79,10 +79,10 @@ export default {
                         fill: false,
                         data: []
                     }
-                    blueprint.label = this.translation[caseTypes[i]];
-                    blueprint.backgroundColor = this.colors[caseTypes[i]];
-                    blueprint.borderColor = this.colors[caseTypes[i]];
-                    blueprint.data = this.cases[caseTypes[i]];
+                    blueprint.label = this.translation[names[i]];
+                    blueprint.backgroundColor = this.colors[names[i]];
+                    blueprint.borderColor = this.colors[names[i]];
+                    blueprint.data = this.cases[names[i]];
                     datasets.push(blueprint)
                 }
             }

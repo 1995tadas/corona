@@ -30,4 +30,19 @@ class ArrayService
             return array_merge($singleArray, $values);
         }, $multidimensionalArray);
     }
+
+    public function multiArrayAddCountryIdToProvinces(array $multidimensionalArray, int $countryId): array
+    {
+
+        return array_map(function ($singleArray) use ($countryId) {
+            if(!empty($singleArray['province'])){
+                $singleArray['province_id'] = [
+                    'province' => $singleArray['province'],
+                    'country_id' => $countryId
+                ];
+            }
+
+            return $singleArray;
+        }, $multidimensionalArray);
+    }
 }

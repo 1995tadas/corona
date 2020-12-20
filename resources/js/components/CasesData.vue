@@ -1,37 +1,55 @@
 <template>
     <div>
-        <div class="cases-diagrams">
-            <template></template>
-            <cases-diagram-component :cases="allCases" :translation="translation"
-                                     canvas-id="casesChart" chartType="line"
-                                     :title="translation.all+' '+translation.cases" :colors="colorsForCases">
-            </cases-diagram-component>
-            <cases-diagram-component :cases="casesPerDay" :translation="translation"
-                                     canvas-id="casesPerDayConfirmed" chartType="bar" filter="confirmed"
-                                     :title="translation.confirmed+' '+translation.cases+' '+translation.per_day"
-                                     :colors="colorsForCases">
-            </cases-diagram-component>
-            <cases-diagram-component :cases="casesPerDay" :translation="translation"
-                                     canvas-id="casesPerDayDeaths" chartType="bar" filter="deaths"
-                                     :title="translation.death_plural+' '+translation.cases+' '+translation.per_day"
-                                     :colors="colorsForCases">
-            </cases-diagram-component>
-            <cases-diagram-component :cases="casesPerDay" :translation="translation"
-                                     canvas-id="casesPerDayActive" chartType="bar" filter="active"
-                                     :title="translation.active+' '+translation.cases+' '+translation.per_day"
-                                     :colors="colorsForCases">
-            </cases-diagram-component>
+        <div class="cases-province-select" v-show="provinces.length">
+            <label for="province">{{ translation.select_province }}</label>
+            <select id="province" @change="selectProvince($event)">
+                <option disabled selected>{{ translation.provinces }}</option>
+                <option v-for="province in provinces" :value="province.id">{{ province.province }}</option>
+            </select>
         </div>
-        <!--        <cases-table-component :cases="cases" :translation="translation">-->
-        <!--        </cases-table-component>-->
+
+        <div v-if="loading" class="cases-loading">
+            <div>{{ translation.loading }}</div>
+            <div class="loader"></div>
+        </div>
+        <div class="no-data" v-else-if="error">{{ translation.error_while_loading }}</div>
+        <div v-else-if="checkIfDataIsNotEmpty(this.cases)">
+            <div class="cases-diagrams">
+                <template></template>
+                <cases-diagram-component :cases="allCases" :translation="translation"
+                                         canvas-id="casesChart" chartType="line"
+                                         :title="translation.all+' '+translation.cases" :colors="colorsForCases">
+                </cases-diagram-component>
+                <cases-diagram-component :cases="casesPerDay" :translation="translation"
+                                         canvas-id="casesPerDayConfirmed" chartType="bar" filter="confirmed"
+                                         :title="translation.confirmed+' '+translation.cases+' '+translation.per_day"
+                                         :colors="colorsForCases">
+                </cases-diagram-component>
+                <cases-diagram-component :cases="casesPerDay" :translation="translation"
+                                         canvas-id="casesPerDayDeaths" chartType="bar" filter="deaths"
+                                         :title="translation.death_plural+' '+translation.cases+' '+translation.per_day"
+                                         :colors="colorsForCases">
+                </cases-diagram-component>
+                <cases-diagram-component :cases="casesPerDay" :translation="translation"
+                                         canvas-id="casesPerDayActive" chartType="bar" filter="active"
+                                         :title="translation.active+' '+translation.cases+' '+translation.per_day"
+                                         :colors="colorsForCases">
+                </cases-diagram-component>
+            </div>
+            <cases-table-component :cases="cases.reverse()" :translation="translation">
+            </cases-table-component>
+        </div>
+        <div v-else class="no-data">{{ translation.no_data }}</div>
     </div>
 </template>
-
 <script>
 export default {
     props: {
-        cases: {
+        provinces: {
             type: Array,
+        },
+        casesRoute: {
+            type: String,
             required: true
         },
         translation: {
@@ -40,11 +58,13 @@ export default {
         }
     },
     created() {
-        this.countCasesPerDay(this.cases);
-        this.extractDataForDiagram(this.cases.reverse());
+        this.fetchCases(this.casesRoute);
     },
     data() {
         return {
+            cases: [],
+            loading: false,
+            error: false,
             allCases: {},
             casesPerDay: {},
             colorsForCases: {
@@ -55,6 +75,29 @@ export default {
         }
     },
     methods: {
+        checkIfDataIsNotEmpty(element) {
+            return Object.keys(element).length || element.length
+        },
+        selectProvince(event) {
+            let provinceId = event.target.value;
+            this.fetchCases(this.casesRoute + '/' + provinceId);
+        },
+        fetchCases(casesRoute) {
+            this.loading = true;
+            axios.get(casesRoute)
+                .then((response) => {
+                    this.cases = response.data;
+                    if (this.checkIfDataIsNotEmpty(this.cases)) {
+                        this.countCasesPerDay(this.cases);
+                        this.extractDataForDiagram(this.cases.reverse());
+                    }
+                })
+                .catch(() => {
+                    this.error = true;
+                }).finally(() => {
+                this.loading = false;
+            })
+        },
         extractDataForDiagram(cases) {
             let allCases = {
                 confirmed: [],

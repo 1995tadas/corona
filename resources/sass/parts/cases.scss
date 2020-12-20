@@ -1,27 +1,59 @@
 .no-data {
-
+    text-align: center;
+    font-size: 20pt;
+    margin-top: 10px;
+    text-transform: uppercase;
 }
 
-.case-table, th, tr, td {
+.cases-province-select {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cases-table {
+    margin: 0 auto;
+    width: 95%;
+}
+
+.cases-table, th, tr, td {
     border: 1px solid black;
 }
 
 th, td {
     padding: 5px 10px;
+    text-align: center;
+    @media screen and (max-width: $small) {
+        padding: 1px;
+    }
+}
+
+.cases-loading {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 20pt;
 }
 
 .cases-diagrams {
     canvas {
-        max-width: 90%;
+        max-width: 70%;
         margin: 0 auto;
+        @media screen and (max-width: $medium) {
+            max-width: 95%;
+            box-sizing: border-box;
+        }
     }
 }
 
 .diagram-title {
     text-align: center;
     margin: 10px 0;
-    font-size: 32pt;
+    font-size: 28pt;
+    @media screen and (max-width: $medium) {
+        font-size: 24pt;
+    }
     @media screen and (max-width: $small) {
-        font-size: 20pt;
+        font-size: 18pt;
     }
 }

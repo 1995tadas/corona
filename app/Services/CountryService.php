@@ -53,13 +53,15 @@ class CountryService
 
     public function fetchCountriesFromDatabase(): \Illuminate\Database\Eloquent\Collection
     {
-        return Country::all(['country', 'slug', 'iso2']);
+        return Country::all(['country', 'slug', 'iso2', 'province']);
     }
 
-    public function storeCountries(array $countries): bool
+    public function storeCountries(array $countries): void
     {
         $countryModel = new Country();
-        return $countryModel->insert($countries);
+        foreach ($countries as $country) {
+            $countryModel->create($country);
+        }
     }
 
     public function checkIfCountryExistsInDatabase(string $slug): bool

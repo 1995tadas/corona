@@ -1937,10 +1937,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    cases: {
-      type: Array,
+    provinces: {
+      type: Array
+    },
+    casesRoute: {
+      type: String,
       required: true
     },
     translation: {
@@ -1949,11 +1967,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.countCasesPerDay(this.cases);
-    this.extractDataForDiagram(this.cases.reverse());
+    this.fetchCases(this.casesRoute);
   },
   data: function data() {
     return {
+      cases: [],
+      loading: false,
+      error: false,
       allCases: {},
       casesPerDay: {},
       colorsForCases: {
@@ -1964,6 +1984,31 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    checkIfDataIsNotEmpty: function checkIfDataIsNotEmpty(element) {
+      return Object.keys(element).length || element.length;
+    },
+    selectProvince: function selectProvince(event) {
+      var provinceId = event.target.value;
+      this.fetchCases(this.casesRoute + '/' + provinceId);
+    },
+    fetchCases: function fetchCases(casesRoute) {
+      var _this = this;
+
+      this.loading = true;
+      axios.get(casesRoute).then(function (response) {
+        _this.cases = response.data;
+
+        if (_this.checkIfDataIsNotEmpty(_this.cases)) {
+          _this.countCasesPerDay(_this.cases);
+
+          _this.extractDataForDiagram(_this.cases.reverse());
+        }
+      })["catch"](function () {
+        _this.error = true;
+      })["finally"](function () {
+        _this.loading = false;
+      });
+    },
     extractDataForDiagram: function extractDataForDiagram(cases) {
       var allCases = {
         confirmed: [],
@@ -2024,7 +2069,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     canvasId: {
@@ -2044,7 +2088,8 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     },
     colors: {
-      type: Object
+      type: Object,
+      required: true
     },
     cases: {
       type: Object,
@@ -2087,12 +2132,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     addDatasets: function addDatasets(cases) {
       var datasets = [];
-      var caseTypes = ['confirmed', 'deaths', 'active'];
+      var names = ['confirmed', 'deaths', 'active'];
 
-      for (var i = 0; i < caseTypes.length; i++) {
+      for (var i = 0; i < names.length; i++) {
         var blueprint = {};
 
-        if (cases[caseTypes[i]].length && (this.filter === caseTypes[i] || this.filter === 'all')) {
+        if (cases[names[i]].length && (this.filter === names[i] || this.filter === 'all')) {
           blueprint = {
             label: [],
             backgroundColor: '',
@@ -2103,10 +2148,10 @@ __webpack_require__.r(__webpack_exports__);
             fill: false,
             data: []
           };
-          blueprint.label = this.translation[caseTypes[i]];
-          blueprint.backgroundColor = this.colors[caseTypes[i]];
-          blueprint.borderColor = this.colors[caseTypes[i]];
-          blueprint.data = this.cases[caseTypes[i]];
+          blueprint.label = this.translation[names[i]];
+          blueprint.backgroundColor = this.colors[names[i]];
+          blueprint.borderColor = this.colors[names[i]];
+          blueprint.data = this.cases[names[i]];
           datasets.push(blueprint);
         }
       }
@@ -2146,6 +2191,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     cases: {
@@ -2156,12 +2203,7 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       required: true
     }
-  },
-  created: function created() {},
-  data: function data() {
-    return {};
-  },
-  methods: {}
+  }
 });
 
 /***/ }),
@@ -75512,74 +75554,145 @@ var render = function() {
   return _c("div", [
     _c(
       "div",
-      { staticClass: "cases-diagrams" },
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.provinces.length,
+            expression: "provinces.length"
+          }
+        ],
+        staticClass: "cases-province-select"
+      },
       [
-        void 0,
+        _c("label", { attrs: { for: "province" } }, [
+          _vm._v(_vm._s(_vm.translation.select_province))
+        ]),
         _vm._v(" "),
-        _c("cases-diagram-component", {
-          attrs: {
-            cases: _vm.allCases,
-            translation: _vm.translation,
-            "canvas-id": "casesChart",
-            chartType: "line",
-            title: _vm.translation.all + " " + _vm.translation.cases,
-            colors: _vm.colorsForCases
-          }
-        }),
-        _vm._v(" "),
-        _c("cases-diagram-component", {
-          attrs: {
-            cases: _vm.casesPerDay,
-            translation: _vm.translation,
-            "canvas-id": "casesPerDayConfirmed",
-            chartType: "bar",
-            filter: "confirmed",
-            title:
-              _vm.translation.confirmed +
-              " " +
-              _vm.translation.cases +
-              " " +
-              _vm.translation.per_day,
-            colors: _vm.colorsForCases
-          }
-        }),
-        _vm._v(" "),
-        _c("cases-diagram-component", {
-          attrs: {
-            cases: _vm.casesPerDay,
-            translation: _vm.translation,
-            "canvas-id": "casesPerDayDeaths",
-            chartType: "bar",
-            filter: "deaths",
-            title:
-              _vm.translation.death_plural +
-              " " +
-              _vm.translation.cases +
-              " " +
-              _vm.translation.per_day,
-            colors: _vm.colorsForCases
-          }
-        }),
-        _vm._v(" "),
-        _c("cases-diagram-component", {
-          attrs: {
-            cases: _vm.casesPerDay,
-            translation: _vm.translation,
-            "canvas-id": "casesPerDayActive",
-            chartType: "bar",
-            filter: "active",
-            title:
-              _vm.translation.active +
-              " " +
-              _vm.translation.cases +
-              " " +
-              _vm.translation.per_day,
-            colors: _vm.colorsForCases
-          }
-        })
-      ],
-      2
-    )
+        _c(
+          "select",
+          {
+            attrs: { id: "province" },
+            on: {
+              change: function($event) {
+                return _vm.selectProvince($event)
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { disabled: "", selected: "" } }, [
+              _vm._v(_vm._s(_vm.translation.provinces))
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.provinces, function(province) {
+              return _c("option", { domProps: { value: province.id } }, [
+                _vm._v(_vm._s(province.province))
+              ])
+            })
+          ],
+          2
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _vm.loading
+      ? _c("div", { staticClass: "cases-loading" }, [
+          _c("div", [_vm._v(_vm._s(_vm.translation.loading))]),
+          _vm._v(" "),
+          _c("div", { staticClass: "loader" })
+        ])
+      : _vm.error
+      ? _c("div", { staticClass: "no-data" }, [
+          _vm._v(_vm._s(_vm.translation.error_while_loading))
+        ])
+      : _vm.checkIfDataIsNotEmpty(this.cases)
+      ? _c(
+          "div",
+          [
+            _c(
+              "div",
+              { staticClass: "cases-diagrams" },
+              [
+                void 0,
+                _vm._v(" "),
+                _c("cases-diagram-component", {
+                  attrs: {
+                    cases: _vm.allCases,
+                    translation: _vm.translation,
+                    "canvas-id": "casesChart",
+                    chartType: "line",
+                    title: _vm.translation.all + " " + _vm.translation.cases,
+                    colors: _vm.colorsForCases
+                  }
+                }),
+                _vm._v(" "),
+                _c("cases-diagram-component", {
+                  attrs: {
+                    cases: _vm.casesPerDay,
+                    translation: _vm.translation,
+                    "canvas-id": "casesPerDayConfirmed",
+                    chartType: "bar",
+                    filter: "confirmed",
+                    title:
+                      _vm.translation.confirmed +
+                      " " +
+                      _vm.translation.cases +
+                      " " +
+                      _vm.translation.per_day,
+                    colors: _vm.colorsForCases
+                  }
+                }),
+                _vm._v(" "),
+                _c("cases-diagram-component", {
+                  attrs: {
+                    cases: _vm.casesPerDay,
+                    translation: _vm.translation,
+                    "canvas-id": "casesPerDayDeaths",
+                    chartType: "bar",
+                    filter: "deaths",
+                    title:
+                      _vm.translation.death_plural +
+                      " " +
+                      _vm.translation.cases +
+                      " " +
+                      _vm.translation.per_day,
+                    colors: _vm.colorsForCases
+                  }
+                }),
+                _vm._v(" "),
+                _c("cases-diagram-component", {
+                  attrs: {
+                    cases: _vm.casesPerDay,
+                    translation: _vm.translation,
+                    "canvas-id": "casesPerDayActive",
+                    chartType: "bar",
+                    filter: "active",
+                    title:
+                      _vm.translation.active +
+                      " " +
+                      _vm.translation.cases +
+                      " " +
+                      _vm.translation.per_day,
+                    colors: _vm.colorsForCases
+                  }
+                })
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c("cases-table-component", {
+              attrs: {
+                cases: _vm.cases.reverse(),
+                translation: _vm.translation
+              }
+            })
+          ],
+          1
+        )
+      : _c("div", { staticClass: "no-data" }, [
+          _vm._v(_vm._s(_vm.translation.no_data))
+        ])
   ])
 }
 var staticRenderFns = []
@@ -75632,7 +75745,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "table",
-    { staticClass: "case-table" },
+    { staticClass: "cases-table" },
     [
       _c("tr", [
         _c("th", [_vm._v(_vm._s(_vm.translation.date))]),
@@ -75646,17 +75759,35 @@ var render = function() {
         _c("th", [
           _vm._v(
             _vm._s(
-              _vm.translation.confirmedPerDay + " " + _vm.translation.cases
+              _vm.translation.confirmed +
+                " " +
+                _vm.translation.cases +
+                " " +
+                _vm.translation.per_day
+            )
+          )
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _vm._v(
+            _vm._s(_vm.translation.death_plural + " " + _vm.translation.cases)
+          )
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _vm._v(
+            _vm._s(
+              _vm.translation.death_plural +
+                " " +
+                _vm.translation.cases +
+                " " +
+                _vm.translation.per_day
             )
           )
         ]),
         _vm._v(" "),
         _c("th", [
           _vm._v(_vm._s(_vm.translation.active + " " + _vm.translation.cases))
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v(_vm._s(_vm.translation.deaths + " " + _vm.translation.cases))
         ])
       ]),
       _vm._v(" "),
@@ -75668,9 +75799,11 @@ var render = function() {
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(value.confirmedPerDay))]),
           _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(value.active))]),
+          _c("td", [_vm._v(_vm._s(value.deaths))]),
           _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(value.deaths))])
+          _c("td", [_vm._v(_vm._s(value.deathsPerDay))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(value.active))])
         ])
       })
     ],

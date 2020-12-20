@@ -1,0 +1,25 @@
+.country-presentation {
+    text-align: center;
+
+    .country-title {
+        font-weight: bold;
+        font-size: 42pt;
+        @media screen and (max-width: $medium) {
+            font-size: 30pt;
+        }
+        @media screen and (max-width: $small) {
+            font-size: 24pt;
+        }
+
+        .country-flag {
+            @media screen and (max-width: $medium) {
+                width: 60px;
+                height: 40px;
+            }
+            @media screen and (max-width: $small) {
+                width: 40px;
+                height: 30px;
+            }
+        }
+    }
+}

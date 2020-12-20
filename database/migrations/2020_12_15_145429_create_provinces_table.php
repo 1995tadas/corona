@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCoronasTable extends Migration
+class CreateProvincesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,10 @@ class CreateCoronasTable extends Migration
      */
     public function up()
     {
-        Schema::create('coronas', function (Blueprint $table) {
+        Schema::create('provinces', function (Blueprint $table) {
             $table->id();
-            $table->integer('confirmed');
-            $table->integer('deaths');
-            $table->integer('active');
-            $table->date('date');
+            $table->string('province');
             $table->foreignId('country_id')->constrained()->onDelete('cascade');
-            $table->foreignId('province_id')->nullable()->constrained()->onDelete('cascade');
-            $table->unique(['country_id', 'province_id', 'date']);
         });
     }
 
@@ -32,6 +27,6 @@ class CreateCoronasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coronas');
+        Schema::dropIfExists('provinces');
     }
 }
