@@ -12,7 +12,7 @@ class ApiService
     {
         $finalUrl = $url . $query;
         if ($method === 'GET') {
-            $response = Http::get($finalUrl, $parameters);
+            $response = Http::withOptions(['verify' => false])->get($finalUrl, $parameters);
         } else {
             abort(405);
         }
@@ -24,7 +24,7 @@ class ApiService
         }
     }
 
-    public function performGetRequest(string $query = '', array $parameters = []): array
+    public function performGetRequest(string $query = '', array $parameters = [])
     {
         $content = $this->performRequest('GET', self::API_URL, $query, $parameters);
         return json_decode($content);

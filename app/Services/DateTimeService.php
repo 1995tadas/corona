@@ -28,4 +28,11 @@ class DateTimeService
     {
         return Carbon::parse($timestamp)->format('Y-m-d');
     }
+
+    public function passedDays(string $date): int
+    {
+        $pastDate = Carbon::parse($date);
+        $now = Carbon::now();
+        return $pastDate->diffInDays($now);
+    }
 }

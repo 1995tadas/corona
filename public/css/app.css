@@ -11000,6 +11000,10 @@ td {
   font-size: 20pt;
 }
 
+.cases-diagrams {
+  margin: 10px 0;
+}
+
 .cases-diagrams canvas {
   max-width: 70%;
   margin: 0 auto;

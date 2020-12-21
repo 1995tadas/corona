@@ -2,18 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\CoronaService;
+use App\Services\CaseService;
 use App\Services\CountryService;
+use App\Services\SummaryService;
 
 class CoronaController extends Controller
 {
-    private $coronaService;
+    private $caseService;
     private $countryService;
 
     public function __construct()
     {
-        $this->coronaService = new CoronaService();
+        $this->caseService = new CaseService();
         $this->countryService = new CountryService();
+    }
+
+    public function index()
+    {
+        $summaryService = new SummaryService();
+        $needUpdateOrStore = $summaryService->checkIfSummaryNeedStoreOrUpdate(1);
+        if($needUpdateOrStore){
+            $summaryService->fetchAndStoreOrUpdateSummary();
+        }
+
+        return view('corona.index');
     }
 
     public function show(string $slug)
@@ -25,13 +37,13 @@ class CoronaController extends Controller
 
     public function cases(string $slug, int $provinceId = null): \Illuminate\Http\JsonResponse
     {
-        if ($this->coronaService->checkIfEmpty($slug)) {
-            $cases = $this->coronaService->fetchAndStoreCases($slug);
+        if ($this->caseService->checkIfEmpty($slug)) {
+            $cases = $this->caseService->fetchAndStoreCases($slug);
         } else {
-            $cases = $this->coronaService->fetchCasesFromDatabase($slug, $provinceId);
+            $cases = $this->caseService->fetchCasesFromDatabase($slug, $provinceId);
         }
 
-        $finalCases = $this->coronaService->checkIfCasePropertiesAreZeroByPercentage($cases, 0.95);
+        $finalCases = $this->caseService->checkIfCasePropertiesAreZeroByPercentage($cases, 0.95);
         return response()->json($finalCases);
     }
 }

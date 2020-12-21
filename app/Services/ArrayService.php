@@ -2,18 +2,20 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Str;
+
 class ArrayService
 {
-    public function multiArrayKeyCaseChange(array $multidimensionalArray, bool $uppercase = false): array
+    public function multiArrayKeysToSnakeCase(array $multidimensionalArray): array
     {
-        if ($uppercase) {
-            $case = CASE_UPPER;
-        } else {
-            $case = CASE_LOWER;
-        }
+        return array_map(function ($insideArray) {
+            gettype($insideArray) === 'object' ? $insideArray = (array)$insideArray : null;
+            foreach ($insideArray as $index => $value) {
+                unset($insideArray[$index]);
+                $insideArray[Str::snake($index)] = $value;
+            }
 
-        return array_map(function ($singleArray) use ($case) {
-            return array_change_key_case((array)$singleArray, $case);
+            return $insideArray;
         }, $multidimensionalArray);
     }
 
@@ -31,18 +33,39 @@ class ArrayService
         }, $multidimensionalArray);
     }
 
-    public function multiArrayAddCountryIdToProvinces(array $multidimensionalArray, int $countryId): array
+    public function multiArrayAddCountryId(array $multidimensionalArray, int $countryId = null): array
     {
+        $countryService = new CountryService();
 
-        return array_map(function ($singleArray) use ($countryId) {
-            if(!empty($singleArray['province'])){
+        return array_map(function ($singleArray) use ($countryId, $countryService) {
+            if (isset($singleArray['slug'])) {
+                $countryId = $countryService->getCountry($singleArray['slug'])->id;
+            }
+
+            if (!empty($singleArray['province'])) {
                 $singleArray['province_id'] = [
                     'province' => $singleArray['province'],
                     'country_id' => $countryId
                 ];
             }
 
+            if ($countryId) {
+                $singleArray['country_id'] = $countryId;
+            }
+
             return $singleArray;
         }, $multidimensionalArray);
+    }
+
+    public function prepareCasesArrayForStoring(array $cases, string $slug = ''): array
+    {
+        $countryService = new CountryService();
+        if ($slug) {
+            $countryId = $countryService->getCountry($slug)->id;
+        }
+
+        $cases = $this->multiArrayKeysToSnakeCase($cases);
+        $cases = $this->multiArrayAddCountryId($cases, $countryId ?? null);
+        return $cases;
     }
 }

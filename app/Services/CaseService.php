@@ -6,7 +6,7 @@ use App\Models\Corona;
 use App\Models\Country;
 use Carbon\Carbon;
 
-class CoronaService
+class CaseService
 {
     private $apiService;
     private const API_QUERY_FOR_DAY_ONE_TOTAL_CASES = 'dayone/country/';
@@ -48,9 +48,11 @@ class CoronaService
             $startingDate = $dateTimeService->addDays($startingDate, 1);
             $endingDate = Carbon::today('UTC');
             if ($startingDate != $endingDate) {
+                $arrayService = new ArrayService();
                 $intervalDates = $dateTimeService->prepareIntervalDates($startingDate, $endingDate);
                 $newCases = $this->fetchCasesFromApiByInterval($countrySlug, $intervalDates);
-                $this->prepareAndStore($newCases, $countrySlug);
+                $preparedCases = $arrayService->prepareCasesArrayForStoring($newCases, $countrySlug);
+                $this->store($preparedCases);
                 return true;
             }
         }
@@ -62,7 +64,7 @@ class CoronaService
     {
         $latestDateCases = Corona::where('date', $latestCase->date)
             ->where('country_id', $latestCase->country_id)
-        ->whereNotNull('province_id');
+            ->whereNotNull('province_id');
         $lastDateCasesCount = $latestDateCases->count();
         $provincesCount = Country::find($latestCase->country_id)->provinces->count();
 
@@ -88,7 +90,9 @@ class CoronaService
     {
         $cases = $this->fetchCasesFromApi($slug);
         if ($cases) {
-            $this->prepareAndStore($cases, $slug);
+            $arrayService = new ArrayService();
+            $cases = $arrayService->prepareCasesArrayForStoring($cases, $slug);
+            $this->store($cases);
             return $this->fetchCasesFromDatabase($slug);
         }
 
@@ -101,18 +105,6 @@ class CoronaService
         foreach ($cases as $case) {
             $countryModel->create($case);
         }
-    }
-
-    public function prepareAndStore(array $cases, string $slug): void
-    {
-        $arrayService = new ArrayService();
-        $countryService = new CountryService();
-        $country = $countryService->getCountry($slug);
-        $cases = $arrayService->multiArraySelect($cases, ['Deaths', 'Active', 'Confirmed', 'Date', 'Province']);
-        $cases = $arrayService->multiArrayKeyCaseChange($cases);
-        $cases = $arrayService->multiArrayAddCountryIdToProvinces($cases, $country->id);
-        $cases = $arrayService->multiArrayAddValues($cases, ['country_id' => $country->id]);
-        $this->store($cases);
     }
 
     public function getLatestCountryCaseDate(Country $country): string
