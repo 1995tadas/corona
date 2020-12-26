@@ -15,19 +15,20 @@
 .cases-table {
     margin: 0 auto;
     width: 95%;
+
+    th, td {
+        padding: 5px 10px;
+        text-align: center;
+        @media screen and (max-width: $small) {
+            padding: 1px;
+        }
+    }
 }
 
 .cases-table, th, tr, td {
     border: 1px solid black;
 }
 
-th, td {
-    padding: 5px 10px;
-    text-align: center;
-    @media screen and (max-width: $small) {
-        padding: 1px;
-    }
-}
 
 .cases-loading {
     margin-top: 20px;

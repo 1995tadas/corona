@@ -15,7 +15,7 @@ class DateTimeService
     public function prepareIntervalDates(string $startingDate, string $endingDate = ''): array
     {
         if (!$endingDate) {
-            $endingDate = $this->extractDate(Carbon::today('UTC'));
+            $endingDate = $this->extractDate(Carbon::today());
         }
 
         return [
@@ -24,9 +24,12 @@ class DateTimeService
         ];
     }
 
-    public function extractDate(string $timestamp): string
+    public function extractDate(string $timestamp, bool $time = false): string
     {
-        return Carbon::parse($timestamp)->format('Y-m-d');
+        $format = 'Y-m-d';
+        $time ? $format .= ' H:i' : null;
+
+        return Carbon::parse($timestamp)->format($format);
     }
 
     public function passedDays(string $date): int
@@ -34,5 +37,14 @@ class DateTimeService
         $pastDate = Carbon::parse($date);
         $now = Carbon::now();
         return $pastDate->diffInDays($now);
+    }
+
+    public function ifNoDateSetToCurrentAndExtract(string $timestamp): string
+    {
+        if (!$timestamp) {
+            $timestamp = Carbon::now();
+        }
+
+        return $this->extractDate($timestamp, true);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\CaseService;
 use App\Services\CountryService;
+use App\Services\DateTimeService;
 use App\Services\SummaryService;
 
 class CoronaController extends Controller
@@ -21,11 +22,20 @@ class CoronaController extends Controller
     {
         $summaryService = new SummaryService();
         $needUpdateOrStore = $summaryService->checkIfSummaryNeedStoreOrUpdate(1);
-        if($needUpdateOrStore){
-            $summaryService->fetchAndStoreOrUpdateSummary();
+        if ($needUpdateOrStore) {
+            $countriesSummary = $summaryService->fetchAndStoreOrUpdateSummary();
+        } else {
+            $countriesSummary = $summaryService->fetchSummaryFromDatabaseWithCountry()->toArray();
         }
 
-        return view('corona.index');
+        $globalSummary = $summaryService->takeGlobalSummary($countriesSummary);
+        if ($globalSummary) {
+            $dateTimeService = new DateTimeService();
+            $lastUpdated = $dateTimeService->ifNoDateSetToCurrentAndExtract(
+                isset($globalSummary['updated_at']) ? $globalSummary['updated_at'] : '');
+        }
+
+        return view('corona.index', compact('globalSummary', 'lastUpdated', 'countriesSummary'));
     }
 
     public function show(string $slug)

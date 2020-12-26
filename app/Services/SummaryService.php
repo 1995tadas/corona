@@ -19,7 +19,7 @@ class SummaryService
         return $this->apiService->performGetRequest(self::API_QUERY_FOR_SUMMARY);
     }
 
-    public function fetchAndStoreOrUpdateSummary(): void
+    public function fetchAndStoreOrUpdateSummary(): array
     {
         $summary = $this->fetchSummaryFromApi();
         if ($summary && isset($summary->Global) && isset($summary->Countries)) {
@@ -29,12 +29,20 @@ class SummaryService
             $summaryCases = array_merge($globalCases, $countriesCases);
             $preparedSummary = $arrayService->prepareCasesArrayForStoring($summaryCases);
             $this->updateOrStore($preparedSummary);
+            return $preparedSummary;
         }
+
+        return [];
     }
 
     public function fetchGlobalSummary()
     {
         return Summary::whereNull('country_id')->first();
+    }
+
+    public function fetchSummaryFromDatabaseWithCountry(): \Illuminate\Database\Eloquent\Collection
+    {
+        return Summary::with('country')->get();
     }
 
     public function checkIfSummaryExists()
@@ -83,5 +91,16 @@ class SummaryService
                 ]
             );
         }
+    }
+
+    public function takeGlobalSummary(array $summaryArray): array
+    {
+        foreach ($summaryArray as $record) {
+            if (!array_key_exists('country_id', $record) || $record['country_id'] === null) {
+                return $record;
+            }
+        }
+
+        return [];
     }
 }

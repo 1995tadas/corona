@@ -10,4 +10,9 @@ class Summary extends Model
     use HasFactory;
 
     protected $fillable = ['total_confirmed', 'new_confirmed', 'total_deaths', 'new_deaths', 'total_recovered', 'new_recovered', 'country_id'];
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }
