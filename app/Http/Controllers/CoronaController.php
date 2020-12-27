@@ -24,7 +24,9 @@ class CoronaController extends Controller
         $needUpdateOrStore = $summaryService->checkIfSummaryNeedStoreOrUpdate(1);
         if ($needUpdateOrStore) {
             $countriesSummary = $summaryService->fetchAndStoreOrUpdateSummary();
-        } else {
+        }
+
+        if (!$needUpdateOrStore || !$countriesSummary) {
             $countriesSummary = $summaryService->fetchSummaryFromDatabaseWithCountry()->toArray();
         }
 

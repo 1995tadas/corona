@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="Summary method for fetching json from api.&#10;Updating and storing case summary data in database.">
-      <change afterPath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/lt/summary.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/parts/summary.scss" afterDir="false" />
+    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="Summary page for global cases">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CoronaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CoronaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Summary.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Summary.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/DateTimeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/DateTimeService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Services/SummaryService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/SummaryService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/parts/cases.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/parts/cases.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/corona/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/corona/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/parts/global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/parts/global.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/parts/summary.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/parts/summary.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,7 +196,8 @@
       <workItem from="1608803115814" duration="12294000" />
       <workItem from="1608891379717" duration="96000" />
       <workItem from="1608891520178" duration="10541000" />
-      <workItem from="1608986433975" duration="9775000" />
+      <workItem from="1608986433975" duration="10207000" />
+      <workItem from="1609073337378" duration="3423000" />
     </task>
     <task id="LOCAL−00001" summary="Countries and Cases fetch and store into database functionality">
       <created>1608146687656</created>
@@ -250,7 +241,13 @@
       <option name="presentableId" value="LOCAL−00007" />
       <updated>1608582999732</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL−00008" summary="Summary page for global cases">
+      <created>1609007288739</created>
+      <option name="number" value="LOCAL−00008" />
+      <option name="presentableId" value="LOCAL−00008" />
+      <updated>1609007288739</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -265,7 +262,8 @@
     <MESSAGE value="For Countries with provinces select bar will be presented.&#10;Saving and fetching data bugs fixed.&#10;Responsive style for vue elements." />
     <MESSAGE value="Custom 404 page" />
     <MESSAGE value="Summary method for fetching json from api.&#10;Updating and storing case summary data in database." />
-    <option name="LAST_COMMIT_MESSAGE" value="Summary method for fetching json from api.&#10;Updating and storing case summary data in database." />
+    <MESSAGE value="Summary page for global cases" />
+    <option name="LAST_COMMIT_MESSAGE" value="Summary page for global cases" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

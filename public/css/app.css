@@ -10915,7 +10915,7 @@ a.text-dark:focus {
   width: 80%;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 768px) {
   .center {
     width: 100%;
   }
@@ -11208,7 +11208,7 @@ td {
 
 .summary-table th,
 .summary-table td {
-  padding: 5px 10px;
+  padding: 5px;
   text-align: center;
 }
 
