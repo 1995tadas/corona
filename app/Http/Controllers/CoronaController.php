@@ -31,6 +31,7 @@ class CoronaController extends Controller
         }
 
         $globalSummary = $summaryService->takeGlobalSummary($countriesSummary);
+        $lastUpdated = '';
         if ($globalSummary) {
             $dateTimeService = new DateTimeService();
             $lastUpdated = $dateTimeService->ifNoDateSetToCurrentAndExtract(

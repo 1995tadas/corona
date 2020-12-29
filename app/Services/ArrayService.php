@@ -19,6 +19,14 @@ class ArrayService
         }, $multidimensionalArray);
     }
 
+    public function multiArrayKeyCaseChange(array $multidimensionalArray): array
+    {
+        return array_map(function ($insideArray) {
+            gettype($insideArray) === 'object' ? $insideArray = (array)$insideArray : null;
+            return array_change_key_case($insideArray);
+        }, $multidimensionalArray);
+    }
+
     public function multiArraySelect(array $multidimensionalArray, array $keysToLeave): array
     {
         return array_map(function ($singleArray) use ($keysToLeave) {

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 
 class CreateCountriesTable extends Migration
@@ -18,6 +19,9 @@ class CreateCountriesTable extends Migration
             $table->string('country')->unique();
             $table->string('slug')->unique();
             $table->char('iso2', 2)->unique();
+            if (App::isLocale('lt')) {
+                $table->string('lt_country')->unique()->nullable();
+            }
         });
     }
 

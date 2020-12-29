@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="Summary page for global cases">
+    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="fixed empty api data and table overflow bugs">
+      <change afterPath="$PROJECT_DIR$/resources/lang/lt/countries.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CoronaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CoronaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/SummaryService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/SummaryService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/parts/global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/parts/global.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/parts/summary.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/parts/summary.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Country.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Country.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/ArrayService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/ArrayService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/DateTimeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/DateTimeService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_15_132757_create_countries_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_15_132757_create_countries_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/CasesData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CasesData.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/corona/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/corona/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/corona/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/corona/show.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +203,9 @@
       <workItem from="1608891379717" duration="96000" />
       <workItem from="1608891520178" duration="10541000" />
       <workItem from="1608986433975" duration="10207000" />
-      <workItem from="1609073337378" duration="3423000" />
+      <workItem from="1609073337378" duration="3784000" />
+      <workItem from="1609160253291" duration="14081000" />
+      <workItem from="1609238915489" duration="4584000" />
     </task>
     <task id="LOCAL−00001" summary="Countries and Cases fetch and store into database functionality">
       <created>1608146687656</created>
@@ -247,7 +255,13 @@
       <option name="presentableId" value="LOCAL−00008" />
       <updated>1609007288739</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL−00009" summary="fixed empty api data and table overflow bugs">
+      <created>1609092578640</created>
+      <option name="number" value="LOCAL−00009" />
+      <option name="presentableId" value="LOCAL−00009" />
+      <updated>1609092578640</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,7 +277,8 @@
     <MESSAGE value="Custom 404 page" />
     <MESSAGE value="Summary method for fetching json from api.&#10;Updating and storing case summary data in database." />
     <MESSAGE value="Summary page for global cases" />
-    <option name="LAST_COMMIT_MESSAGE" value="Summary page for global cases" />
+    <MESSAGE value="fixed empty api data and table overflow bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed empty api data and table overflow bugs" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -2250,6 +2250,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     summary: {
@@ -2259,6 +2269,9 @@ __webpack_require__.r(__webpack_exports__);
     translation: {
       type: Object,
       required: true
+    },
+    countriesTranslation: {
+      type: Object
     },
     casesByCountryRoute: {
       type: String,
@@ -76001,12 +76014,23 @@ var render = function() {
                               }
                             },
                             [
-                              _vm._v(
-                                "\n                    " +
-                                  _vm._s(data.country.country) +
-                                  "\n                "
-                              )
-                            ]
+                              data.country.lt_country
+                                ? [
+                                    _vm._v(
+                                      "\n                        " +
+                                        _vm._s(data.country.lt_country) +
+                                        "\n                    "
+                                    )
+                                  ]
+                                : [
+                                    _vm._v(
+                                      "\n                        " +
+                                        _vm._s(data.country.country) +
+                                        "\n                    "
+                                    )
+                                  ]
+                            ],
+                            2
                           )
                         ])
                       : typeof data.country === "string"
@@ -76019,12 +76043,29 @@ var render = function() {
                               }
                             },
                             [
-                              _vm._v(
-                                "\n                    " +
-                                  _vm._s(data.country) +
-                                  "\n                "
-                              )
-                            ]
+                              _vm.countriesTranslation[
+                                data.country_code.toLowerCase()
+                              ]
+                                ? [
+                                    _vm._v(
+                                      "\n                        " +
+                                        _vm._s(
+                                          _vm.countriesTranslation[
+                                            data.country_code.toLowerCase()
+                                          ]
+                                        ) +
+                                        "\n                    "
+                                    )
+                                  ]
+                                : [
+                                    _vm._v(
+                                      "\n                        " +
+                                        _vm._s(data.country) +
+                                        "\n                    "
+                                    )
+                                  ]
+                            ],
+                            2
                           )
                         ])
                       : _vm._e()

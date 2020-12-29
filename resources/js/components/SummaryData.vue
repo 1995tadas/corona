@@ -19,12 +19,22 @@
             <template v-else>
                 <td v-if="typeof(data.country) === 'object'">
                     <a :href="casesByCountryRoute+'/'+data.country.slug">
-                        {{ data.country.country }}
+                        <template v-if="data.country.lt_country">
+                            {{ data.country.lt_country }}
+                        </template>
+                        <template v-else>
+                            {{ data.country.country }}
+                        </template>
                     </a>
                 </td>
                 <td v-else-if="typeof(data.country) === 'string'">
                     <a :href="casesByCountryRoute+'/'+data.slug">
-                        {{ data.country }}
+                        <template v-if="countriesTranslation[data.country_code.toLowerCase()]">
+                            {{ countriesTranslation[data.country_code.toLowerCase()] }}
+                        </template>
+                        <template v-else>
+                            {{ data.country }}
+                        </template>
                     </a>
                 </td>
             </template>
@@ -41,6 +51,9 @@ export default {
         translation: {
             type: Object,
             required: true
+        },
+        countriesTranslation: {
+            type: Object
         },
         casesByCountryRoute: {
             type: String,

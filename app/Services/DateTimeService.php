@@ -29,7 +29,7 @@ class DateTimeService
         $format = 'Y-m-d';
         $time ? $format .= ' H:i' : null;
 
-        return Carbon::parse($timestamp)->format($format);
+        return Carbon::parse($timestamp)->setTimezone(config('app.timezone'))->format($format);
     }
 
     public function passedDays(string $date): int

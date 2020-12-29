@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('content')
     <div class="country-presentation">
-        <h1 class="country-title">{{$country->country}}
+        <h1 class="country-title">
+            {{app()->getLocale() === 'lt'? $country->lt_country: $country->country}}
             <img class="country-flag" src="https://flagcdn.com/80x60/{{ $country->iso2 }}.png" alt="{{$country->slug}}">
         </h1>
     </div>

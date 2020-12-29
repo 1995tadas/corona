@@ -21,7 +21,10 @@
         </section>
         <summary-data-component :summary="{{ json_encode($countriesSummary) }}"
                                 :translation="{{ json_encode(trans('summary')) }}"
-                                cases-by-country-route="{{route('corona.show',['slug'=>'/'])}}">
-        </summary-data-component>
+                                cases-by-country-route="{{route('corona.show',['slug'=>'/'])}}"
+                                @if(App::isLocale('lt') && !array_key_exists('country_id', $countriesSummary[0]))
+                                :countries-translation="{{json_encode(trans('countries')) }}"
+                                @endif
+        ></summary-data-component>
     @endempty
 @endsection
