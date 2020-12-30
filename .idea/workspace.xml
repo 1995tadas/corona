@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Country.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Country.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/lt/countries.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/lt/countries.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-    </list>
+    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -200,7 +193,7 @@
       <workItem from="1609073337378" duration="3784000" />
       <workItem from="1609160253291" duration="14081000" />
       <workItem from="1609238915489" duration="5505000" />
-      <workItem from="1609331212286" duration="2419000" />
+      <workItem from="1609331212286" duration="2726000" />
     </task>
     <task id="LOCAL−00001" summary="Countries and Cases fetch and store into database functionality">
       <created>1608146687656</created>
@@ -262,7 +255,13 @@
       <option name="presentableId" value="LOCAL−00010" />
       <updated>1609265784185</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL−00011" summary="Ready for heroku">
+      <created>1609334853354</created>
+      <option name="number" value="LOCAL−00011" />
+      <option name="presentableId" value="LOCAL−00011" />
+      <updated>1609334853354</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -280,7 +279,8 @@
     <MESSAGE value="Summary page for global cases" />
     <MESSAGE value="fixed empty api data and table overflow bugs" />
     <MESSAGE value="Country names in lithuanian added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Country names in lithuanian added" />
+    <MESSAGE value="Ready for heroku" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ready for heroku" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
