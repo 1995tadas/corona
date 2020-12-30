@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="Vue production">
-      <change afterPath="$PROJECT_DIR$/public/js/app.js.LICENSE.txt" afterDir="false" />
+    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_100000_create_password_resets_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_19_000000_create_failed_jobs_table.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/public/.htaccess" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -200,7 +196,7 @@
       <workItem from="1609073337378" duration="3784000" />
       <workItem from="1609160253291" duration="14081000" />
       <workItem from="1609238915489" duration="5505000" />
-      <workItem from="1609331212286" duration="4572000" />
+      <workItem from="1609331212286" duration="4815000" />
     </task>
     <task id="LOCAL−00001" summary="Countries and Cases fetch and store into database functionality">
       <created>1608146687656</created>
@@ -274,7 +270,13 @@
       <option name="presentableId" value="LOCAL−00012" />
       <updated>1609335245539</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL−00013" summary="modifications for production">
+      <created>1609336929097</created>
+      <option name="number" value="LOCAL−00013" />
+      <option name="presentableId" value="LOCAL−00013" />
+      <updated>1609336929097</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,7 +296,8 @@
     <MESSAGE value="Country names in lithuanian added" />
     <MESSAGE value="Ready for heroku" />
     <MESSAGE value="Vue production" />
-    <option name="LAST_COMMIT_MESSAGE" value="Vue production" />
+    <MESSAGE value="modifications for production" />
+    <option name="LAST_COMMIT_MESSAGE" value="modifications for production" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
