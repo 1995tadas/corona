@@ -12,13 +12,24 @@ class ApiService
     {
         $finalUrl = $url . $query;
         if ($method === 'GET') {
-            $response = Http::withOptions(['verify' => false])->get($finalUrl, $parameters);
+            $response = Http::withOptions([
+                'verify' => false,
+                'stream' => true
+            ])->withHeaders([
+                'accept-encoding' => 'gzip',
+            ])->get($finalUrl, $parameters);
         } else {
             abort(405);
         }
 
         if ($response->successful()) {
-            return $response->body();
+            $data = '';
+            $body = $response->getBody();
+            while (!$body->eof()) {
+                $data.= $body->read(1024);
+            }
+
+            return $data;
         } else {
             abort($response->status());
         }

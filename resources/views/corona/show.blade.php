@@ -6,8 +6,7 @@
             <img class="country-flag" src="https://flagcdn.com/80x60/{{ $country->iso2 }}.png" alt="{{$country->slug}}">
         </h1>
     </div>
-    <cases-data-component :provinces="{{ $provinces }}"
-                          cases-route="{{ route('corona.cases', ['slug' => $country->slug]) }}"
+    <cases-data-component cases-route="{{ route('corona.cases', ['slug' => $country->slug]) }}"
                           :translation="{{ json_encode(trans('cases')) }}">
     </cases-data-component>
 @endsection

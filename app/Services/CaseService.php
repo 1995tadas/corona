@@ -3,13 +3,12 @@
 namespace App\Services;
 
 use App\Models\Corona;
-use App\Models\Country;
 use Carbon\Carbon;
 
 class CaseService
 {
     private $apiService;
-    private const API_QUERY_FOR_DAY_ONE_TOTAL_CASES = 'dayone/country/';
+    private const API_QUERY_FOR_DAY_ONE_TOTAL_CASES = 'total/country/';
     private const API_QUERY_BY_COUNTRY_INTERVAL_CASES = 'country/';
 
     public function __construct()
@@ -27,53 +26,30 @@ class CaseService
         return $this->apiService->performGetRequest(self::API_QUERY_BY_COUNTRY_INTERVAL_CASES . $countrySlug, $intervalDates);
     }
 
-    public function fetchCasesFromDatabase(string $countrySlug, int $provinceId = null): object
+    public function fetchCasesFromDatabase(string $countrySlug): object
     {
         $countryService = new CountryService();
         $country = $countryService->getCountry($countrySlug);
-        $cases = $country->cases($provinceId)->get();
-        if (!$cases->isEmpty()) {
-            $latestCaseDate = $this->getLatestCountryCaseDate($country);
-            $this->updateCases($latestCaseDate, $countrySlug);
-            $cases = $country->whereNoProvince($provinceId)->get();
-        }
-
-        return $cases;
+        return $country->allCases;
     }
 
-    public function updateCases(string $startingDate, string $countrySlug): bool
+    public function updateCases(string $countrySlug): bool
     {
+        $startingDate = $this->getLatestCountryCaseDate($countrySlug);
         $dateTimeService = new DateTimeService();
         if ($startingDate && $countrySlug) {
-            $startingDate = $dateTimeService->addDays($startingDate, 1);
+            $startingDate = $dateTimeService->addDays($startingDate, 2);
             $endingDate = Carbon::today('UTC');
-            if ($startingDate != $endingDate) {
+            if ($startingDate < $endingDate && $startingDate != $endingDate) {
                 $arrayService = new ArrayService();
                 $intervalDates = $dateTimeService->prepareIntervalDates($startingDate, $endingDate);
                 $newCases = $this->fetchCasesFromApiByInterval($countrySlug, $intervalDates);
-                $preparedCases = $arrayService->prepareCasesArrayForStoring($newCases, $countrySlug);
-                $this->store($preparedCases);
-                return true;
+                if($newCases){
+                    $preparedCases = $arrayService->prepareCasesArrayForStoring($newCases, $countrySlug);
+                    $this->store($preparedCases);
+                    return true;
+                }
             }
-        }
-
-        return false;
-    }
-
-    public function deleteCasesIfUnfinished(Corona $latestCase): bool
-    {
-        $latestDateCases = Corona::where('date', $latestCase->date)
-            ->where('country_id', $latestCase->country_id)
-            ->whereNotNull('province_id');
-        $lastDateCasesCount = $latestDateCases->count();
-        $provincesCount = Country::find($latestCase->country_id)->provinces->count();
-
-        if ($provincesCount > 1 && $provincesCount > $lastDateCasesCount) {
-            foreach ($latestDateCases->get() as $latestDateCase) {
-                $latestDateCase->delete();
-            }
-
-            return true;
         }
 
         return false;
@@ -107,37 +83,12 @@ class CaseService
         }
     }
 
-    public function getLatestCountryCaseDate(Country $country): string
+    public function getLatestCountryCaseDate(string $slug): string
     {
+        $countryService = new CountryService();
+        $country = $countryService->getCountry($slug);
         $cases = $country->allCases;
         $latestCase = $cases->first();
-        if ($latestCase) {
-            $deleted = $this->deleteCasesIfUnfinished($latestCase);
-            if ($deleted) {
-                $latestCase = $cases->first();
-            }
-
-            return $latestCase->date;
-        }
-
-        return '';
-    }
-
-    public function checkIfCasePropertiesAreZeroByPercentage(object $cases, float $percentage): object
-    {
-        if ($cases->first()) {
-            $emptyCount = 0;
-            foreach ($cases as $case) {
-                if ($case->confirmed == 0 && $case->deaths == 0 && $case->active == 0) {
-                    $emptyCount++;
-                }
-            }
-
-            if (($cases->count() * $percentage) < $emptyCount) {
-                return collect([]);
-            }
-        }
-
-        return $cases;
+        return $latestCase->date;
     }
 }

@@ -21,21 +21,12 @@ class CoronaController extends Controller
     public function index()
     {
         $summaryService = new SummaryService();
-        $needUpdateOrStore = $summaryService->checkIfSummaryNeedStoreOrUpdate(1);
-        if ($needUpdateOrStore) {
-            $countriesSummary = $summaryService->fetchAndStoreOrUpdateSummary();
-        }
-
-        if (!$needUpdateOrStore || !$countriesSummary) {
-            $countriesSummary = $summaryService->fetchSummaryFromDatabaseWithCountry()->toArray();
-        }
-
+        $countriesSummary = $summaryService->fetchSummaryFromDatabaseWithCountry()->toArray();
         $globalSummary = $summaryService->takeGlobalSummary($countriesSummary);
         $lastUpdated = '';
         if ($globalSummary) {
             $dateTimeService = new DateTimeService();
-            $lastUpdated = $dateTimeService->ifNoDateSetToCurrentAndExtract(
-                isset($globalSummary['updated_at']) ? $globalSummary['updated_at'] : '');
+            $lastUpdated = $dateTimeService->extractDate($globalSummary['updated_at'], true);
         }
 
         return view('corona.index', compact('globalSummary', 'lastUpdated', 'countriesSummary'));
@@ -44,19 +35,12 @@ class CoronaController extends Controller
     public function show(string $slug)
     {
         $country = $this->countryService->getCountry($slug);
-        $provinces = $country->provinces;
-        return view('corona.show', compact('country', 'provinces'));
+        return view('corona.show', compact('country'));
     }
 
-    public function cases(string $slug, int $provinceId = null): \Illuminate\Http\JsonResponse
+    public function cases(string $slug): \Illuminate\Http\JsonResponse
     {
-        if ($this->caseService->checkIfEmpty($slug)) {
-            $cases = $this->caseService->fetchAndStoreCases($slug);
-        } else {
-            $cases = $this->caseService->fetchCasesFromDatabase($slug, $provinceId);
-        }
-
-        $finalCases = $this->caseService->checkIfCasePropertiesAreZeroByPercentage($cases, 0.95);
-        return response()->json($finalCases);
+        $cases = $this->caseService->fetchCasesFromDatabase($slug);
+        return response()->json($cases);
     }
 }

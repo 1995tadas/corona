@@ -94,7 +94,7 @@ return [
     'de' => 'Vokietija',
     'gi' => 'Gibraltaras',
     'pa' => 'Panama',
-    'za' => 'Piertų Afrikos Respublika',
+    'za' => 'Pietų Afrikos Respublika',
     'uy' => 'Urugvajus',
     'cd' => 'Kongo Demokratinė Respublika',
     'nz' => 'Naujoji Zelandija',

@@ -38,13 +38,4 @@ class DateTimeService
         $now = Carbon::now();
         return $pastDate->diffInDays($now);
     }
-
-    public function ifNoDateSetToCurrentAndExtract(string $timestamp): string
-    {
-        if (!$timestamp) {
-            $timestamp = Carbon::now();
-        }
-
-        return $this->extractDate($timestamp, true);
-    }
 }

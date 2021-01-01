@@ -50,13 +50,6 @@ class ArrayService
                 $countryId = $countryService->getCountry($singleArray['slug'])->id;
             }
 
-            if (!empty($singleArray['province'])) {
-                $singleArray['province_id'] = [
-                    'province' => $singleArray['province'],
-                    'country_id' => $countryId
-                ];
-            }
-
             if ($countryId) {
                 $singleArray['country_id'] = $countryId;
             }

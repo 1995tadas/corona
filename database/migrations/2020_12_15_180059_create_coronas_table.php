@@ -19,9 +19,8 @@ class CreateCoronasTable extends Migration
             $table->integer('deaths');
             $table->integer('active');
             $table->date('date');
-            $table->foreignId('country_id')->constrained()->onDelete('cascade');
-            $table->foreignId('province_id')->nullable()->constrained()->onDelete('cascade');
-            $table->unique(['country_id', 'province_id', 'date']);
+            $table->foreignId('country_id');
+            $table->unique(['country_id', 'date']);
         });
     }
 

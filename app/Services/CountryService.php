@@ -53,7 +53,7 @@ class CountryService
 
     public function fetchCountriesFromDatabase(): \Illuminate\Database\Eloquent\Collection
     {
-        return Country::all(['country', 'slug', 'iso2', 'province']);
+        return Country::all(['country', 'slug', 'iso2']);
     }
 
     public function storeCountries(array $countries): void

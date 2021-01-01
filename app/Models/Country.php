@@ -31,29 +31,4 @@ class Country extends Model
         return $this->hasMany(Corona::class)->orderBy('date', 'DESC');
     }
 
-    public function cases(int $provinceId = null): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        $query = $this->allCases();
-        if ($provinceId) {
-            $query->where('province_id', $provinceId);
-        }
-
-        return $query;
-    }
-
-    public function whereNoProvince($provinceId = null): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        $query = $this->cases($provinceId);
-        if (!$provinceId) {
-            $query->whereNull('province_id');
-        }
-
-        return $query;
-    }
-
-    public function provinces(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Province::class);
-    }
-
 }

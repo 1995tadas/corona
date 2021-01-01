@@ -12,6 +12,7 @@ return [
     'all' => 'Visi',
     'loading' => 'Duomenys kraunasi',
     'error_while_loading' => 'Kraunant duomenys įvyko klaida. Perkraukite puslapį',
-    'select_province' => 'Pasirinkite provinciją',
-    'provinces' => 'Galimos provincijos'
+    'saved' => 'sėkmingai išsaugota',
+    'updated' => 'sėkmingai atnaujinta',
+    'not_updated' => 'atnaujinti nereikia',
 ];
