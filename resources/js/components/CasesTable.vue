@@ -9,7 +9,7 @@
             <th>{{ translation.active + ' ' + translation.cases }}</th>
 
         </tr>
-        <tr v-for="value in cases">
+        <tr v-for="value in reversedCases">
             <td>{{ value.date }}</td>
             <td>{{ value.confirmed }}</td>
             <td>{{ value.confirmedPerDay }}</td>
@@ -29,6 +29,19 @@ export default {
         translation: {
             type: Object,
             required: true
+        }
+    },
+    data() {
+        return {
+            reversedCases: []
+        }
+    },
+    created() {
+        this.reverseCases();
+    },
+    methods: {
+        reverseCases() {
+            this.reversedCases = this.cases.reverse();
         }
     }
 }

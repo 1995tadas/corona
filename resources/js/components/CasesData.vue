@@ -27,7 +27,7 @@
                                      :colors="colorsForCases">
             </cases-diagram-component>
         </div>
-        <cases-table-component :cases="cases.reverse()" :translation="translation">
+        <cases-table-component :cases="cases" :translation="translation">
         </cases-table-component>
     </div>
     <div v-else class="no-data">{{ translation.no_data }}</div>
