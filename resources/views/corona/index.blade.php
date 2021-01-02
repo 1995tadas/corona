@@ -5,16 +5,18 @@
         <div class="summary-empty">{{__('summary.empty')}}</div>
     @else
         <span class="global-last-updated">{{__('summary.updated').': '.$lastUpdated}}</span>
-        <section class="global-summary">
+        <section class="summary-global">
             @foreach($globalSummary as $summaryIndex => $summaryValue)
                 @if($summaryIndex === 'total_confirmed' || $summaryIndex === 'new_confirmed'||
                 $summaryIndex === 'total_deaths' || $summaryIndex === 'new_deaths'||
                 $summaryIndex === 'total_recovered' || $summaryIndex === 'new_recovered')
-                    <div class="summary-global-data-pair">
-                        <h2 class="summary-global-{{substr($summaryIndex, 0,  3) === 'new'?'new-':null}}title">
+                    <div class="summary-category">
+                        <h2 class="summary-category-title">
                             {{__('summary.'.$summaryIndex)}}
                         </h2>
-                        <span class="summary-global-cases">{{number_format($summaryValue)}}</span>
+                        <span class="summary-global-cases">
+                            {{(strtok($summaryIndex,'_') === 'new'?'+':null) . number_format($summaryValue)}}
+                        </span>
                     </div>
                 @endif
             @endforeach

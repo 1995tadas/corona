@@ -3,9 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/CasesData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CasesData.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/CasesTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CasesTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/lt/cases.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/lt/cases.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/lt/summary.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/lt/summary.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/parts/summary.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/parts/summary.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/corona/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/corona/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +209,9 @@
       <workItem from="1609419823571" duration="11867000" />
       <workItem from="1609436445297" duration="2907000" />
       <workItem from="1609442322334" duration="6336000" />
-      <workItem from="1609499319801" duration="21710000" />
+      <workItem from="1609499319801" duration="22289000" />
+      <workItem from="1609567769948" duration="16673000" />
+      <workItem from="1609594650770" duration="6374000" />
     </task>
     <task id="LOCAL−00001" summary="Countries and Cases fetch and store into database functionality">
       <created>1608146687656</created>
@@ -295,7 +303,13 @@
       <option name="presentableId" value="LOCAL−00015" />
       <updated>1609527385383</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL−00016" summary="casesTable component infinite loop bugfix">
+      <created>1609532374640</created>
+      <option name="number" value="LOCAL−00016" />
+      <option name="presentableId" value="LOCAL−00016" />
+      <updated>1609532374640</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -318,7 +332,8 @@
     <MESSAGE value="modifications for production" />
     <MESSAGE value="htaccess configuration" />
     <MESSAGE value="Automatic cases fetching replaced by manual.&#10;Api with countries provinces was changed to national cases only" />
-    <option name="LAST_COMMIT_MESSAGE" value="Automatic cases fetching replaced by manual.&#10;Api with countries provinces was changed to national cases only" />
+    <MESSAGE value="casesTable component infinite loop bugfix" />
+    <option name="LAST_COMMIT_MESSAGE" value="casesTable component infinite loop bugfix" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

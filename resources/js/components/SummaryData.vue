@@ -1,33 +1,38 @@
 <template>
-    <table class="summary-table">
-        <tr>
-            <th>#</th>
-            <th v-for="field in requiredFields">
-                {{ translation[field] }}
-                <a class="sort-link" v-if="field !== 'country'" href=""
-                   @click.prevent="sortBy(field, typeof order[field] === 'boolean'?order[field] = !order[field]:order[field] = false)">
-                    <i class="sort-icon fas"
-                       :class="{'fa-sort-down':(order[field] === true || order[field] === undefined),'fa-sort-up':order[field] ===false }"></i>
-                </a>
-            </th>
-        </tr>
-        <tr v-for="(data, index) in sortedSummary">
-            <td>{{ index + 1 }}</td>
-            <td v-for="field in requiredFields" v-if="field !== 'country'">
-                {{ data[field] }}
-            </td>
-            <td v-else>
-                <a :href="casesByCountryRoute+'/'+data.country.slug">
-                    <template v-if="data.country.lt_country">
-                        {{ data.country.lt_country }}
-                    </template>
-                    <template v-else>
-                        {{ data.country.country }}
-                    </template>
-                </a>
-            </td>
-        </tr>
-    </table>
+    <div class="summary-table-wrapper">
+        <table class="summary-table">
+            <tr>
+                <th>#</th>
+                <th v-for="field in requiredFields">
+                    {{ capitalize(translation[field]) }}
+                    <a class="sort-link" v-if="field !== 'country'" href=""
+                       @click.prevent="sortBy(field, typeof order[field] === 'boolean'?order[field] = !order[field]:order[field] = false)">
+                        <i class="sort-icon fas"
+                           :class="{'fa-sort-down':(order[field] === true || order[field] === undefined),'fa-sort-up':order[field] ===false }"></i>
+                    </a>
+                </th>
+            </tr>
+            <tr v-for="(data, index) in sortedSummary">
+                <td>{{ index + 1 }}</td>
+                <td v-for="field in requiredFields" v-if="field !== 'country'">
+                    {{
+                        (field.startsWith('new_') ? (data[field] !== 0 ? '+' + new Intl.NumberFormat().format(data[field]) : '')
+                            : new Intl.NumberFormat().format(data[field]))
+                    }}
+                </td>
+                <td v-else>
+                    <a class="country-cases-link" :href="casesByCountryRoute+'/'+data.country.slug">
+                        <template v-if="data.country.lt_country">
+                            {{ data.country.lt_country }}
+                        </template>
+                        <template v-else>
+                            {{ data.country.country }}
+                        </template>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
 </template>
 <script>
 export default {
@@ -79,6 +84,13 @@ export default {
 
                 return a[property] - b[property]
             });
+        },
+        capitalize(string) {
+            if (typeof (string) !== 'string') {
+                return ''
+            }
+
+            return string.trim().charAt(0).toUpperCase() + string.slice(1);
         }
     }
 }

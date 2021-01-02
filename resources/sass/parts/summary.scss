@@ -3,14 +3,16 @@
     font-size: 20pt;
 }
 
-.summary-title, .global-summary {
-    background-color: #292729;
+.summary-title, .summary-global {
+    background-color: $summary-dark;
     color: #fff;
     text-transform: uppercase;
     text-align: center;
 }
 
 .summary-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 50pt;
     padding: 10px 0;
     @media screen and (max-width: $medium) {
@@ -19,18 +21,22 @@
 }
 
 .global-last-updated {
-    background-color: #292729;
+    background-color: $summary-dark;
     color: #fff;
     margin: 5px auto;
     padding: 5px 20px;
     font-size: 8pt;
 }
 
-.global-summary {
+.summary-global {
     padding: 50px 0;
     margin-bottom: 20px;
+    @media screen and (max-width: $medium) {
+        margin-bottom: 10px;
+        padding: 10px 0 0;
+    }
 
-    .summary-global-data-pair {
+    .summary-category {
         display: inline-flex;
         justify-content: center;
         flex-direction: column;
@@ -40,23 +46,34 @@
             width: 100%;
         }
 
-        .summary-global-title, .summary-global-new-title {
+        &:nth-child(-n+2) {
+            .summary-category-title {
+                background-color: $confirmed;
+            }
+        }
+
+        &:nth-child(-n+4):nth-child(n+3) {
+            .summary-category-title {
+                background-color: $deaths;
+            }
+        }
+
+        &:nth-child(-n+6):nth-child(n+5) {
+            .summary-category-title {
+                background-color: $recovered;
+            }
+        }
+
+        .summary-category-title {
             font-size: 25pt;
             padding: 5px;
             margin: 0 5px;
+            border: 3px solid #fff;
             @media screen and (max-width: $medium) {
                 font-size: 18pt;
                 border-radius: 5px;
                 padding: 10px 0;
             }
-        }
-
-        .summary-global-title {
-            background-color: #911161;
-        }
-
-        .summary-global-new-title {
-            background-color: #112d91;
         }
 
         .summary-global-cases {
@@ -69,26 +86,62 @@
     }
 }
 
-.summary-table, th, tr, td {
-    border: 1px solid black;
-}
+.summary-table-wrapper {
+    width: 100%;
+    @media screen and (max-width: $small) {
+        overflow-x: auto;
+    }
 
-.summary-table {
-    background-color: #292729;
-    color: #fff;
+    .summary-table, th, tr, td {
+        border: 3px solid black;
+    }
 
-    th, td {
-        padding: 5px;
-        text-align: center;
-        @media screen and (max-width: $small) {
-            padding: 1px;
+    .summary-table {
+        width: 100%;
+        font-weight: 500;
+        font-size: 10pt;
+        font-family: Tahoma, Verdana, Segoe, sans-serif;
+
+        th, td {
+            padding: 3px;
+            text-align: center;
+
+            .sort-link {
+                display: block;
+                color: $link-blue;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+
+            .country-cases-link {
+                font-size: 14pt;
+                color: $link-blue;
+
+                &:hover, &:focus {
+                    color: $link-hover-blue;
+                    background-color: $link-hover-background;
+                }
+
+                @media screen and (max-width: $medium) {
+                    font-size: 12pt;
+                }
+            }
         }
 
-        .sort-link {
-            display: block;
+        th {
+            max-font-size: 22pt;
+            font-size: 1.5vw;
+            @media screen and (max-width: $medium) {
+                font-size: 12pt;
+            }
+        }
 
-            &:hover {
-                text-decoration: none;
+        tr {
+            &:nth-child(even) {
+                color: #fff;
+                background-color: #484545;
             }
         }
     }

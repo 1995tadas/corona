@@ -2,7 +2,7 @@
 
 return [
     'confirmed' => 'Patvirtinti',
-    'active' => 'Aktyvus',
+    'active' => 'Aktyvūs',
     'deaths' => 'Mirtys',
     'death_plural' => 'Mirčių',
     'no_data' => 'Duomenų nėra',
