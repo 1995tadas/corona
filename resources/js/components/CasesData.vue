@@ -6,7 +6,6 @@
     <div class="no-data" v-else-if="error">{{ translation.error_while_loading }}</div>
     <div v-else-if="checkIfDataIsNotEmpty(this.cases)">
         <div class="cases-diagrams">
-            <template></template>
             <cases-diagram-component :cases="allCases" :translation="translation"
                                      canvas-id="casesChart" chartType="line"
                                      :title="translation.all+' '+translation.cases" :colors="colorsForCases">
@@ -97,7 +96,7 @@ export default {
             }
 
             for (let i = 0; i < cases.length; i++) {
-                allCases.dates.push([cases[i].date]);
+                allCases.dates.push(cases[i].date);
                 casesPerDay.dates.push(cases[i].date);
                 allCases.confirmed.push(cases[i].confirmed);
                 casesPerDay.confirmed.push(cases[i].confirmedPerDay);

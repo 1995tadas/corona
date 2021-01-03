@@ -15,4 +15,6 @@ return [
     'saved' => 'sėkmingai išsaugota',
     'updated' => 'sėkmingai atnaujinta',
     'not_updated' => 'atnaujinti nereikia',
+    'from' => 'nuo',
+    'to' => 'iki',
 ];

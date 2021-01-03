@@ -1941,7 +1941,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     casesRoute: {
@@ -2007,7 +2006,7 @@ __webpack_require__.r(__webpack_exports__);
       };
 
       for (var i = 0; i < cases.length; i++) {
-        allCases.dates.push([cases[i].date]);
+        allCases.dates.push(cases[i].date);
         casesPerDay.dates.push(cases[i].date);
         allCases.confirmed.push(cases[i].confirmed);
         casesPerDay.confirmed.push(cases[i].confirmedPerDay);
@@ -2052,6 +2051,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     canvasId: {
@@ -2083,35 +2098,94 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   },
-  mounted: function mounted() {
-    this.addDatasets(this.cases);
-    this.createDiagram(this.canvasId);
-    this.renderTitle(this.canvasId);
-  },
   data: function data() {
     return {
       type: this.chartType,
       data: {
-        labels: this.cases.dates,
+        labels: [],
         datasets: []
-      }
+      },
+      defaultDateIntervals: [],
+      selectedDates: [],
+      chart: {}
     };
   },
+  created: function created() {
+    this.defaultDateIntervals = this.setDefaultDates(this.cases.dates);
+    this.selectedDates = this.defaultDateIntervals.slice(0);
+  },
+  watch: {
+    selectedDates: function selectedDates() {
+      this.filterArray(this.cases, this.cases.dates, this.selectedDates[0], this.selectedDates[1]);
+    }
+  },
   methods: {
-    renderTitle: function renderTitle(canvasId) {
-      var title = document.createElement("h1");
-      title.innerHTML = this.title;
-      var diagram = document.getElementById(canvasId);
-      title.classList.add("diagram-title");
-      diagram.parentNode.insertBefore(title, diagram.previousSibling);
+    newDiagram: function newDiagram(cases) {
+      this.addDatasets(cases);
+      this.createDiagram(this.canvasId, this.chart);
     },
-    createDiagram: function createDiagram(canvasId) {
-      var ctx = document.getElementById(canvasId).getContext('2d');
-      new Chart(ctx, {
-        type: this.type,
-        data: this.data,
-        options: this.options
+    setDefaultDates: function setDefaultDates(dates) {
+      if (!Array.isArray(dates)) {
+        return [];
+      }
+
+      var length = dates.length;
+
+      if (!length) {
+        return [];
+      }
+
+      var first = dates[0];
+      var last = dates[length - 1];
+      return [first, last];
+    },
+    filterArray: function filterArray(array, datesArray, firstCut, secondCut) {
+      var first = datesArray.indexOf(firstCut);
+
+      if (first === -1) {
+        first = 0;
+      }
+
+      var last = datesArray.indexOf(secondCut);
+
+      if (last === -1) {
+        last = datesArray - 1;
+      }
+
+      var filteredArray = [];
+      Object.keys(array).map(function (element) {
+        filteredArray[element] = array[element].slice(first, last);
       });
+      this.newDiagram(filteredArray);
+    },
+    changeWeek: function changeWeek(date, operand) {
+      var result = new Date(date);
+      var newDate = null;
+      var daysToChange = 7;
+
+      if (operand === '-') {
+        newDate = result.getDate() - daysToChange;
+      } else if (operand === '+') {
+        newDate = result.getDate() + daysToChange;
+      } else {
+        return '';
+      }
+
+      result.setDate(newDate);
+      return result.toLocaleDateString("lt-LT");
+    },
+    createDiagram: function createDiagram(canvasId, chart) {
+      var ctx = document.getElementById(canvasId).getContext('2d');
+
+      if (!(chart instanceof Chart)) {
+        this.chart = new Chart(ctx, {
+          type: this.type,
+          data: this.data,
+          options: this.options
+        });
+      } else {
+        chart.update();
+      }
     },
     addDatasets: function addDatasets(cases) {
       var datasets = [];
@@ -2134,12 +2208,13 @@ __webpack_require__.r(__webpack_exports__);
           blueprint.label = this.translation[names[i]];
           blueprint.backgroundColor = this.colors[names[i]];
           blueprint.borderColor = this.colors[names[i]];
-          blueprint.data = this.cases[names[i]];
+          blueprint.data = cases[names[i]];
           datasets.push(blueprint);
         }
       }
 
       this.data.datasets = datasets;
+      this.data.labels = cases.dates;
     }
   }
 });
@@ -2155,6 +2230,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -75664,8 +75741,6 @@ var render = function() {
             "div",
             { staticClass: "cases-diagrams" },
             [
-              void 0,
-              _vm._v(" "),
               _c("cases-diagram-component", {
                 attrs: {
                   cases: _vm.allCases,
@@ -75728,7 +75803,7 @@ var render = function() {
                 }
               })
             ],
-            2
+            1
           ),
           _vm._v(" "),
           _c("cases-table-component", {
@@ -75763,9 +75838,77 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("canvas", {
-    attrs: { id: _vm.canvasId, width: "400", height: "400" }
-  })
+  return _c("div", [
+    _c("h1", { staticClass: "diagram-title" }, [_vm._v(_vm._s(_vm.title))]),
+    _vm._v(" "),
+    _c("canvas", { attrs: { id: _vm.canvasId, width: "400", height: "400" } }),
+    _vm._v(" "),
+    _c("div", { staticClass: "interval-filter" }, [
+      _c("div", [
+        _c("label", { attrs: { for: "from-date" } }, [
+          _vm._v(_vm._s(_vm.translation["from"]))
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectedDates[0],
+              expression: "selectedDates[0]"
+            }
+          ],
+          attrs: {
+            id: "from-date",
+            type: "date",
+            min: _vm.defaultDateIntervals[0],
+            max: _vm.changeWeek(_vm.selectedDates[1], "-")
+          },
+          domProps: { value: _vm.selectedDates[0] },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.selectedDates, 0, $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("label", { attrs: { for: "to-date" } }, [
+          _vm._v(_vm._s(_vm.translation["to"]))
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectedDates[1],
+              expression: "selectedDates[1]"
+            }
+          ],
+          attrs: {
+            id: "to-date",
+            type: "date",
+            min: _vm.changeWeek(_vm.selectedDates[0], "+"),
+            max: _vm.defaultDateIntervals[1]
+          },
+          domProps: { value: _vm.selectedDates[1] },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.selectedDates, 1, $event.target.value)
+            }
+          }
+        })
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -75789,72 +75932,74 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "table",
-    { staticClass: "cases-table" },
-    [
-      _c("tr", [
-        _c("th", [_vm._v(_vm._s(_vm.translation.date))]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v(
-            _vm._s(_vm.translation.confirmed + " " + _vm.translation.cases)
-          )
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v(
-            _vm._s(
-              _vm.translation.confirmed +
-                " " +
-                _vm.translation.cases +
-                " " +
-                _vm.translation.per_day
+  return _c("div", { staticClass: "table-wrapper" }, [
+    _c(
+      "table",
+      { staticClass: "table" },
+      [
+        _c("tr", [
+          _c("th", [_vm._v(_vm._s(_vm.translation.date))]),
+          _vm._v(" "),
+          _c("th", [
+            _vm._v(
+              _vm._s(_vm.translation.confirmed + " " + _vm.translation.cases)
             )
-          )
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v(
-            _vm._s(_vm.translation.death_plural + " " + _vm.translation.cases)
-          )
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v(
-            _vm._s(
-              _vm.translation.death_plural +
-                " " +
-                _vm.translation.cases +
-                " " +
-                _vm.translation.per_day
+          ]),
+          _vm._v(" "),
+          _c("th", [
+            _vm._v(
+              _vm._s(
+                _vm.translation.confirmed +
+                  " " +
+                  _vm.translation.cases +
+                  " " +
+                  _vm.translation.per_day
+              )
             )
-          )
+          ]),
+          _vm._v(" "),
+          _c("th", [
+            _vm._v(
+              _vm._s(_vm.translation.death_plural + " " + _vm.translation.cases)
+            )
+          ]),
+          _vm._v(" "),
+          _c("th", [
+            _vm._v(
+              _vm._s(
+                _vm.translation.death_plural +
+                  " " +
+                  _vm.translation.cases +
+                  " " +
+                  _vm.translation.per_day
+              )
+            )
+          ]),
+          _vm._v(" "),
+          _c("th", [
+            _vm._v(_vm._s(_vm.translation.active + " " + _vm.translation.cases))
+          ])
         ]),
         _vm._v(" "),
-        _c("th", [
-          _vm._v(_vm._s(_vm.translation.active + " " + _vm.translation.cases))
-        ])
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.reversedCases, function(value) {
-        return _c("tr", [
-          _c("td", [_vm._v(_vm._s(value.date))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(value.confirmed))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(value.confirmedPerDay))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(value.deaths))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(value.deathsPerDay))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(value.active))])
-        ])
-      })
-    ],
-    2
-  )
+        _vm._l(_vm.reversedCases, function(value) {
+          return _c("tr", [
+            _c("td", [_vm._v(_vm._s(value.date))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(value.confirmed))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(value.confirmedPerDay))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(value.deaths))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(value.deathsPerDay))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(value.active))])
+          ])
+        })
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -75878,10 +76023,10 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "summary-table-wrapper" }, [
+  return _c("div", { staticClass: "table-wrapper" }, [
     _c(
       "table",
-      { staticClass: "summary-table" },
+      { staticClass: "table" },
       [
         _c(
           "tr",

@@ -1,6 +1,6 @@
 <template>
-    <div class="summary-table-wrapper">
-        <table class="summary-table">
+    <div class="table-wrapper">
+        <table class="table">
             <tr>
                 <th>#</th>
                 <th v-for="field in requiredFields">
