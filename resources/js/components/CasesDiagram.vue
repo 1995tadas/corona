@@ -58,7 +58,8 @@ export default {
             },
             defaultDateIntervals: [],
             selectedDates: [],
-            chart: {}
+            chart: {},
+            options: {}
         }
     },
     created() {
@@ -98,6 +99,8 @@ export default {
             let last = datesArray.indexOf(secondCut);
             if (last === -1) {
                 last = datesArray - 1;
+            } else {
+                last++;
             }
 
             let filteredArray = [];
@@ -135,23 +138,25 @@ export default {
         },
         addDatasets(cases) {
             let datasets = [];
-            let names = ['confirmed', 'deaths', 'active']
-            for (let i = 0; i < names.length; i++) {
-                let blueprint = {};
-                if (cases[names[i]].length && (this.filter === names[i] || this.filter === 'all')) {
-                    blueprint = {
-                        label: [],
-                        backgroundColor: '',
-                        borderColor: '',
-                        pointRadius: 1,
-                        pointHoverRadius: 2,
-                        borderWidth: 0.5,
-                        fill: false,
-                        data: []
-                    }
+            let names = ['confirmed', 'deaths', 'active'];
+            let namesCount = names.length;
+            let pointRadius = [];
+            if (this.chartType === 'line') {
+                let casesCount = cases.dates.length;
+                pointRadius = this.setPointRadius(casesCount);
+            }
 
+            for (let i = 0; i < namesCount; i++) {
+                if (cases[names[i]].length && (this.filter === names[i] || this.filter === 'all')) {
+                    let blueprint = {}
                     blueprint.label = this.translation[names[i]];
                     blueprint.backgroundColor = this.colors[names[i]];
+                    if (this.chartType === 'line') {
+                        blueprint.fill = false;
+                        blueprint.pointRadius = pointRadius;
+                        blueprint.pointHoverRadius = pointRadius;
+                    }
+
                     blueprint.borderColor = this.colors[names[i]];
                     blueprint.data = cases[names[i]];
                     datasets.push(blueprint)
@@ -160,6 +165,20 @@ export default {
 
             this.data.datasets = datasets;
             this.data.labels = cases.dates
+        },
+
+        setPointRadius(count) {
+            if (count > 200) {
+                return 1;
+            } else if (count <= 50) {
+                return 3;
+            } else if (count <= 100) {
+                return 2.5;
+            } else if (count <= 150) {
+                return 2;
+            } else if (count <= 200) {
+                return 1.5;
+            }
         }
     }
 }
