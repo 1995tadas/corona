@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
+use Illuminate\http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
 class ApiService
@@ -22,11 +24,12 @@ class ApiService
             abort(405);
         }
 
+        $this->rateLimitReset($response);
         if ($response->successful()) {
             $data = '';
             $body = $response->getBody();
             while (!$body->eof()) {
-                $data.= $body->read(1024);
+                $data .= $body->read(1024);
             }
 
             return $data;
@@ -39,5 +42,15 @@ class ApiService
     {
         $content = $this->performRequest('GET', self::API_URL, $query, $parameters);
         return json_decode($content);
+    }
+
+    public function rateLimitReset(Response $response): void
+    {
+        $rateLimitRemaining = $response->header('X-Ratelimit-Remaining');
+        if ($rateLimitRemaining && $rateLimitRemaining <= 1) {
+            $rateLimitReset = Carbon::createFromTimestamp($response->header('X-Ratelimit-Reset'));
+            $difference = $rateLimitReset->diffInSeconds(Carbon::now());
+            sleep($difference + 1);
+        }
     }
 }

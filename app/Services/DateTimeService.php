@@ -38,4 +38,26 @@ class DateTimeService
         $now = Carbon::now();
         return $pastDate->diffInDays($now);
     }
+
+    public function compareTwoDates(string $firstDate, string $operator, string $secondDate): bool
+    {
+        $first = Carbon::parse($firstDate);
+        $second = Carbon::parse($secondDate);
+        switch ($operator) {
+            case '<':
+                return $first->lessThan($second);
+            case '>':
+                return $first->greaterThan($second);
+            case '=':
+                return $first->equalTo($second);
+            case '!=':
+                return $first->notEqualTo($second);
+            case '>=':
+                return $first->greaterThanOrEqualTo($second);
+            case '<=':
+                return $first->lessThanOrEqualTo($second);
+            default:
+                return false;
+        }
+    }
 }

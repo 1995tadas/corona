@@ -38,13 +38,14 @@ class CaseService
         $startingDate = $this->getLatestCountryCaseDate($countrySlug);
         $dateTimeService = new DateTimeService();
         if ($startingDate && $countrySlug) {
-            $startingDate = $dateTimeService->addDays($startingDate, 2);
-            $endingDate = Carbon::today('UTC');
-            if ($startingDate < $endingDate && $startingDate != $endingDate) {
-                $arrayService = new ArrayService();
+            $endingDate = Carbon::today()->toIso8601String();
+            $intervalComparison = $dateTimeService->compareTwoDates($dateTimeService->addDays($startingDate, 2), '<', $endingDate);
+            if ($intervalComparison) {
+                $startingDate = $dateTimeService->addDays($startingDate, 1);
                 $intervalDates = $dateTimeService->prepareIntervalDates($startingDate, $endingDate);
                 $newCases = $this->fetchCasesFromApiByInterval($countrySlug, $intervalDates);
-                if($newCases){
+                if ($newCases) {
+                    $arrayService = new ArrayService();
                     $preparedCases = $arrayService->prepareCasesArrayForStoring($newCases, $countrySlug);
                     $this->store($preparedCases);
                     return true;

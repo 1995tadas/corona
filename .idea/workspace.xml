@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/sass/parts/table.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/ApiService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/ApiService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/CaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/CaseService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/DateTimeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/DateTimeService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/CasesData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CasesData.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/CasesDiagram.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CasesDiagram.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/CasesTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CasesTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/lt/cases.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/lt/cases.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/parts/cases.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/parts/cases.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/parts/global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/parts/global.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/parts/summary.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/parts/summary.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,7 +222,8 @@
       <workItem from="1609499319801" duration="22289000" />
       <workItem from="1609567769948" duration="16673000" />
       <workItem from="1609594650770" duration="15532000" />
-      <workItem from="1609671474325" duration="16724000" />
+      <workItem from="1609671474325" duration="17269000" />
+      <workItem from="1609763374946" duration="17646000" />
     </task>
     <task id="LOCAL−00001" summary="Countries and Cases fetch and store into database functionality">
       <created>1608146687656</created>
@@ -332,7 +327,13 @@
       <option name="presentableId" value="LOCAL−00017" />
       <updated>1609601606010</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL−00018" summary="Date filter for diagram">
+      <created>1609704063441</created>
+      <option name="number" value="LOCAL−00018" />
+      <option name="presentableId" value="LOCAL−00018" />
+      <updated>1609704063441</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -357,7 +358,8 @@
     <MESSAGE value="Automatic cases fetching replaced by manual.&#10;Api with countries provinces was changed to national cases only" />
     <MESSAGE value="casesTable component infinite loop bugfix" />
     <MESSAGE value="Index page design update.&#10;Summary table empty data filtering for new and format change" />
-    <option name="LAST_COMMIT_MESSAGE" value="Index page design update.&#10;Summary table empty data filtering for new and format change" />
+    <MESSAGE value="Date filter for diagram" />
+    <option name="LAST_COMMIT_MESSAGE" value="Date filter for diagram" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
