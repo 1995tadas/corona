@@ -67,8 +67,8 @@ export default {
         this.selectedDates = this.defaultDateIntervals.slice(0);
     },
     watch: {
-        selectedDates() {
-            this.filterArray(this.cases, this.cases.dates, this.selectedDates[0], this.selectedDates[1]);
+        selectedDates(value) {
+            this.filterArray(this.cases, this.cases.dates, value[0], value[1]);
         }
     },
     methods: {

@@ -33,17 +33,9 @@ export default {
             required: true
         }
     },
-    data() {
-        return {
-            reversedCases: []
-        }
-    },
-    created() {
-        this.reverseCases();
-    },
-    methods: {
-        reverseCases() {
-            this.reversedCases = this.cases.reverse();
+    computed: {
+        reversedCases() {
+            return this.cases.reverse();
         }
     }
 }

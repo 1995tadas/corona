@@ -7,21 +7,17 @@
                     {{ capitalize(translation[field]) }}
                     <a class="sort-link" v-if="field !== 'country'" href=""
                        @click.prevent="sortBy(field, typeof order[field] === 'boolean'?order[field] = !order[field]:order[field] = false)">
-                        <i class="sort-icon fas"
-                           :class="{'fa-sort-down':(order[field] === true || order[field] === undefined),'fa-sort-up':order[field] ===false }"></i>
+                        <i class="sort-icon fas" :class="arrowDirection(field)"></i>
                     </a>
                 </th>
             </tr>
             <tr v-for="(data, index) in sortedSummary">
                 <td>{{ index + 1 }}</td>
                 <td v-for="field in requiredFields" v-if="field !== 'country'">
-                    {{
-                        (field.startsWith('new_') ? (data[field] !== 0 ? '+' + new Intl.NumberFormat().format(data[field]) : '')
-                            : new Intl.NumberFormat().format(data[field]))
-                    }}
+                    {{ emptyFilter(field, data[field]) }}
                 </td>
                 <td v-else>
-                    <a class="country-cases-link" :href="casesByCountryRoute+'/'+data.country.slug">
+                    <a class="country-cases-link" :href="casesByCountryRoute + '/' + data.country.slug">
                         <template v-if="countriesTranslation">
                             {{ countriesTranslation[data.country.iso2] }}
                         </template>
@@ -55,7 +51,6 @@ export default {
     },
     data() {
         return {
-            filteredSummary: [],
             sortedSummary: [],
             requiredFields: [
                 'country',
@@ -70,15 +65,16 @@ export default {
         }
     },
     mounted() {
-        this.filterSummary();
         this.sortBy('total_confirmed', 'desc');
     },
-    methods: {
-        filterSummary() {
-            this.filteredSummary = this.summary.filter((data) => {
+    computed: {
+        filteredSummary() {
+            return this.summary.filter((data) => {
                 return data.country_id !== null && data.country_id !== undefined
             });
         },
+    },
+    methods: {
         sortBy(property, desc) {
             this.sortedSummary = this.filteredSummary.sort((a, b) => {
                 if (desc) {
@@ -94,6 +90,17 @@ export default {
             }
 
             return string.trim().charAt(0).toUpperCase() + string.slice(1);
+        },
+        arrowDirection(field) {
+            return {
+                'fa-sort-down': (this.order[field] === true || this.order[field] === undefined),
+                'fa-sort-up': this.order[field] === false
+            }
+        },
+        emptyFilter(name, field) {
+            return name.startsWith('new_')
+                ? (field !== 0 ? '+' + new Intl.NumberFormat().format(field) : '')
+                : new Intl.NumberFormat().format(field);
         }
     }
 }
