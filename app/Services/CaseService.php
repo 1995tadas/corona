@@ -7,23 +7,19 @@ use Carbon\Carbon;
 
 class CaseService
 {
-    private $apiService;
     private const API_QUERY_FOR_DAY_ONE_TOTAL_CASES = 'total/country/';
     private const API_QUERY_BY_COUNTRY_INTERVAL_CASES = 'country/';
 
-    public function __construct()
-    {
-        $this->apiService = new ApiService();
-    }
-
     public function fetchCasesFromApi(string $countrySlug): array
     {
-        return $this->apiService->performGetRequest(self::API_QUERY_FOR_DAY_ONE_TOTAL_CASES . $countrySlug);
+        $requestService = new RequestService();
+        return $requestService->performGetRequestCovidApi(self::API_QUERY_FOR_DAY_ONE_TOTAL_CASES . $countrySlug);
     }
 
     public function fetchCasesFromApiByInterval(string $countrySlug, array $intervalDates): array
     {
-        return $this->apiService->performGetRequest(self::API_QUERY_BY_COUNTRY_INTERVAL_CASES . $countrySlug, $intervalDates);
+        $requestService = new RequestService();
+        return  $requestService->performGetRequestCovidApi(self::API_QUERY_BY_COUNTRY_INTERVAL_CASES . $countrySlug, $intervalDates);
     }
 
     public function fetchCasesFromDatabase(string $countrySlug): object

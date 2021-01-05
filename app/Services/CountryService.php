@@ -6,12 +6,12 @@ use App\Models\Country;
 
 class CountryService
 {
-    private $apiService;
     private const API_QUERY_FOR_COUNTRIES = 'countries';
 
-    public function __construct()
+    public function fetchCountriesFromApi(): array
     {
-        $this->apiService = new ApiService();
+        $requestService = new RequestService();
+        return $requestService->performGetRequestCovidApi(self::API_QUERY_FOR_COUNTRIES);
     }
 
     public function getCountries(): object
@@ -31,11 +31,6 @@ class CountryService
         }
 
         return $this->fetchCountryFromDatabase($slug);
-    }
-
-    public function fetchCountriesFromApi(): array
-    {
-        return $this->apiService->performGetRequest(self::API_QUERY_FOR_COUNTRIES);
     }
 
     public function fetchCountriesFromApiAndStore(): array

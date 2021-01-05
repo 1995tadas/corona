@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Http;
 
 class ApiService
 {
-    private const API_URL = "https://api.covid19api.com/";
-
     protected function performRequest(string $method, string $url, string $query = '', array $parameters = []): string
     {
         $finalUrl = $url . $query;
@@ -38,9 +36,9 @@ class ApiService
         }
     }
 
-    public function performGetRequest(string $query = '', array $parameters = [])
+    public function performGetRequest(string $apiUrl, string $query = '', array $parameters = [])
     {
-        $content = $this->performRequest('GET', self::API_URL, $query, $parameters);
+        $content = $this->performRequest('GET', $apiUrl, $query, $parameters);
         return json_decode($content);
     }
 

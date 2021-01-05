@@ -6,17 +6,12 @@ use App\Models\Summary;
 
 class SummaryService
 {
-    private $apiService;
     private const API_QUERY_FOR_SUMMARY = 'summary';
-
-    public function __construct()
-    {
-        $this->apiService = new ApiService();
-    }
 
     public function fetchSummaryFromApi(): object
     {
-        return $this->apiService->performGetRequest(self::API_QUERY_FOR_SUMMARY);
+        $requestService = new RequestService();
+        return $requestService->performGetRequestCovidApi(self::API_QUERY_FOR_SUMMARY);
     }
 
     public function fetchAndStoreOrUpdateSummary(): array
