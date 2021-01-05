@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="line pointRadius size correlation to data pool">
-      <change afterPath="$PROJECT_DIR$/app/Services/RequestService.php" afterDir="false" />
+    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="RequestService separated form ApiService">
+      <change afterPath="$PROJECT_DIR$/app/Models/Region.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/SubRegion.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_123407_create_regions_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_123625_create_sub_regions_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/ApiService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/ApiService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/CaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/CaseService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/FetchCases.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/FetchCases.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Country.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Country.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Services/CountryService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/CountryService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/SummaryService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/SummaryService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_15_132757_create_countries_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_15_132757_create_countries_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/corona/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/corona/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/corona/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/corona/show.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +235,7 @@
       <workItem from="1609671474325" duration="17269000" />
       <workItem from="1609763374946" duration="20342000" />
       <workItem from="1609844280896" duration="4926000" />
-      <workItem from="1609854745097" duration="2241000" />
+      <workItem from="1609854745097" duration="12970000" />
     </task>
     <task id="LOCAL−00001" summary="Countries and Cases fetch and store into database functionality">
       <created>1608146687656</created>
@@ -349,7 +357,13 @@
       <option name="presentableId" value="LOCAL−00020" />
       <updated>1609795450229</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL−00021" summary="RequestService separated form ApiService">
+      <created>1609857159376</created>
+      <option name="number" value="LOCAL−00021" />
+      <option name="presentableId" value="LOCAL−00021" />
+      <updated>1609857159376</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,7 +391,8 @@
     <MESSAGE value="Date filter for diagram" />
     <MESSAGE value="Api ratelimit handling" />
     <MESSAGE value="line pointRadius size correlation to data pool" />
-    <option name="LAST_COMMIT_MESSAGE" value="line pointRadius size correlation to data pool" />
+    <MESSAGE value="RequestService separated form ApiService" />
+    <option name="LAST_COMMIT_MESSAGE" value="RequestService separated form ApiService" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

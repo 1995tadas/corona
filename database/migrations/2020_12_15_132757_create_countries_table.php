@@ -19,9 +19,11 @@ class CreateCountriesTable extends Migration
             $table->string('country')->unique();
             $table->string('slug')->unique();
             $table->char('iso2', 2)->unique();
-            if (App::isLocale('lt')) {
-                $table->string('lt_country')->unique()->nullable();
-            }
+            $table->foreignId('region_id')->nullable()->constrained();
+            $table->foreignId('sub_region_id')->nullable()->constrained();
+            $table->string('capital')->nullable();
+            $table->integer('population')->nullable();
+            $table->integer('area')->nullable();
         });
     }
 

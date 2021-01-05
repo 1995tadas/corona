@@ -10,7 +10,7 @@ class Country extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['country', 'slug', 'iso2'];
+    protected $fillable = ['country', 'slug', 'iso2', 'region', 'sub_region', 'capital', 'population', 'area'];
 
     public $timestamps = [];
 
@@ -18,11 +18,27 @@ class Country extends Model
     {
         $lowerCaseIso2 = strtolower($value);
         $this->attributes['iso2'] = $lowerCaseIso2;
-        if (App::isLocale('lt')) {
-            $countryInLithuanian = __('countries.' . $lowerCaseIso2);
-            if ($countryInLithuanian) {
-                $this->attributes['lt_country'] = $countryInLithuanian;
-            }
+    }
+
+    public function setRegionAttribute($value)
+    {
+        $region = Region::firstOrCreate([
+            'name' => $value
+        ]);
+
+        if ($region) {
+            $this->attributes['region_id'] = $region->id;
+        }
+    }
+
+    public function setSubRegionAttribute($value)
+    {
+        $subRegion = SubRegion::firstOrCreate([
+            'name' => $value
+        ]);
+
+        if ($subRegion) {
+            $this->attributes['sub_region_id'] = $subRegion->id;
         }
     }
 

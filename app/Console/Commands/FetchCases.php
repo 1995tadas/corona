@@ -44,17 +44,15 @@ class FetchCases extends Command
         $summaryService = new SummaryService();
         $countriesSummary = $summaryService->fetchAndStoreOrUpdateSummary();
         $caseService = new CaseService();
-        $lithuanian = false;
-        if (App::isLocale('lt')) {
-            $countryService = new CountryService();
-            $lithuanian = true;
+        $translation = false;
+        if (app()->getLocale() !== 'en') {
+            $translation = true;
         }
 
-        $this->withProgressBar($countriesSummary, function ($summary) use ($lithuanian, $countryService, $caseService) {
+        $this->withProgressBar($countriesSummary, function ($summary) use ($translation, $caseService) {
             if (isset($summary['slug'])) {
-                if ($lithuanian) {
-                    $country = $countryService->getCountry($summary['slug']);
-                    $country = $country->lt_country;
+                if ($translation) {
+                    $country = __('countries.' . strtolower($summary['country_code']));
                 } else {
                     $country = $summary['country'];
                 }

@@ -21,9 +21,13 @@
                 @endif
             @endforeach
         </section>
-        <summary-data-component :summary="{{ json_encode($countriesSummary) }}"
-                                :translation="{{ json_encode(trans('summary')) }}"
-                                cases-by-country-route="{{route('corona.show',['slug'=>'/'])}}"
-        ></summary-data-component>
+        <summary-data-component
+            :summary="{{ json_encode($countriesSummary) }}"
+            :translation="{{ json_encode(trans('summary')) }}"
+            cases-by-country-route="{{route('corona.show',['slug'=>'/'])}}"
+            @if(app()->getLocale() !=='en')
+            :countries-translation="{{json_encode(trans('countries'))}}"
+            @endif>
+        </summary-data-component>
     @endempty
 @endsection

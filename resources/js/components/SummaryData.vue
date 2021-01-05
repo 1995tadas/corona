@@ -22,8 +22,8 @@
                 </td>
                 <td v-else>
                     <a class="country-cases-link" :href="casesByCountryRoute+'/'+data.country.slug">
-                        <template v-if="data.country.lt_country">
-                            {{ data.country.lt_country }}
+                        <template v-if="countriesTranslation">
+                            {{ countriesTranslation[data.country.iso2] }}
                         </template>
                         <template v-else>
                             {{ data.country.country }}
@@ -44,6 +44,9 @@ export default {
         translation: {
             type: Object,
             required: true
+        },
+        countriesTranslation: {
+            type: Object,
         },
         casesByCountryRoute: {
             type: String,
