@@ -86,25 +86,94 @@
     }
 }
 
-.sort-link {
-    display: block;
-    color: $link-blue;
+.summary-data {
+    .region-filter {
+        ul {
+            font-weight: bold;
+            padding: 0;
+            font-size: 9pt;
+            @media screen and (max-width: $medium) {
+                font-size: 7pt;
+                display: flex;
+                flex-wrap: wrap;
+            }
 
-    &:hover {
-        text-decoration: none;
+            li {
+                display: inline;
+                padding: 15px;
+                @media screen and (max-width: $medium) {
+                    padding: 5px;
+                }
+
+                .selected-region {
+                    border: 1px solid black;
+                    background-color: rgba(231, 176, 147, 0.3) !important;
+                    cursor: context-menu;
+                }
+
+                a {
+                    display: inline-block;
+                    box-sizing: border-box;
+                    padding: 10px;
+                    @media screen and (max-width: $medium) {
+                        padding: 5px;
+                    }
+                    border-radius: 5px;
+                    border: 1px solid transparent;
+
+                    &:hover {
+                        background-color: rgba(162, 142, 239, 0.1);
+                        text-decoration: none;
+                        color: #3490dc;
+                    }
+                }
+            }
+
+            &:last-child {
+                @media screen and (max-width: $medium) {
+                    border-top: 1px solid black;
+                }
+
+                li {
+                    @media screen and (min-width: $medium) {
+                        border-top: 1px solid black;
+                    }
+                }
+            }
+        }
     }
-}
 
-.country-cases-link {
-    font-size: 14pt;
-    color: $link-blue;
+    .sort-link {
+        display: block;
+        color: $link-blue;
 
-    &:hover, &:focus {
-        color: $link-hover-blue;
-        background-color: $link-hover-background;
+        &:hover {
+            text-decoration: none;
+        }
     }
 
-    @media screen and (max-width: $medium) {
-        font-size: 12pt;
+    .country-cases-link {
+        font-size: 14pt;
+        color: $link-blue;
+
+        &:hover, &:focus {
+            color: $link-hover-blue;
+            background-color: $link-hover-background;
+        }
+
+        @media screen and (max-width: $medium) {
+            font-size: 12pt;
+        }
+    }
+
+    .no-countries {
+        margin-top: 30px;
+        height: 100vh;
+        font-size: 33pt;
+        text-align: center;
+        @media screen and (max-width: $medium) {
+            font-size: 12pt;
+            height: 30vh;
+        }
     }
 }

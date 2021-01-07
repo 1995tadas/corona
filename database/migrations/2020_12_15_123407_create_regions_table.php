@@ -15,7 +15,8 @@ class CreateRegionsTable extends Migration
     {
         Schema::create('regions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('continent_id')->constrained();
+            $table->foreignId('sub_region_id')->nullable()->constrained();
         });
     }
 

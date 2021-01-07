@@ -4,7 +4,9 @@ $summary = [
     'title' => 'Covid-19 pandemijos statistika',
     'updated' => 'Atnaujinta',
     'country' => 'Šalis',
-    'empty' => 'Duomenų nėra'
+    'empty' => 'Duomenų nėra',
+    'all' => 'Visi',
+    'no-countries' => 'Šalių šioje kategorijoje nėra'
 ];
 
 $types = [

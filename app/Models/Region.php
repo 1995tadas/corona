@@ -11,5 +11,15 @@ class Region extends Model
 
     public $timestamps = [];
 
-    protected $fillable = ['name'];
+    protected $fillable = ['continent_id', 'sub_region_id'];
+
+    public function subRegion(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(SubRegion::class, 'sub_region_id', 'id');
+    }
+
+    public function continent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Continent::class, 'continent_id', 'id');
+    }
 }

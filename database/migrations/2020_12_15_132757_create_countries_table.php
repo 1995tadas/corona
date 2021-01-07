@@ -20,7 +20,6 @@ class CreateCountriesTable extends Migration
             $table->string('slug')->unique();
             $table->char('iso2', 2)->unique();
             $table->foreignId('region_id')->nullable()->constrained();
-            $table->foreignId('sub_region_id')->nullable()->constrained();
             $table->string('capital')->nullable();
             $table->integer('population')->nullable();
             $table->integer('area')->nullable();

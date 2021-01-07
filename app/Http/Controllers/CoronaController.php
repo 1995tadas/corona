@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\CaseService;
 use App\Services\CountryService;
 use App\Services\DateTimeService;
+use App\Services\RegionService;
 use App\Services\SummaryService;
 
 class CoronaController extends Controller
@@ -21,7 +22,7 @@ class CoronaController extends Controller
     public function index()
     {
         $summaryService = new SummaryService();
-        $countriesSummary = $summaryService->fetchSummaryFromDatabaseWithCountry()->toArray();
+        $countriesSummary = $summaryService->fetchSummaryFromDatabaseWithCountryInfo()->toArray();
         $globalSummary = $summaryService->takeGlobalSummary($countriesSummary);
         $lastUpdated = '';
         if ($globalSummary) {
@@ -29,7 +30,9 @@ class CoronaController extends Controller
             $lastUpdated = $dateTimeService->extractDate($globalSummary['updated_at'], true);
         }
 
-        return view('corona.index', compact('globalSummary', 'lastUpdated', 'countriesSummary'));
+        $regionService = New RegionService();
+        $regions = $regionService->getRegionsWithSubRegions();
+        return view('corona.index', compact('globalSummary', 'lastUpdated', 'countriesSummary', 'regions'));
     }
 
     public function show(string $slug)

@@ -35,7 +35,7 @@ class SummaryService
         return Summary::whereNull('country_id')->first();
     }
 
-    public function fetchSummaryFromDatabaseWithCountry(): \Illuminate\Database\Eloquent\Collection
+    public function fetchSummaryFromDatabaseWithCountryInfo(): \Illuminate\Database\Eloquent\Collection
     {
         return Summary::with('country')->get();
     }

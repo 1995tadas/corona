@@ -40,24 +40,24 @@ class CountryService
         return $this->fetchCountryFromDatabase($slug);
     }
 
-    public function addAdditionalInfoToCountriesArray(array $countriesArray): array
+    public function addAdditionalInfoToCountriesArray(array $countries): array
     {
         $countriesInfoFromApi = $this->fetchCountriesInfoFromApi();
         if ($countriesInfoFromApi) {
             foreach ($countriesInfoFromApi as $countryInfo) {
-                foreach ($countriesArray as $index => $country) {
+                foreach ($countries as $index => $country) {
                     if ($countryInfo->alpha2Code === $country->ISO2) {
-                        $countriesArray[$index]->region = $countryInfo->region;
-                        $countriesArray[$index]->sub_region = $countryInfo->subregion;
-                        $countriesArray[$index]->capital = $countryInfo->capital;
-                        $countriesArray[$index]->population = $countryInfo->population;
-                        $countriesArray[$index]->area = $countryInfo->area;
+                        $countries[$index]->region['continent'] = $countryInfo->region;
+                        $countries[$index]->region['sub_region'] = $countryInfo->subregion;
+                        $countries[$index]->capital = $countryInfo->capital;
+                        $countries[$index]->population = $countryInfo->population;
+                        $countries[$index]->area = $countryInfo->area;
                         break;
                     }
                 }
             }
 
-            return $countriesArray;
+            return $countries;
         }
 
         return [];

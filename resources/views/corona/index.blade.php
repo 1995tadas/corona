@@ -23,10 +23,12 @@
         </section>
         <summary-data-component
             :summary="{{ json_encode($countriesSummary) }}"
+            :regions="{{ json_encode($regions) }}"
             :translation="{{ json_encode(trans('summary')) }}"
             cases-by-country-route="{{route('corona.show',['slug'=>'/'])}}"
             @if(app()->getLocale() !=='en')
             :countries-translation="{{json_encode(trans('countries'))}}"
+            :regions-translation="{{json_encode(trans('regions'))}}"
             @endif>
         </summary-data-component>
     @endempty

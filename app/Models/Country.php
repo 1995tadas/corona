@@ -10,7 +10,7 @@ class Country extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['country', 'slug', 'iso2', 'region', 'sub_region', 'capital', 'population', 'area'];
+    protected $fillable = ['country', 'slug', 'iso2', 'region', 'capital', 'population', 'area'];
 
     public $timestamps = [];
 
@@ -22,23 +22,28 @@ class Country extends Model
 
     public function setRegionAttribute($value)
     {
-        $region = Region::firstOrCreate([
-            'name' => $value
-        ]);
-
-        if ($region) {
-            $this->attributes['region_id'] = $region->id;
-        }
-    }
-
-    public function setSubRegionAttribute($value)
-    {
-        $subRegion = SubRegion::firstOrCreate([
-            'name' => $value
-        ]);
-
-        if ($subRegion) {
-            $this->attributes['sub_region_id'] = $subRegion->id;
+        if (isset($value['continent']) && $value['continent']) {
+            $continent = Continent::firstOrCreate([
+                'name' => $value['continent'],
+            ]);
+            $regionData = [];
+            if ($continent) {
+                $regionData['continent_id'] = $continent->id;
+                if (isset($value['sub_region']) && $value['sub_region']) {
+                    $subRegion = SubRegion::firstOrCreate([
+                        'name' => $value['sub_region'],
+                    ]);
+                    if ($subRegion) {
+                        $regionData['sub_region_id'] = $subRegion->id;
+                    }
+                }
+            }
+            if ($regionData) {
+                $region = Region::firstOrCreate($regionData);
+                if ($region) {
+                    $this->attributes['region_id'] = $region->id;
+                }
+            }
         }
     }
 
