@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="Vue components optimizations">
-      <change afterPath="$PROJECT_DIR$/app/Models/Continent.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Services/RegionService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_171656_create_continents_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/lt/regions.php" afterDir="false" />
+    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CoronaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CoronaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Country.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Country.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Region.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Region.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/SubRegion.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/SubRegion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/CountryService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/CountryService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/SummaryService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/SummaryService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_123407_create_regions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_15_123407_create_regions_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_15_132757_create_countries_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_15_132757_create_countries_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/lt/summary.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/lt/summary.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/parts/summary.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/parts/summary.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/parts/table.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/parts/table.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/corona/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/corona/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/CasesDiagram.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CasesDiagram.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -247,7 +231,7 @@
       <workItem from="1609953628110" duration="11731000" />
       <workItem from="1610020306134" duration="3827000" />
       <workItem from="1610025992305" duration="684000" />
-      <workItem from="1610026766690" duration="10970000" />
+      <workItem from="1610026766690" duration="13425000" />
     </task>
     <task id="LOCAL−00001" summary="Countries and Cases fetch and store into database functionality">
       <created>1608146687656</created>
@@ -387,7 +371,13 @@
       <option name="presentableId" value="LOCAL−00023" />
       <updated>1609884463280</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL−00024" summary="Summary filter by region and subregion">
+      <created>1610042892189</created>
+      <option name="number" value="LOCAL−00024" />
+      <option name="presentableId" value="LOCAL−00024" />
+      <updated>1610042892189</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -418,7 +408,8 @@
     <MESSAGE value="RequestService separated form ApiService" />
     <MESSAGE value="Additional country data (region, sub-region, capital, area, population) added from other api source" />
     <MESSAGE value="Vue components optimizations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Vue components optimizations" />
+    <MESSAGE value="Summary filter by region and subregion" />
+    <option name="LAST_COMMIT_MESSAGE" value="Summary filter by region and subregion" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

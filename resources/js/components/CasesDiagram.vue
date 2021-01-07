@@ -169,15 +169,15 @@ export default {
 
         setPointRadius(count) {
             if (count > 200) {
-                return 1;
-            } else if (count <= 50) {
-                return 3;
-            } else if (count <= 100) {
-                return 2.5;
-            } else if (count <= 150) {
-                return 2;
-            } else if (count <= 200) {
                 return 1.5;
+            } else if (count <= 50) {
+                return 3.5;
+            } else if (count <= 100) {
+                return 3;
+            } else if (count <= 150) {
+                return 2.5;
+            } else if (count <= 200) {
+                return 2;
             }
         }
     }
