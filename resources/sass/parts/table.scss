@@ -20,10 +20,12 @@
         }
 
         th {
-            max-font-size: 22pt;
             font-size: 1.5vw;
             @media screen and (max-width: $medium) {
-                font-size: 12pt;
+                font-size: 2vw;
+            }
+            @media screen and (max-width: $small) {
+                font-size: 3.2vw;
             }
         }
 

@@ -15,8 +15,11 @@
     text-overflow: ellipsis;
     font-size: 50pt;
     padding: 10px 0;
+    line-height: 1.5;
+    margin-bottom: 0;
     @media screen and (max-width: $medium) {
-        font-size: 40pt;
+        line-height: 1.2;
+        font-size: 8vw;
     }
 }
 
@@ -46,6 +49,15 @@
             width: 100%;
         }
 
+        &:nth-child(even) {
+            @media screen and (max-width: $medium) {
+                border-bottom: 3px solid black;
+                &:not(:last-child) {
+                    margin-bottom: 5px;
+                }
+            }
+        }
+
         &:nth-child(-n+2) {
             .summary-category-title {
                 background-color: $confirmed;
@@ -70,9 +82,9 @@
             margin: 0 5px;
             border: 3px solid #fff;
             @media screen and (max-width: $medium) {
-                font-size: 18pt;
+                font-size: 14pt;
                 border-radius: 5px;
-                padding: 10px 0;
+                padding: 2px;
             }
         }
 
@@ -80,7 +92,8 @@
             font-size: 22pt;
             margin: 10px 0;
             @media screen and (max-width: $medium) {
-                font-size: 18pt;
+                font-size: 12pt;
+                margin: 0;
             }
         }
     }
