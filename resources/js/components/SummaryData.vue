@@ -42,27 +42,31 @@
                     <th v-for="field in requiredFields">
                         {{ capitalize(translation[field]) }}
                         <a class="sort-link" v-if="field !== 'country'" href="" v-show="sortingShowStatus"
-                           @click.prevent="sortBy(field,
-                           typeof order[field] === 'boolean'? order[field] = !order[field]: order[field] = false)">
+                           @click.prevent="sortBy(field, sortingOrder(field))">
                             <i class="sort-icon fas" :class="arrowDirection(field)"></i>
                         </a>
                     </th>
                 </tr>
                 <tr v-for="(data, index) in sortedSummary">
                     <td>{{ index + 1 }}</td>
-                    <td v-for="field in requiredFields" v-if="field !== 'country'">
-                        {{ emptyFilter(field, data[field]) }}
-                    </td>
-                    <td v-else>
-                        <a class="country-cases-link" :href="casesByCountryRoute + '/' + data.country.slug">
-                            <template v-if="countriesTranslation">
-                                {{ countriesTranslation[data.country.iso2] }}
-                            </template>
-                            <template v-else>
-                                {{ data.country.country }}
-                            </template>
-                        </a>
-                    </td>
+                    <template v-for="field in requiredFields">
+                        <td v-if="field === 'country'">
+                            <a class="country-cases-link" :href="casesByCountryRoute + '/' + data.country.slug">
+                                <template v-if="countriesTranslation">
+                                    {{ countriesTranslation[data.country.iso2] }}
+                                </template>
+                                <template v-else>
+                                    {{ data.country.country }}
+                                </template>
+                            </a>
+                        </td>
+                        <td v-else>
+                            {{
+                                formatSummaryNumbers(field,
+                                    data[field] !== undefined ? data[field] : data.country[field])
+                            }}
+                        </td>
+                    </template>
                 </tr>
             </table>
         </div>
@@ -114,9 +118,12 @@ export default {
                 'total_deaths',
                 'new_deaths',
                 'total_recovered',
-                'new_recovered'
+                'new_recovered',
+                'population',
+                'area',
+                'capital'
             ],
-            order: []
+            directions: []
         }
     },
     mounted() {
@@ -168,7 +175,7 @@ export default {
         /*
             Checks if summary have more than one item
         */
-        sortingShowStatus(){
+        sortingShowStatus() {
             return this.sortedSummary.length > 1
         }
     },
@@ -211,7 +218,7 @@ export default {
             Sets sorting arrows to default positions and shows default summary data
         */
         showSummary() {
-            this.order = [];
+            this.directions = [];
             this.sortBy('total_confirmed', 'desc');
         },
         /*
@@ -219,11 +226,22 @@ export default {
         */
         sortBy(property, desc) {
             this.sortedSummary = this.filteredSummary.sort((a, b) => {
-                if (desc) {
-                    return b[property] - a[property];
+                let elements = []
+                if (a[property] !== undefined) {
+                    elements.first = a[property];
+                    elements.second = b[property];
+                } else if (a.country[property] !== undefined) {
+                    elements.first = a.country[property];
+                    elements.second = b.country[property];
+                } else {
+                    return []
                 }
 
-                return a[property] - b[property]
+                if (desc) {
+                    return elements.second - elements.first;
+                }
+
+                return elements.first - elements.second
             });
         },
         /*
@@ -241,19 +259,42 @@ export default {
         */
         arrowDirection(field) {
             return {
-                'fa-sort-down': (this.order[field] === true || this.order[field] === undefined),
-                'fa-sort-up': this.order[field] === false
+                'fa-sort-down': (this.directions[field] === true || this.directions[field] === undefined),
+                'fa-sort-up': this.directions[field] === false
             }
+        },
+        /*
+            Sets boolean variables for fields direction tracking
+        */
+        sortingOrder(field) {
+            return typeof this.directions[field] === 'boolean' ?
+                this.directions[field] = !this.directions[field] :
+                this.directions[field] = false
         },
         /*
            Summary data filter.
            For new cases adds + to the start and hides empty data.
            Formats numbers and conjunction marks between digits
         */
-        emptyFilter(name, field) {
-            return name.startsWith('new_')
-                ? (field !== 0 ? '+' + new Intl.NumberFormat().format(field) : '')
-                : new Intl.NumberFormat().format(field);
+        formatSummaryNumbers(name, field) {
+            if (Number.isInteger(field)) {
+                let formattedNumber = new Intl.NumberFormat().format(field);
+                if (name.startsWith('new_')) {
+                    if (field === 0) {
+                        formattedNumber = null;
+                    } else {
+                        formattedNumber = '+' + formattedNumber;
+                    }
+                }
+
+                return formattedNumber
+            }
+
+            if (field === '' || field === null) {
+                return this.translation['not_available'];
+            }
+
+            return field;
         }
     }
 }
