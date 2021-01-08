@@ -41,7 +41,7 @@
                     <th>#</th>
                     <th v-for="field in requiredFields">
                         {{ capitalize(translation[field]) }}
-                        <a class="sort-link" v-if="field !== 'country'" href="" v-show="sortingShowStatus"
+                        <a class="sort-link" href="" v-show="sortingShowStatus"
                            @click.prevent="sortBy(field, sortingOrder(field))">
                             <i class="sort-icon fas" :class="arrowDirection(field)"></i>
                         </a>
@@ -227,21 +227,50 @@ export default {
         sortBy(property, desc) {
             this.sortedSummary = this.filteredSummary.sort((a, b) => {
                 let elements = []
-                if (a[property] !== undefined) {
-                    elements.first = a[property];
-                    elements.second = b[property];
-                } else if (a.country[property] !== undefined) {
+                if (a.country[property] !== undefined) {
                     elements.first = a.country[property];
                     elements.second = b.country[property];
+                } else if (a[property] !== undefined) {
+                    elements.first = a[property];
+                    elements.second = b[property];
                 } else {
                     return []
                 }
+                /* Sorting strings */
+                if (typeof elements.first === 'string' && typeof elements.second === 'string'
+                    && elements.first !== "" && elements.second !== "") {
+                    if (desc) {
+                        return elements.first.localeCompare(elements.second);
+                    }
 
-                if (desc) {
-                    return elements.second - elements.first;
+                    return elements.second.localeCompare(elements.first)
                 }
+                /* Sorting numbers */
+                if (typeof elements.first === 'number' && typeof elements.second === 'number') {
+                    if (desc) {
+                        return elements.second - elements.first;
+                    }
 
-                return elements.first - elements.second
+                    return elements.first - elements.second
+                }
+                /* Sorting empty values */
+                if (desc) {
+                    if (elements.first === "" || elements.first === null) {
+                        return 1;
+                    }
+
+                    if (elements.second === "" || elements.second === null) {
+                        return -1;
+                    }
+                } else {
+                    if (elements.first === "" || elements.first === null) {
+                        return -1;
+                    }
+
+                    if (elements.second === "" || elements.second === null) {
+                        return 1;
+                    }
+                }
             });
         },
         /*
@@ -269,7 +298,7 @@ export default {
         sortingOrder(field) {
             return typeof this.directions[field] === 'boolean' ?
                 this.directions[field] = !this.directions[field] :
-                this.directions[field] = false
+                this.directions[field] = false;
         },
         /*
            Summary data filter.
