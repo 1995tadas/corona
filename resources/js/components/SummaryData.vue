@@ -44,7 +44,7 @@
                         <template v-if="field === 'area'">
                             (km<sup>2</sup>)
                         </template>
-                        <a class="sort-link" href="" v-show="sortingShowStatus"
+                        <a class="sort-link" href="" v-show="showSortingArrow(field)"
                            @click.prevent="sortBy(field, sortingOrder(field))">
                             <i class="sort-icon fas" :class="arrowDirection(field)"></i>
                         </a>
@@ -179,14 +179,24 @@ export default {
 
             return regions;
         },
-        /*
-            Checks if summary have more than one item
-        */
-        sortingShowStatus() {
-            return this.sortedSummary.length > 1
-        }
     },
     methods: {
+        /*
+           Checks if summary have more than one item
+       */
+        showSortingArrow(field) {
+            if (this.sortedSummary.length <= 1) {
+                return false;
+            }
+
+            for (let summaryItem of this.sortedSummary) {
+                if (summaryItem[field] !== null && summaryItem[field] !== '' && summaryItem[field] !== 0) {
+                    return true;
+                }
+            }
+
+            return false;
+        },
         /*
             Filters summary by region and sets selected region
         */
