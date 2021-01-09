@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="">
+    <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="Capital translations to lithuanian&#10;All place names translations placed to single file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/FetchCases.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/FetchCases.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/SummaryData.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/lt/countries.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/lt/places.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/lt/regions.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/corona/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/corona/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/corona/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/corona/show.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +168,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang/lt" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -233,7 +238,9 @@
       <workItem from="1610025992305" duration="684000" />
       <workItem from="1610026766690" duration="13817000" />
       <workItem from="1610098026883" duration="8475000" />
-      <workItem from="1610114086598" duration="17207000" />
+      <workItem from="1610114086598" duration="17950000" />
+      <workItem from="1610193981735" duration="26000" />
+      <workItem from="1610194435502" duration="13329000" />
     </task>
     <task id="LOCAL−00001" summary="Countries and Cases fetch and store into database functionality">
       <created>1608146687656</created>
@@ -397,7 +404,13 @@
       <option name="presentableId" value="LOCAL−00027" />
       <updated>1610135680409</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL−00028" summary="Summary sorting function divided into strings, numbers and empty values parts.">
+      <created>1610147426563</created>
+      <option name="number" value="LOCAL−00028" />
+      <option name="presentableId" value="LOCAL−00028" />
+      <updated>1610147426563</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -405,7 +418,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Cases DateTime to Date change" />
     <MESSAGE value="Data manipulation for cases diagram" />
     <MESSAGE value="For Countries with provinces select bar will be presented.&#10;Saving and fetching data bugs fixed.&#10;Responsive style for vue elements." />
     <MESSAGE value="Custom 404 page" />
@@ -430,7 +442,8 @@
     <MESSAGE value="Line diagram point size readjustments" />
     <MESSAGE value="Global summary style resizing" />
     <MESSAGE value="New summary columns (population, area, capital) was added.&#10;Sorting algorithm rewritten, now can handle country info data&#10;NumberFormatting functions ternary operator replaced by if statements for easier readability and edge cases handling added" />
-    <option name="LAST_COMMIT_MESSAGE" value="New summary columns (population, area, capital) was added.&#10;Sorting algorithm rewritten, now can handle country info data&#10;NumberFormatting functions ternary operator replaced by if statements for easier readability and edge cases handling added" />
+    <MESSAGE value="Summary sorting function divided into strings, numbers and empty values parts." />
+    <option name="LAST_COMMIT_MESSAGE" value="Summary sorting function divided into strings, numbers and empty values parts." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

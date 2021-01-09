@@ -2,7 +2,7 @@
 @section('content')
     <div class="country-presentation">
         <h1 class="country-title">
-            {{app()->getLocale() !== 'en'? __('countries.'.$country->iso2): $country->country}}
+            {{app()->getLocale() !== 'en'? __('places.'.$country->iso2): $country->country}}
             <img class="country-flag" src="https://flagcdn.com/80x60/{{ $country->iso2 }}.png" alt="{{$country->slug}}">
         </h1>
     </div>

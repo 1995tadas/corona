@@ -12,8 +12,8 @@
                     <a href="#" :class="{'selected-region':selectedRegion.region === continent}"
                        @click.prevent="filterByRegion(content, continent)"
                        @mouseenter="showSubRegions(content.subRegions)">
-                        <template v-if="regionsTranslation">
-                            {{ regionsTranslation[continent] }}
+                        <template v-if="placesTranslation[continent]">
+                            {{ placesTranslation[continent] }}
                         </template>
                         <template v-else>
                             {{ continent }}
@@ -25,8 +25,8 @@
                 <li v-for="region in subRegions">
                     <a @click.prevent="filterByRegion(region, region.name, true)"
                        :class="{'selected-region':selectedRegion.region === region.name}" href="">
-                        <template v-if="regionsTranslation">
-                            {{ regionsTranslation[region.name] }}
+                        <template v-if="placesTranslation[region.name]">
+                            {{ placesTranslation[region.name] }}
                         </template>
                         <template v-else>
                             {{ region.name }}
@@ -41,6 +41,9 @@
                     <th>#</th>
                     <th v-for="field in requiredFields">
                         {{ capitalize(translation[field]) }}
+                        <template v-if="field === 'area'">
+                            (km<sup>2</sup>)
+                        </template>
                         <a class="sort-link" href="" v-show="sortingShowStatus"
                            @click.prevent="sortBy(field, sortingOrder(field))">
                             <i class="sort-icon fas" :class="arrowDirection(field)"></i>
@@ -52,18 +55,25 @@
                     <template v-for="field in requiredFields">
                         <td v-if="field === 'country'">
                             <a class="country-cases-link" :href="casesByCountryRoute + '/' + data.country.slug">
-                                <template v-if="countriesTranslation">
-                                    {{ countriesTranslation[data.country.iso2] }}
+                                <template v-if="placesTranslation[data.country.iso2]">
+                                    {{ placesTranslation[data.country.iso2] }}
                                 </template>
                                 <template v-else>
                                     {{ data.country.country }}
                                 </template>
                             </a>
                         </td>
+                        <td v-else-if="field === 'capital'">
+                            <template v-if="placesTranslation[data.country.capital]">
+                                {{ checkIfFieldEmpty(placesTranslation[data.country.capital]) }}
+                            </template>
+                            <template v-else>
+                                {{ checkIfFieldEmpty(data.country.capital) }}
+                            </template>
+                        </td>
                         <td v-else>
                             {{
-                                formatSummaryNumbers(field,
-                                    data[field] !== undefined ? data[field] : data.country[field])
+                                formatSummaryNumbers(field, (data[field] !== undefined ? data[field] : data.country[field]))
                             }}
                         </td>
                     </template>
@@ -90,10 +100,7 @@ export default {
             type: Object,
             required: true
         },
-        countriesTranslation: {
-            type: Object,
-        },
-        regionsTranslation: {
+        placesTranslation: {
             type: Object,
         },
         casesByCountryRoute: {
@@ -319,7 +326,13 @@ export default {
                 return formattedNumber
             }
 
-            if (field === '' || field === null) {
+            return this.checkIfFieldEmpty(field);
+        },
+        /*
+            When passed data field is empty returns warning string N/A
+        */
+        checkIfFieldEmpty(field) {
+            if (field === '' || field === null || field === []) {
                 return this.translation['not_available'];
             }
 

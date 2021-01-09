@@ -52,7 +52,7 @@ class FetchCases extends Command
         $this->withProgressBar($countriesSummary, function ($summary) use ($translation, $caseService) {
             if (isset($summary['slug'])) {
                 if ($translation) {
-                    $country = __('countries.' . strtolower($summary['country_code']));
+                    $country = __('places.' . strtolower($summary['country_code']));
                 } else {
                     $country = $summary['country'];
                 }
