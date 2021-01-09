@@ -235,6 +235,10 @@ export default {
             this.sortedSummary = this.filteredSummary.sort((a, b) => {
                 let elements = []
                 if (a.country[property] !== undefined) {
+                    if (property === 'country' && this.placesTranslation) {
+                        property = 'iso2';
+                    }
+
                     elements.first = a.country[property];
                     elements.second = b.country[property];
                 } else if (a[property] !== undefined) {
@@ -246,6 +250,11 @@ export default {
                 /* Sorting strings */
                 if (typeof elements.first === 'string' && typeof elements.second === 'string'
                     && elements.first !== "" && elements.second !== "") {
+                    if (this.placesTranslation[elements.first] && this.placesTranslation[elements.second]) {
+                        elements.first = this.placesTranslation[elements.first];
+                        elements.second = this.placesTranslation[elements.second];
+                    }
+
                     if (desc) {
                         return elements.first.localeCompare(elements.second);
                     }
