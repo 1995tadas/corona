@@ -19,10 +19,10 @@ $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
 // Custom colors;
-$confirmed:#EE0A0A;
-$deaths:#000;
+$confirmed: #EE0A0A;
+$deaths: #000;
 $recovered: #10cb10;
-$active:#055EF6;
+$active: #055EF6;
 $summary-dark: #292729;
 $link-blue: #1e92de;
 $link-hover-blue: #00c;
@@ -31,4 +31,5 @@ $link-hover-background: #c3c33a;
 // Media queries
 
 $small: 576px;
-$medium: 768px
+$medium: 768px;
+$large: 992px;

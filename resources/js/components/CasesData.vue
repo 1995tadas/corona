@@ -22,7 +22,7 @@
             </cases-diagram-component>
             <cases-diagram-component :cases="casesPerDay" :translation="translation"
                                      canvas-id="casesPerDayActive" chartType="bar" filter="active"
-                                     :title="translation.active+' '+translation.cases+' '+translation.per_day"
+                                     :title="translation.active+' '+translation.per_day"
                                      :colors="colorsForCases">
             </cases-diagram-component>
         </div>

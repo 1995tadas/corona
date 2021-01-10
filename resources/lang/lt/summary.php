@@ -16,7 +16,7 @@ $summary = [
 $types = [
     'confirmed' => 'atvejai',
     'deaths' => 'mirtys',
-    'recovered' => 'pasveikimai'
+    'recovered' => 'pasveikusieji'
 ];
 
 foreach ($types as $index => $type) {

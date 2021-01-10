@@ -7,7 +7,7 @@
                 <th>{{ translation.confirmed + ' ' + translation.cases + ' ' + translation.per_day }}</th>
                 <th>{{ translation.death_plural + ' ' + translation.cases }}</th>
                 <th>{{ translation.death_plural + ' ' + translation.cases + ' ' + translation.per_day }}</th>
-                <th>{{ translation.active + ' ' + translation.cases }}</th>
+                <th>{{ translation.active}}</th>
 
             </tr>
             <tr v-for="value in reversedCases">
