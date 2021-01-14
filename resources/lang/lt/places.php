@@ -204,7 +204,7 @@ return [
     'co' => 'Kolumbija',
     'kn' => 'Sent Kitsas ir Nevis',
     'tt' => 'Trinidadas ir Tobagas',
-    'bs' => 'Bahamos',
+    'bs' => 'Bahamai',
     'je' => 'Džersis',
     'ke' => 'Kenija',
     'ne' => 'Nigeris',
