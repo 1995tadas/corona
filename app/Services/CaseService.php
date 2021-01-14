@@ -8,7 +8,6 @@ use Carbon\Carbon;
 class CaseService
 {
     private const API_QUERY_FOR_DAY_ONE_TOTAL_CASES = 'total/country/';
-    private const API_QUERY_BY_COUNTRY_INTERVAL_CASES = 'country/';
 
     public function fetchCasesFromApi(string $countrySlug): array
     {
@@ -19,7 +18,7 @@ class CaseService
     public function fetchCasesFromApiByInterval(string $countrySlug, array $intervalDates): array
     {
         $requestService = new RequestService();
-        return  $requestService->performGetRequestCovidApi(self::API_QUERY_BY_COUNTRY_INTERVAL_CASES . $countrySlug, $intervalDates);
+        return $requestService->performGetRequestCovidApi(self::API_QUERY_FOR_DAY_ONE_TOTAL_CASES . $countrySlug, $intervalDates);
     }
 
     public function fetchCasesFromDatabase(string $countrySlug): object
@@ -35,9 +34,9 @@ class CaseService
         $dateTimeService = new DateTimeService();
         if ($startingDate && $countrySlug) {
             $endingDate = Carbon::today()->toIso8601String();
-            $intervalComparison = $dateTimeService->compareTwoDates($dateTimeService->addDays($startingDate, 2), '<', $endingDate);
-            if ($intervalComparison) {
-                $startingDate = $dateTimeService->addDays($startingDate, 1);
+            $startingDate = $dateTimeService->addDays($startingDate, 1);
+            $needsUpdate = $dateTimeService->compareTwoDates($startingDate, '<', $endingDate, true);
+            if ($needsUpdate) {
                 $intervalDates = $dateTimeService->prepareIntervalDates($startingDate, $endingDate);
                 $newCases = $this->fetchCasesFromApiByInterval($countrySlug, $intervalDates);
                 if ($newCases) {

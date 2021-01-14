@@ -39,10 +39,15 @@ class DateTimeService
         return $pastDate->diffInDays($now);
     }
 
-    public function compareTwoDates(string $firstDate, string $operator, string $secondDate): bool
+    public function compareTwoDates(string $firstDate, string $operator, string $secondDate, bool $onlyDates = false): bool
     {
         $first = Carbon::parse($firstDate);
         $second = Carbon::parse($secondDate);
+        if ($onlyDates) {
+            $first = $first->startOfDay();
+            $second = $second->startOfDay();
+        }
+
         switch ($operator) {
             case '<':
                 return $first->lessThan($second);
