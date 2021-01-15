@@ -3,10 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Services\CaseService;
-use App\Services\CountryService;
+use App\Services\CronService;
 use App\Services\SummaryService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\App;
 
 class FetchCases extends Command
 {
@@ -72,5 +71,9 @@ class FetchCases extends Command
                 }
             }
         });
+        if ($countriesSummary) {
+            $cronService = new CronService();
+            $cronService->createOrUpdate();
+        }
     }
 }
