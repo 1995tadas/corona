@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('cases:fetch')->daily();
-        $schedule->command('cases:needsUpdate --update')->everyFifteenMinutes();
+        $schedule->command('cases:needsUpdate --update')->everyThirtyMinutes();
     }
 
     /**

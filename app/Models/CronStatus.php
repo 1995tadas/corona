@@ -9,7 +9,7 @@ class CronStatus extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['updated'];
+    protected $fillable = ['type', 'updated'];
 
     public $timestamps = [];
 }

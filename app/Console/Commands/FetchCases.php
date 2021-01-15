@@ -73,7 +73,7 @@ class FetchCases extends Command
         });
         if ($countriesSummary) {
             $cronService = new CronService();
-            $cronService->createOrUpdate();
+            $cronService->createOrUpdateCases();
         }
     }
 }

@@ -14,28 +14,31 @@ class CronService
         $this->cronStatus = new CronStatus();
     }
 
-    public function readyForUpdate(): bool
+    public function casesReadyForUpdate(): bool
     {
-        $record = $this->cronStatus->first();
-        if ($record) {
-            $dateTimeService = new DateTimeService();
-            $updatedDaysAgo = $dateTimeService->passedDays($record->updated);
-            if ($updatedDaysAgo != 0) {
-                return true;
-            }
+        $record = $this->cronStatus->where('type', 'cases_update')->first();
+        if (!$record) {
+            return true;
         }
 
-        return false;
+        $dateTimeService = new DateTimeService();
+        $updatedDaysAgo = $dateTimeService->passedDays($record->updated);
+        if ($updatedDaysAgo != 0) {
+            return true;
+        }
     }
 
-    public function createOrUpdate(): void
+    public function createOrUpdateCases(): void
     {
         $now = Carbon::now();
-        $recordCount = $this->cronStatus->count();
+        $recordCount = $this->cronStatus->where('type', 'cases_update')->count();
         if ($recordCount === 0) {
-            $this->cronStatus->create(['updated' => $now]);
+            $this->cronStatus->create([
+                'type' => 'cases_update',
+                'updated' => $now
+            ]);
         } else {
-            $record = $this->cronStatus->first();
+            $record = $this->cronStatus->where('type', 'cases_update')->first();
             $record->update(['updated' => $now]);
         }
     }

@@ -40,7 +40,7 @@ class CasesLastUpdated extends Command
     public function handle()
     {
         $cronService = new CronService();
-        $readyForUpdate = $cronService->readyForUpdate();
+        $readyForUpdate = $cronService->casesReadyForUpdate();
         if ($readyForUpdate) {
             if ($this->option('update') == true) {
                 Artisan::call('cases:fetch');

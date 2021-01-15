@@ -15,6 +15,7 @@ class CreateCronStatusesTable extends Migration
     {
         Schema::create('cron_statuses', function (Blueprint $table) {
             $table->id();
+            $table->string('type');
             $table->timestamp('updated');
         });
     }

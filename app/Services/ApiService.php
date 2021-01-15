@@ -48,7 +48,7 @@ class ApiService
         if ($rateLimitRemaining && $rateLimitRemaining <= 1) {
             $rateLimitReset = Carbon::createFromTimestamp($response->header('X-Ratelimit-Reset'));
             $difference = $rateLimitReset->diffInSeconds(Carbon::now());
-            sleep($difference + 1);
+            sleep($difference + 2);
         }
     }
 }
