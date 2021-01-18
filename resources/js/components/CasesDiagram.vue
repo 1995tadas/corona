@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 class="diagram-title">{{ title }}</h1>
-        <canvas :id="canvasId" width="400" height="400">
+        <canvas class="diagram" :id="canvasId" width="400" height="400">
         </canvas>
         <div class="interval-filter">
             <div>

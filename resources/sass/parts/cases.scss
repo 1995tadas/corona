@@ -12,11 +12,19 @@
 }
 
 .cases-diagrams {
+    width: 100%;
+
+    .diagram {
+        transition: 0.5s ease-in-out;
+        width: 100%;
+    }
+
     .interval-filter {
         margin-top: 10px;
         width: 100%;
         text-align: center;
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         padding: 0 5px;
 
@@ -33,29 +41,11 @@
         }
     }
 
-    canvas {
-        max-width: 50%;
-        margin: 0 auto;
-        box-sizing: border-box;
-        @media screen and (max-width: $medium) {
-            max-width: 95%;
-        }
-        @media screen and (max-width: $large) {
-            max-width: 80%;
-        }
-    }
-
     margin: 10px 0;
 }
 
 .diagram-title {
     text-align: center;
     margin: 10px 0;
-    font-size: 28pt;
-    @media screen and (max-width: $medium) {
-        font-size: 24pt;
-    }
-    @media screen and (max-width: $small) {
-        font-size: 18pt;
-    }
+    font-size: 2em;
 }

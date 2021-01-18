@@ -6,25 +6,33 @@
     <div class="no-data" v-else-if="error">{{ translation.error_while_loading }}</div>
     <div v-else-if="checkIfDataIsNotEmpty(this.cases)">
         <div class="cases-diagrams">
-            <cases-diagram-component :cases="allCases" :translation="translation"
-                                     canvas-id="casesChart" chartType="line"
-                                     :title="translation.all+' '+translation.cases" :colors="colorsForCases">
-            </cases-diagram-component>
-            <cases-diagram-component :cases="casesPerDay" :translation="translation"
-                                     canvas-id="casesPerDayConfirmed" chartType="bar" filter="confirmed"
-                                     :title="translation.confirmed+' '+translation.cases+' '+translation.per_day"
-                                     :colors="colorsForCases">
-            </cases-diagram-component>
-            <cases-diagram-component :cases="casesPerDay" :translation="translation"
-                                     canvas-id="casesPerDayDeaths" chartType="bar" filter="deaths"
-                                     :title="translation.death_plural+' '+translation.cases+' '+translation.per_day"
-                                     :colors="colorsForCases">
-            </cases-diagram-component>
-            <cases-diagram-component :cases="casesPerDay" :translation="translation"
-                                     canvas-id="casesPerDayActive" chartType="bar" filter="active"
-                                     :title="translation.active+' '+translation.per_day"
-                                     :colors="colorsForCases">
-            </cases-diagram-component>
+            <content-tabs-component :translation="translation" :tabsNumber="4"
+                                    :tabsNames="[
+                                        translation.all,
+                                        translation.confirmed,
+                                        translation.deaths,
+                                        translation.active
+                                    ]">
+                <cases-diagram-component slot="tab-1" :cases="allCases" :translation="translation"
+                                         canvas-id="casesChart" chartType="line"
+                                         :title="translation.all+' '+translation.cases" :colors="colorsForCases">
+                </cases-diagram-component>
+                <cases-diagram-component slot="tab-2" :cases="casesPerDay" :translation="translation"
+                                         canvas-id="casesPerDayConfirmed" chartType="bar" filter="confirmed"
+                                         :title="translation.confirmed+' '+translation.cases+' '+translation.per_day"
+                                         :colors="colorsForCases">
+                </cases-diagram-component>
+                <cases-diagram-component slot="tab-3" :cases="casesPerDay" :translation="translation"
+                                         canvas-id="casesPerDayDeaths" chartType="bar" filter="deaths"
+                                         :title="translation.death_plural+' '+translation.cases+' '+translation.per_day"
+                                         :colors="colorsForCases">
+                </cases-diagram-component>
+                <cases-diagram-component slot="tab-4" :cases="casesPerDay" :translation="translation"
+                                         canvas-id="casesPerDayActive" chartType="bar" filter="active"
+                                         :title="translation.active+' '+translation.per_day"
+                                         :colors="colorsForCases">
+                </cases-diagram-component>
+            </content-tabs-component>
         </div>
         <cases-table-component :cases="cases" :translation="translation">
         </cases-table-component>

@@ -26,6 +26,7 @@ Vue.component('cases-data-component', require('./components/CasesData.vue').defa
 Vue.component('cases-diagram-component', require('./components/CasesDiagram.vue').default);
 Vue.component('cases-table-component', require('./components/CasesTable.vue').default);
 Vue.component('summary-data-component', require('./components/SummaryData.vue').default);
+Vue.component('content-tabs-component', require('./components/ContentTabs.vue').default);
 
 /**W
  * Next, we will create a fresh Vue application instance and attach it to
