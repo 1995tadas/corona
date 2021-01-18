@@ -2,9 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/errors/401.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/errors/403.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/errors/419.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/errors/429.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/errors/500.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/errors/503.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/lt/errors.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/lt/errors.php" afterDir="false" />
+    </list>
+    <list id="8e335b63-345e-4624-8cff-a81f233fda56" name=".idea" comment="idea files">
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,11 +180,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Bitnami\wampstack-7.3.23-0\apache2\htdocs\corona\resources\js\components" />
       <recent name="C:\Bitnami\wampstack-7.3.23-0\apache2\htdocs\corona\resources\lang\lt" />
       <recent name="C:\Bitnami\wampstack-7.3.23-0\apache2\htdocs\corona\app\Services" />
       <recent name="C:\Bitnami\wampstack-7.3.23-0\apache2\htdocs\corona\public\css" />
       <recent name="C:\Bitnami\wampstack-7.3.23-0\apache2\htdocs\corona" />
-      <recent name="C:\Bitnami\wampstack-7.3.23-0\apache2\htdocs\corona\resources\js\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Bitnami\wampstack-7.3.23-0\apache2\htdocs\corona\public\js" />
@@ -189,6 +198,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="2e9b38de-5b86-4cc7-ba17-b2d9da70937b" name="Default Changelist" comment="" />
+      <changelist id="8e335b63-345e-4624-8cff-a81f233fda56" name=".idea" comment="idea files" />
       <created>1608037220476</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -238,6 +248,19 @@
       <workItem from="1610275749647" duration="89000" />
       <workItem from="1610304730123" duration="2769000" />
       <workItem from="1610308847307" duration="417000" />
+      <workItem from="1610325093071" duration="2539000" />
+      <workItem from="1610549414215" duration="6031000" />
+      <workItem from="1610571436753" duration="1955000" />
+      <workItem from="1610574156828" duration="3196000" />
+      <workItem from="1610619164644" duration="10697000" />
+      <workItem from="1610649700688" duration="40000" />
+      <workItem from="1610658241169" duration="14278000" />
+      <workItem from="1610708787032" duration="3174000" />
+      <workItem from="1610740855860" duration="6152000" />
+      <workItem from="1610798284017" duration="129000" />
+      <workItem from="1610798470808" duration="40000" />
+      <workItem from="1610886406660" duration="2476000" />
+      <workItem from="1610973864000" duration="10797000" />
     </task>
     <task id="LOCAL−00001" summary="Countries and Cases fetch and store into database functionality">
       <created>1608146687656</created>
@@ -431,7 +454,49 @@
       <option name="presentableId" value="LOCAL−00032" />
       <updated>1610307501175</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL−00033" summary="Vue production">
+      <created>1610325390569</created>
+      <option name="number" value="LOCAL−00033" />
+      <option name="presentableId" value="LOCAL−00033" />
+      <updated>1610325390569</updated>
+    </task>
+    <task id="LOCAL−00034" summary="htaccess set for virtual host">
+      <created>1610574712675</created>
+      <option name="number" value="LOCAL−00034" />
+      <option name="presentableId" value="LOCAL−00034" />
+      <updated>1610574712675</updated>
+    </task>
+    <task id="LOCAL−00035" summary="htaccess modifications">
+      <created>1610631959526</created>
+      <option name="number" value="LOCAL−00035" />
+      <option name="presentableId" value="LOCAL−00035" />
+      <updated>1610631959526</updated>
+    </task>
+    <task id="LOCAL−00036" summary="Cases update dates comparison fix">
+      <created>1610660931512</created>
+      <option name="number" value="LOCAL−00036" />
+      <option name="presentableId" value="LOCAL−00036" />
+      <updated>1610660931512</updated>
+    </task>
+    <task id="LOCAL−00037" summary="Command to check if cases was updated succesfully&#10;Cron will run this command every 15 minutes and updates cases if needed">
+      <created>1610709727237</created>
+      <option name="number" value="LOCAL−00037" />
+      <option name="presentableId" value="LOCAL−00037" />
+      <updated>1610709727237</updated>
+    </task>
+    <task id="LOCAL−00038" summary="Types for cron_statuses table&#10;Naming and bug fixes for last commit">
+      <created>1610711773980</created>
+      <option name="number" value="LOCAL−00038" />
+      <option name="presentableId" value="LOCAL−00038" />
+      <updated>1610711773980</updated>
+    </task>
+    <task id="LOCAL−00039" summary="Tabs for diagrams">
+      <created>1610988802338</created>
+      <option name="number" value="LOCAL−00039" />
+      <option name="presentableId" value="LOCAL−00039" />
+      <updated>1610988802338</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,13 +504,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Summary page for global cases" />
-    <MESSAGE value="fixed empty api data and table overflow bugs" />
-    <MESSAGE value="Country names in lithuanian added" />
-    <MESSAGE value="Ready for heroku" />
-    <MESSAGE value="Vue production" />
-    <MESSAGE value="modifications for production" />
-    <MESSAGE value="htaccess configuration" />
     <MESSAGE value="Automatic cases fetching replaced by manual.&#10;Api with countries provinces was changed to national cases only" />
     <MESSAGE value="casesTable component infinite loop bugfix" />
     <MESSAGE value="Index page design update.&#10;Summary table empty data filtering for new and format change" />
@@ -464,7 +522,14 @@
     <MESSAGE value="Fixed summary sorting for Lithuanian strings" />
     <MESSAGE value="Sorting icon will not be shown when all column items are empty or 0" />
     <MESSAGE value="Translation string readjustments,&#10;Changed width of cases diagram for more media queries" />
-    <option name="LAST_COMMIT_MESSAGE" value="Translation string readjustments,&#10;Changed width of cases diagram for more media queries" />
+    <MESSAGE value="Vue production" />
+    <MESSAGE value="htaccess set for virtual host" />
+    <MESSAGE value="htaccess modifications" />
+    <MESSAGE value="Cases update dates comparison fix" />
+    <MESSAGE value="Command to check if cases was updated succesfully&#10;Cron will run this command every 15 minutes and updates cases if needed" />
+    <MESSAGE value="Types for cron_statuses table&#10;Naming and bug fixes for last commit" />
+    <MESSAGE value="Tabs for diagrams" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tabs for diagrams" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
