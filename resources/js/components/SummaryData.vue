@@ -40,13 +40,14 @@
                 <tr>
                     <th>#</th>
                     <th v-for="field in requiredFields">
-                        {{ capitalize(translation[field]) }}
-                        <template v-if="field === 'area'">
-                            (km<sup>2</sup>)
-                        </template>
-                        <a class="sort-link" href="" v-show="showSortingArrow(field)"
-                           @click.prevent="sortBy(field, sortingOrder(field))">
-                            <i class="sort-icon fas" :class="arrowDirection(field)"></i>
+                        <a class="field" :class="{'sort-link':canBeSorted(field)}" ref=""
+                           @click.prevent="sortableFields[field] ? sortBy(field, sortingOrder(field)) : ''">
+                            {{ capitalize(translation[field]) }}
+                            <template v-if="field === 'area'">
+                                (km<sup>2</sup>)
+                            </template>
+                            <i class="sort-icon fas" :class="arrowDirection(field)"
+                               v-show="sortableFields[field]"></i>
                         </a>
                     </th>
                 </tr>
@@ -130,7 +131,8 @@ export default {
                 'area',
                 'capital'
             ],
-            directions: []
+            directions: [],
+            sortableFields: []
         }
     },
     mounted() {
@@ -182,15 +184,16 @@ export default {
     },
     methods: {
         /*
-           Checks if summary have more than one item
+           Checks if summary column have more than one item
        */
-        showSortingArrow(field) {
+        canBeSorted(field) {
             if (this.sortedSummary.length <= 1) {
                 return false;
             }
 
             for (let summaryItem of this.sortedSummary) {
                 if (summaryItem[field] !== null && summaryItem[field] !== '' && summaryItem[field] !== 0) {
+                    this.sortableFields[field] = true;
                     return true;
                 }
             }
@@ -242,6 +245,7 @@ export default {
             Sorts summary by selected column and direction
         */
         sortBy(property, desc) {
+            this.sortableFields = [];
             this.sortedSummary = this.filteredSummary.sort((a, b) => {
                 let elements = []
                 if (a.country[property] !== undefined) {

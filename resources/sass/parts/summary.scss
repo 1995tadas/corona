@@ -156,12 +156,23 @@
         }
     }
 
-    .sort-link {
-        display: block;
-        color: $link-blue;
+    .field {
+        color: $summary-dark;
 
         &:hover {
             text-decoration: none;
+        }
+    }
+
+    .sort-link {
+        color: $link-blue;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        .sort-icon {
+            display: block;
         }
     }
 
