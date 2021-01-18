@@ -26,6 +26,8 @@ class CronService
         if ($updatedDaysAgo != 0) {
             return true;
         }
+
+        return false;
     }
 
     public function createOrUpdateCases(): void

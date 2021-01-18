@@ -44,6 +44,8 @@ class CasesLastUpdated extends Command
         if ($readyForUpdate) {
             if ($this->option('update') == true) {
                 Artisan::call('cases:fetch');
+            } else {
+                $this->line(__('commands.needs_update'));
             }
         } else {
             $this->line(__('commands.no_update'));
