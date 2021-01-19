@@ -40,9 +40,24 @@ class SummaryService
         return Summary::with('country')->get();
     }
 
-    public function checkIfSummaryExists()
+    public function checkIfSummaryExists(): bool
     {
         return Summary::whereNull('country_id')->exists();
+    }
+
+    public function fetchAndPrepareSummaryFromDatabase(): array
+    {
+        $countriesSummary = $this->fetchSummaryFromDatabaseWithCountryInfo()->toArray();
+        $selectedFields = ['total_confirmed', 'new_confirmed', 'total_deaths', 'new_deaths'];
+        $arrayService = new ArrayService();
+        return array_map(function ($countrySummary) use ($arrayService, $selectedFields) {
+            if ($countrySummary['country']) {
+                $population = $countrySummary['country']['population'];
+                $countrySummary = $arrayService->casesPerCapitaForSelectedFields($countrySummary, $selectedFields, $population);
+            }
+
+            return $countrySummary;
+        }, $countriesSummary);
     }
 
     public function checkIfSummaryNeedStoreOrUpdate(float $daysSinceLastUpdate): bool

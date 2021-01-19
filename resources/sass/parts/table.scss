@@ -1,17 +1,16 @@
 .table-wrapper {
-    min-height: 100vh;
-    @media screen and (max-width: $small) {
-        overflow-x: auto;
-    }
+    overflow-x: auto;
+    transform:rotateX(180deg);
 
     .table, th, tr, td {
         border: 3px solid black;
     }
 
     .table {
-        font-weight: 500;
+        transform:rotateX(180deg);
+        font-weight: 400;
         font-size: 10pt;
-        font-family: Tahoma, Verdana, Segoe, sans-serif;
+        font-family: 'Sora', sans-serif;
 
         th, td {
             padding: 3px;
@@ -20,7 +19,8 @@
         }
 
         th {
-            font-size: 1.4vw;
+            text-transform: uppercase;
+            font-size: 1.1vw;
             @media screen and (max-width: $medium) {
                 font-size: 2vw;
             }

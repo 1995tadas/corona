@@ -22,7 +22,7 @@ class CoronaController extends Controller
     public function index()
     {
         $summaryService = new SummaryService();
-        $countriesSummary = $summaryService->fetchSummaryFromDatabaseWithCountryInfo()->toArray();
+        $countriesSummary = $summaryService->fetchAndPrepareSummaryFromDatabase();
         $globalSummary = $summaryService->takeGlobalSummary($countriesSummary);
         $lastUpdated = '';
         if ($globalSummary) {

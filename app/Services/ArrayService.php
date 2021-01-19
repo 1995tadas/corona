@@ -69,4 +69,14 @@ class ArrayService
         $cases = $this->multiArrayAddCountryId($cases, $countryId ?? null);
         return $cases;
     }
+
+    public function casesPerCapitaForSelectedFields(array $array, array $selectedFields, int $population): array
+    {
+        $mathService = new MathService();
+        foreach ($selectedFields as $field) {
+            $array[$field . '_per_capita'] = $mathService->perCapita($array[$field], $population);
+        }
+
+        return $array;
+    }
 }

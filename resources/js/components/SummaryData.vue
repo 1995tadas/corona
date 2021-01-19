@@ -122,9 +122,13 @@ export default {
             requiredFields: [
                 'country',
                 'total_confirmed',
+                'total_confirmed_per_capita',
                 'new_confirmed',
+                'new_confirmed_per_capita',
                 'total_deaths',
+                'total_deaths_per_capita',
                 'new_deaths',
+                'new_deaths_per_capita',
                 'total_recovered',
                 'new_recovered',
                 'population',
