@@ -41,6 +41,17 @@ class ArrayService
         }, $multidimensionalArray);
     }
 
+    public function formatNumbers(array $array): array
+    {
+        return array_map(function ($value) {
+            if (is_numeric($value)) {
+                return number_format($value, 0, "",' ');
+            }
+
+            return $value;
+        }, $array);
+    }
+
     public function multiArrayAddCountryId(array $multidimensionalArray, int $countryId = null): array
     {
         $countryService = new CountryService();
