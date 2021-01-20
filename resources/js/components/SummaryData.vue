@@ -3,14 +3,14 @@
         <div class="region-filter" @mouseleave="hideSubRegions">
             <ul>
                 <li>
-                    <a :class="{'selected-region':selectedRegion.region === ''}"
+                    <a :class="{'selected-region':selectedRegion === ''}"
                        @click.prevent="filterByRegion()" href="#">
                         {{ translation['all'] }}
                     </a>
                 </li>
                 <li v-for="(content, continent) in preparedRegions" :key="continent">
-                    <a href="#" :class="{'selected-region':selectedRegion.region === continent}"
-                       @click.prevent="filterByRegion(content, continent)"
+                    <a href="#" :class="{'selected-region':selectedRegion.name === continent}"
+                       @click.prevent="filterByRegion(content.id, continent)"
                        @mouseenter="showSubRegions(content.subRegions)">
                         <template v-if="placesTranslation[continent]">
                             {{ placesTranslation[continent] }}
@@ -23,8 +23,8 @@
             </ul>
             <ul v-show="subRegions.length">
                 <li v-for="region in subRegions">
-                    <a @click.prevent="filterByRegion(region, region.name, true)"
-                       :class="{'selected-region':selectedRegion.region === region.name}" href="">
+                    <a @click.prevent="filterByRegion(region.id, region.name, true)"
+                       :class="{'selected-region':selectedRegion.name === region.name}" href="">
                         <template v-if="placesTranslation[region.name]">
                             {{ placesTranslation[region.name] }}
                         </template>
@@ -114,10 +114,7 @@ export default {
             sortedSummary: [],
             filteredSummary: [],
             countriesSummary: [],
-            selectedRegion: {
-                region: '',
-                sub: false
-            },
+            selectedRegion: {},
             subRegions: [],
             requiredFields: [
                 'country',
@@ -139,9 +136,14 @@ export default {
             sortableFields: []
         }
     },
-    mounted() {
+    created() {
         this.countriesSummary = this.filterCountriesSummary;
-        this.showSummary();
+        this.selectedRegion = this.getRegionCookie();
+        if (this.selectedRegion) {
+            this.showPreviouslySelectedSummary();
+        } else {
+            this.showSummary();
+        }
     },
     computed: {
         /*
@@ -189,7 +191,7 @@ export default {
     methods: {
         /*
            Checks if summary column have more than one item
-       */
+        */
         canBeSorted(field) {
             if (this.sortedSummary.length <= 1) {
                 return false;
@@ -207,20 +209,20 @@ export default {
         /*
             Filters summary by region and sets selected region
         */
-        filterByRegion(region, name = '', sub = false) {
-            if (this.selectedRegion.region !== name) {
-                this.selectedRegion.region = name;
-                this.selectedRegion.sub = sub;
-                if (region) {
-                    this.filteredSummary = this.countriesSummary.filter((data) => {
-                        return region.id.includes(data.country.region_id);
-                    });
-                } else {
-                    this.filteredSummary = this.countriesSummary;
-                }
-
-                this.showSummary()
+        filterByRegion(regionsIds, name = '', sub = false) {
+            if (this.selectedRegion === '' || this.selectedRegion.name !== name) {
+                this.updateSelectedRegion(regionsIds, name, sub);
             }
+
+            if (regionsIds) {
+                this.filteredSummary = this.countriesSummary.filter((data) => {
+                    return regionsIds.includes(data.country.region_id);
+                });
+            } else {
+                this.filteredSummary = this.countriesSummary;
+            }
+
+            this.showSummary()
         },
         /*
             Sets selected sub-regions array and later sub-regions list will be shown in template
@@ -364,6 +366,61 @@ export default {
             }
 
             return field;
+        },
+        /*
+           Creates cookie for regions
+        */
+        setRegionCookie(regionsIds, region, sub = false) {
+            let regionsString = '';
+            if (typeof regionsIds === 'object') {
+                regionsString = JSON.stringify({'name': region, 'sub': sub, regionsIds});
+            }
+
+            document.cookie = 'region=' + regionsString + ';';
+        },
+        /*
+           Parses cookie with has a region name
+        */
+        getRegionCookie() {
+            let cookiesString = document.cookie
+            let cookiesArray = cookiesString.split(";")
+            for (let cookie of cookiesArray) {
+                if (cookie.startsWith('region')) {
+                    let start = cookie.indexOf('=');
+                    if (start) {
+                        let regionString = cookie.slice(start + 1)
+                        if (regionString.length !== 0) {
+                            return JSON.parse(regionString);
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            return '';
+        },
+        /*
+          Sets region cookie and updates selected regions
+        */
+        updateSelectedRegion(regionsIds, region, sub) {
+            this.setRegionCookie(regionsIds, region, sub);
+            this.selectedRegion = this.getRegionCookie();
+        },
+        /*
+            Filters summary out by selectedRegion data
+        */
+        showPreviouslySelectedSummary() {
+            let selectedRegion = this.selectedRegion;
+            this.filterByRegion(selectedRegion.regionsIds, selectedRegion.name, selectedRegion.sub);
+            if (selectedRegion.regionsIds.length === 1) {
+                for (const property in this.preparedRegions) {
+                    if (this.preparedRegions[property].id.includes(selectedRegion.regionsIds[0])) {
+                        this.showSubRegions(this.preparedRegions[property].subRegions)
+                        break;
+                    }
+                }
+            }
         }
     }
 }
