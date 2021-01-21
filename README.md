@@ -3,7 +3,7 @@
 **Covid-19 In lithuanian language** is a website which displays global and national covid-19 cases data history in
 simple manner. It targets lithuanian speaking audience.
 
-# DEMO
+## DEMO
 
 https://tadassapitavicius.com/corona/
 
@@ -28,24 +28,24 @@ https://www.countryflags.io/
 Customizable charts:
 https://www.chartjs.org/
 
-# Technologies used
+## Technologies used
 
-<ul>
-<li>Php 7.4 </li>
-<li>Laravel 8.19.0</li>
-<li>VueJs 2.6.12</li>
-<li>MySql 8.0.22</li>
-<li>Sass 1.30.0</li>
-<li>Composer 2.0.8 for php packages</li>
-<li>NodeJs 6.14.11 for npm packages</li>
-</ul>
 
-# How to deploy
+- Php 7.4
+- Laravel 8.19.0
+- VueJs 2.6.12
+- MySql 8.0.22
+- Sass 1.30.0
+- Composer 2.0.8 for php packages
+- NodeJs 6.14.11 for npm packages
 
-1. Copy all files from this repo</li>
-1. Make sure you have right technologies installed</li>
+## How to deploy
+
+1. Copy all files from this repo
+1. Make sure you have right technologies installed
 1. Copy .env.example and rename it to .env (if you using unix operating system just run this command in app root `mv .env.example .env`)
-1. Run `composer install` and `npm install`(needed dependencies will be installed)  
+1. Run `composer install` and `npm install`(needed dependencies will be installed)
+1. Compile all VueJs, sass and other files by `npm run dev ` or `npm run watch` for development,`npm run prod` for production
 1. Then run `php artisan key:generate` and replace database credentials inside .env file
 1. Migrate tables by running `php artisan migrate`
 1. `php artisan cases:fetch` command will fetch all countries, summary, covid-19 cases and save it to database (it will also update data when ran again - if new data exists)
