@@ -1,13 +1,26 @@
+.table-scroll {
+    overflow-y: auto;
+    display: block !important;
+    align-items: initial;
+    height: 100vh;
+}
+
 .table-wrapper {
+    box-sizing: border-box;
     overflow-x: auto;
-    transform:rotateX(180deg);
+    transform: rotateX(180deg);
+    min-height: 50vh;
+    display: flex;
+    align-items: flex-end;
 
     .table, th, tr, td {
         border: 3px solid black;
     }
 
     .table {
-        transform:rotateX(180deg);
+        margin-bottom: 0;
+        box-sizing: border-box;
+        transform: rotateX(180deg);
         font-weight: 400;
         font-size: 10pt;
         font-family: 'Sora', sans-serif;

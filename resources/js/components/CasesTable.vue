@@ -1,5 +1,5 @@
 <template>
-    <div class="table-wrapper">
+    <div class="table-wrapper table-scroll">
         <table class="table">
             <tr>
                 <th>{{ translation.date }}</th>
@@ -33,6 +33,9 @@ export default {
             required: true
         },
     },
+    mounted() {
+        this.scrollToTop();
+    },
     computed: {
         formattedCases() {
             let preparedCases = [];
@@ -51,6 +54,12 @@ export default {
             }
 
             return preparedCases.reverse();
+        }
+    },
+    methods: {
+        scrollToTop() {
+            const tableScroll = document.querySelector('.table-scroll');
+            tableScroll.scrollTop = tableScroll.scrollHeight;
         }
     }
 }

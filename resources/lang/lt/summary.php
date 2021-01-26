@@ -6,11 +6,12 @@ $summary = [
     'country' => 'Šalis',
     'empty' => 'Duomenų nėra',
     'all' => 'Visi',
-    'no-countries' => 'Šalių šioje kategorijoje nėra',
+    'no_data' => 'Duomenų nėra',
     'population' => 'Populiacija',
     'area' => 'Plotas',
     'capital' => 'Sostinė',
     'not_available' => '[negalima]',
+    'search' => 'Paieška'
 ];
 
 $types = [

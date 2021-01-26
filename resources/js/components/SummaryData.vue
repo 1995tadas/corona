@@ -1,39 +1,44 @@
 <template>
     <section class="summary-data">
-        <div class="region-filter" @mouseleave="hideSubRegions">
-            <ul>
-                <li>
-                    <a :class="{'selected-region':selectedRegion === ''}"
-                       @click.prevent="filterByRegion()" href="#">
-                        {{ translation['all'] }}
-                    </a>
-                </li>
-                <li v-for="(content, continent) in preparedRegions" :key="continent">
-                    <a href="#" :class="{'selected-region':selectedRegion.name === continent}"
-                       @click.prevent="filterByRegion(content.id, continent)"
-                       @mouseenter="showSubRegions(content.subRegions)">
-                        <template v-if="placesTranslation[continent]">
-                            {{ placesTranslation[continent] }}
-                        </template>
-                        <template v-else>
-                            {{ continent }}
-                        </template>
-                    </a>
-                </li>
-            </ul>
-            <ul v-show="subRegions.length">
-                <li v-for="region in subRegions">
-                    <a @click.prevent="filterByRegion(region.id, region.name, true)"
-                       :class="{'selected-region':selectedRegion.name === region.name}" href="">
-                        <template v-if="placesTranslation[region.name]">
-                            {{ placesTranslation[region.name] }}
-                        </template>
-                        <template v-else>
-                            {{ region.name }}
-                        </template>
-                    </a>
-                </li>
-            </ul>
+        <div class="summary-panel">
+            <div class="region-filter" @mouseleave="hideSubRegions">
+                <ul>
+                    <li>
+                        <a :class="{'selected-region':selectedRegion === ''}"
+                           @click.prevent="filterByRegion()" href="#">
+                            {{ translation['all'] }}
+                        </a>
+                    </li>
+                    <li v-for="(content, continent) in preparedRegions" :key="continent">
+                        <a href="#" :class="{'selected-region':selectedRegion.name === continent}"
+                           @click.prevent="filterByRegion(content.id, continent)"
+                           @mouseenter="showSubRegions(content.subRegions)">
+                            <template v-if="placesTranslation[continent]">
+                                {{ placesTranslation[continent] }}
+                            </template>
+                            <template v-else>
+                                {{ continent }}
+                            </template>
+                        </a>
+                    </li>
+                </ul>
+                <ul v-show="subRegions.length">
+                    <li v-for="region in subRegions">
+                        <a @click.prevent="filterByRegion(region.id, region.name, true)"
+                           :class="{'selected-region':selectedRegion.name === region.name}" href="">
+                            <template v-if="placesTranslation[region.name]">
+                                {{ placesTranslation[region.name] }}
+                            </template>
+                            <template v-else>
+                                {{ region.name }}
+                            </template>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="summary-search">
+                <input type="text" :placeholder="translation.search" @input="filterBySearch" v-model="searchQuery">
+            </div>
         </div>
         <div v-if="sortedSummary.length" class="table-wrapper">
             <table class="table">
@@ -74,15 +79,15 @@
                         </td>
                         <td v-else>
                             {{
-                                formatSummaryNumbers(field, (data[field] !== undefined ? data[field] : data.country[field]))
+                            formatSummaryNumbers(field, (data[field] !== undefined ? data[field] : data.country[field]))
                             }}
                         </td>
                     </template>
                 </tr>
             </table>
         </div>
-        <h1 class="no-countries" v-else>
-            {{ translation['no-countries'] }}
+        <h1 class="no-data" v-else>
+            {{ translation['no_data'] }}
         </h1>
     </section>
 </template>
@@ -116,6 +121,7 @@ export default {
             countriesSummary: [],
             selectedRegion: {},
             subRegions: [],
+            searchQuery: '',
             requiredFields: [
                 'country',
                 'total_confirmed',
@@ -220,6 +226,19 @@ export default {
                 });
             } else {
                 this.filteredSummary = this.countriesSummary;
+            }
+
+            this.showSummary()
+        },
+        /*
+          Filters summary out and shows records than match with search query
+        */
+        filterBySearch() {
+            this.filteredSummary = this.countriesSummary.filter(
+                summary => (this.placesTranslation[summary.country.iso2].toLowerCase()).includes(this.searchQuery.toLowerCase())
+            );
+            if (this.selectedRegion) {
+                this.updateSelectedRegion()
             }
 
             this.showSummary()
@@ -370,7 +389,7 @@ export default {
         /*
            Creates cookie for regions
         */
-        setRegionCookie(regionsIds, region, sub = false) {
+        setRegionCookie(regionsIds = '', region = '', sub = false) {
             let regionsString = '';
             if (typeof regionsIds === 'object') {
                 regionsString = JSON.stringify({'name': region, 'sub': sub, regionsIds});
@@ -403,7 +422,7 @@ export default {
         /*
           Sets region cookie and updates selected regions
         */
-        updateSelectedRegion(regionsIds, region, sub) {
+        updateSelectedRegion(regionsIds = '', region = '', sub = 'false') {
             this.setRegionCookie(regionsIds, region, sub);
             this.selectedRegion = this.getRegionCookie();
         },
