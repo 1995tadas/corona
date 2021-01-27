@@ -79,7 +79,7 @@
                         </td>
                         <td v-else>
                             {{
-                            formatSummaryNumbers(field, (data[field] !== undefined ? data[field] : data.country[field]))
+                                formatSummaryNumbers(field, (data[field] !== undefined ? data[field] : data.country[field]))
                             }}
                         </td>
                     </template>
@@ -234,8 +234,14 @@ export default {
           Filters summary out and shows records than match with search query
         */
         filterBySearch() {
+            let searchQuery = this.searchQuery.toLowerCase();
             this.filteredSummary = this.countriesSummary.filter(
-                summary => (this.placesTranslation[summary.country.iso2].toLowerCase()).includes(this.searchQuery.toLowerCase())
+                summary => {
+                    let country = this.placesTranslation[summary.country.iso2];
+                    let capital = this.placesTranslation[summary.country.capital];
+                    return (country.toLowerCase()).includes(searchQuery) ||
+                    (typeof capital !== 'undefined' ? (capital.toLowerCase()).includes(searchQuery) : false)
+                }
             );
             if (this.selectedRegion) {
                 this.updateSelectedRegion()
