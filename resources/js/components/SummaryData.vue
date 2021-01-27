@@ -255,7 +255,7 @@ export default {
             Removes sub-regions from selected array
         */
         hideSubRegions() {
-            if (!this.selectedRegion.sub) {
+            if (!this.selectedRegion || !this.selectedRegion.sub) {
                 this.subRegions = [];
             }
         },
