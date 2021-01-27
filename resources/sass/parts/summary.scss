@@ -37,6 +37,7 @@
     @media screen and (max-width: $medium) {
         margin-bottom: 10px;
         padding: 10px 0 0;
+        background-color: initial;
     }
 
     .summary-category {
@@ -45,13 +46,14 @@
         flex-direction: column;
         flex-wrap: wrap;
         width: 40%;
+        white-space: nowrap;
+        overflow: hidden;
         @media screen and (max-width: $medium) {
-            width: 100%;
+            width: 50%;
         }
 
         &:nth-child(even) {
             @media screen and (max-width: $medium) {
-                border-bottom: 3px solid black;
                 &:not(:last-child) {
                     margin-bottom: 5px;
                 }
@@ -85,6 +87,7 @@
                 font-size: 14pt;
                 border-radius: 5px;
                 padding: 2px;
+                margin: 0;
             }
         }
 
@@ -93,6 +96,7 @@
             margin: 10px 0;
             @media screen and (max-width: $medium) {
                 font-size: 12pt;
+                color: $summary-dark;
                 margin: 0;
             }
         }
