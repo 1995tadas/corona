@@ -12,7 +12,8 @@ class Corona extends Model
 
     public $timestamps = [];
 
-    protected $fillable = ['confirmed', 'deaths', 'active', 'date', 'country_id'];
+    protected $fillable = ['confirmed', 'new_confirmed', 'deaths', 'new_deaths', 'active', 'new_active',
+        'new_recovered', 'recovered', 'date', 'country_id'];
 
     public function setDateAttribute($value)
     {

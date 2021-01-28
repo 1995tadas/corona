@@ -52,4 +52,9 @@ class Country extends Model
         return $this->hasMany(Corona::class)->orderBy('date', 'DESC');
     }
 
+    public function lastCase(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Corona::class)->orderBy('date', 'DESC')->take(1);
+    }
+
 }

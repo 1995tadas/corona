@@ -45,7 +45,7 @@ class ArrayService
     {
         return array_map(function ($value) {
             if (is_numeric($value)) {
-                return number_format($value, 0, "",' ');
+                return number_format($value, 0, "", ' ');
             }
 
             return $value;
@@ -69,7 +69,49 @@ class ArrayService
         }, $multidimensionalArray);
     }
 
-    public function prepareCasesArrayForStoring(array $cases, string $slug = ''): array
+    public function multiArrayCountNewCases(array $multidimensionalArray, string $slug = '', bool $update = false): array
+    {
+        if ($update) {
+            $countryService = new CountryService();
+            $country = $countryService->getCountry($slug);
+            $lastCase = $country->lastCase->first();
+            $lastDayCases = [
+                'new_confirmed' => $lastCase->confirmed,
+                'new_recovered' => $lastCase->recovered,
+                'new_active' => $lastCase->active,
+                'new_deaths' => $lastCase->deaths];
+        } else {
+            $lastDayCases = [
+                'new_confirmed' => 0,
+                'new_recovered' => 0,
+                'new_active' => 0,
+                'new_deaths' => 0];
+        }
+
+        foreach ($multidimensionalArray as $index => $array) {
+            if (!isset($array['new_confirmed']) && !isset($array['new_recovered']) && !isset($array['new_deaths'])) {
+                $multidimensionalArray[$index]['new_confirmed'] = $array['confirmed'] - $lastDayCases['new_confirmed'];
+                $multidimensionalArray[$index]['new_recovered'] = $array['recovered'] - $lastDayCases['new_recovered'];
+                $multidimensionalArray[$index]['new_active'] = $array['active'] - $lastDayCases['new_active'];
+                $multidimensionalArray[$index]['new_deaths'] = $array['deaths'] - $lastDayCases['new_deaths'];
+
+                $lastDayCases['new_confirmed'] = $array['confirmed'];
+                $lastDayCases['new_recovered'] = $array['recovered'];
+                $lastDayCases['new_active'] = $array['active'];
+                $lastDayCases['new_deaths'] = $array['deaths'];
+            }
+        }
+
+        return $multidimensionalArray;
+    }
+
+    public function prepareCasesArrayForStoring(array $cases, string $slug = '', bool $update = false): array
+    {
+        $prepared = $this->prepareSummaryArrayForStoring($cases, $slug);
+        return $this->multiArrayCountNewCases($prepared, $slug, $update);
+    }
+
+    public function prepareSummaryArrayForStoring(array $cases, string $slug = ''): array
     {
         $countryService = new CountryService();
         if ($slug) {
@@ -89,5 +131,21 @@ class ArrayService
         }
 
         return $array;
+    }
+
+    public function formatDataForDiagram(object $object, array $fields): array
+    {
+        $formattedData = array_flip($fields);
+        foreach ($formattedData as $index => $value) {
+            $formattedData[$index] = [];
+        }
+
+        foreach ($object as $data) {
+            foreach ($formattedData as $index => $value) {
+                $formattedData[$index][] = $data->{$index};
+            }
+        }
+
+        return $formattedData;
     }
 }

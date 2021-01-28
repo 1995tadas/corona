@@ -30,9 +30,12 @@ class CoronaController extends Controller
             $lastUpdated = $dateTimeService->extractDate($globalSummary['updated_at'], true);
         }
 
-        $regionService = New RegionService();
+        $caseService = new CaseService();
+        $allCases = $caseService->getAllCases();
+        $allCases = $this->caseService->formatCasesForDiagram($allCases);
+        $regionService = new RegionService();
         $regions = $regionService->getRegionsWithSubRegions();
-        return view('corona.index', compact('globalSummary', 'lastUpdated', 'countriesSummary', 'regions'));
+        return view('corona.index', compact('globalSummary', 'lastUpdated', 'countriesSummary', 'regions', 'allCases'));
     }
 
     public function show(string $slug)
@@ -44,6 +47,11 @@ class CoronaController extends Controller
     public function cases(string $slug): \Illuminate\Http\JsonResponse
     {
         $cases = $this->caseService->fetchCasesFromDatabase($slug);
-        return response()->json($cases);
+        $formattedCases = $this->caseService->formatCasesForDiagram($cases);
+        foreach ($formattedCases as $index => $case) {
+            $formattedCases[$index] = array_reverse($case);
+        }
+
+        return response()->json(['formatted' => $formattedCases, 'raw' => $cases]);
     }
 }

@@ -22,7 +22,7 @@ class SummaryService
             $globalCases[] = $summary->Global;
             $countriesCases = $summary->Countries;
             $summaryCases = array_merge($globalCases, $countriesCases);
-            $preparedSummary = $arrayService->prepareCasesArrayForStoring($summaryCases);
+            $preparedSummary = $arrayService->prepareSummaryArrayForStoring($summaryCases);
             $this->updateOrStore($preparedSummary);
             return $preparedSummary;
         }
@@ -112,5 +112,22 @@ class SummaryService
         }
 
         return [];
+    }
+
+    public function formatSummaryForDiagram(object $summary): array
+    {
+        $fields = [
+            'active',
+            'new_active',
+            'confirmed',
+            'new_confirmed',
+            'recovered',
+            'new_recovered',
+            'deaths',
+            'new_deaths',
+            'date'
+        ];
+        $arrayService = new ArrayService();
+        return $arrayService->formatDataForDiagram($summary, $fields);
     }
 }

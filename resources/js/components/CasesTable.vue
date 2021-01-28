@@ -8,15 +8,21 @@
                 <th>{{ translation.death_plural + ' ' + translation.cases }}</th>
                 <th>{{ translation.death_plural + ' ' + translation.cases + ' ' + translation.per_day }}</th>
                 <th>{{ translation.active }}</th>
+                <th>{{ translation.active + ' ' + translation.per_day}}</th>
+                <th>{{ translation.recovered }}</th>
+                <th>{{ translation.recovered + ' ' + translation.per_day}}</th>
 
             </tr>
             <tr v-for="value in formattedCases">
                 <td>{{ value.date }}</td>
                 <td>{{ value.confirmed }}</td>
-                <td>{{ value.confirmedPerDay }}</td>
+                <td>{{ value.new_confirmed }}</td>
                 <td>{{ value.deaths }}</td>
-                <td>{{ value.deathsPerDay }}</td>
+                <td>{{ value.new_deaths }}</td>
+                <td>{{ value.recovered }}</td>
+                <td>{{ value.new_recovered }}</td>
                 <td>{{ value.active }}</td>
+                <td>{{ value.new_active }}</td>
             </tr>
         </table>
     </div>
@@ -53,7 +59,7 @@ export default {
                 preparedCases.push(formatted);
             }
 
-            return preparedCases.reverse();
+            return preparedCases;
         }
     },
     methods: {

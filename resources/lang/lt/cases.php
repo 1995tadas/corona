@@ -4,6 +4,7 @@ return [
     'confirmed' => 'Patvirtinti',
     'active' => 'Sergantys',
     'deaths' => 'Mirtys',
+    'recovered' => 'Pasveikusieji',
     'death_plural' => 'Mirčių',
     'no_data' => 'Duomenų nėra',
     'date' => 'Data',

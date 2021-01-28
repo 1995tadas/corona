@@ -41,7 +41,7 @@ class CaseService
                 $newCases = $this->fetchCasesFromApiByInterval($countrySlug, $intervalDates);
                 if ($newCases) {
                     $arrayService = new ArrayService();
-                    $preparedCases = $arrayService->prepareCasesArrayForStoring($newCases, $countrySlug);
+                    $preparedCases = $arrayService->prepareCasesArrayForStoring($newCases, $countrySlug, true);
                     $this->store($preparedCases);
                     return true;
                 }
@@ -86,5 +86,37 @@ class CaseService
         $cases = $country->allCases;
         $latestCase = $cases->first();
         return $latestCase->date;
+    }
+
+    public function getAllCases(): object
+    {
+        return Corona::selectRaw(
+        'SUM(confirmed) AS confirmed,
+         SUM(new_confirmed) AS new_confirmed,
+         SUM(deaths) AS deaths,
+         SUM(new_deaths) AS new_deaths,
+         SUM(active) AS active,
+         SUM(new_active) AS new_active,
+         SUM(recovered) AS recovered,
+         SUM(new_recovered) AS new_recovered,
+         date')
+            ->groupBy('date')->get();
+    }
+
+    public function formatCasesForDiagram(object $cases): array
+    {
+        $fields = [
+            'active',
+            'new_active',
+            'confirmed',
+            'new_confirmed',
+            'recovered',
+            'new_recovered',
+            'deaths',
+            'new_deaths',
+            'date'
+        ];
+        $arrayService = new ArrayService();
+        return $arrayService->formatDataForDiagram($cases, $fields);
     }
 }

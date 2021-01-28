@@ -38,7 +38,13 @@ export default {
         },
         colors: {
             type: Object,
-            required: true
+            default() {
+                return {
+                    confirmed: '#EE0A0A',
+                    active: '#055EF6',
+                    deaths: '#000'
+                }
+            }
         },
         cases: {
             type: Object,
@@ -63,12 +69,12 @@ export default {
         }
     },
     created() {
-        this.defaultDateIntervals = this.setDefaultDates(this.cases.dates);
+        this.defaultDateIntervals = this.setDefaultDates(this.cases.date);
         this.selectedDates = this.defaultDateIntervals.slice(0);
     },
     watch: {
-        selectedDates(value) {
-            this.filterArray(this.cases, this.cases.dates, value[0], value[1]);
+        selectedDates(interval) {
+            this.filterArray(this.cases, this.cases.date, interval[0], interval[1]);
         }
     },
     methods: {
@@ -142,7 +148,7 @@ export default {
             let namesCount = names.length;
             let pointRadius = [];
             if (this.chartType === 'line') {
-                let casesCount = cases.dates.length;
+                let casesCount = cases.date.length;
                 pointRadius = this.setPointRadius(casesCount);
             }
 
@@ -164,7 +170,7 @@ export default {
             }
 
             this.data.datasets = datasets;
-            this.data.labels = cases.dates
+            this.data.labels = cases.date
         },
 
         setPointRadius(count) {
