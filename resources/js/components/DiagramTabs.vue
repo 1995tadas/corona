@@ -1,6 +1,6 @@
 <template>
     <div class="tabs">
-        <ul class="tab-select">
+        <ul class="tab-select" v-if="tabs.length > 1">
             <li class="tab-name" v-for="(tab, index) in tabs" :class="{'tab-current':index === currentTab}">
                 <a class="tab-link" @click.prevent="displayTab(index)" href="">
                     {{ tab.tabName }}

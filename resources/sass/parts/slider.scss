@@ -1,0 +1,19 @@
+.slider {
+    display: flex;
+    align-items: center;
+    @media screen and (max-width: $medium) {
+        margin: 0 5px;
+    }
+
+    .slider-arrow {
+        font-size: 1em;
+
+        &:first-child {
+            padding-right: 10px;
+        }
+
+        &:last-child {
+            padding-left: 10px;
+        }
+    }
+}
