@@ -11,6 +11,7 @@ return [
     'cases' => 'atvejai',
     'per_day' => 'per parą',
     'all' => 'Visi',
+    'new' => 'Nauji',
     'loading' => 'Duomenys kraunasi',
     'error_while_loading' => 'Kraunant duomenys įvyko klaida. Perkraukite puslapį',
     'saved' => 'sėkmingai išsaugota',

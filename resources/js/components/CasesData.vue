@@ -3,34 +3,82 @@
         <div>{{ translation.loading }}</div>
         <div class="loader"></div>
     </div>
-    <div class="no-data" v-else-if="error">{{ translation.error_while_loading }}</div>
-    <div v-else-if="checkIfDataIsNotEmpty(formattedCases)">
+    <div class="no-data" v-else-if="error">
+        {{ translation.error_while_loading }}
+    </div>
+    <div v-else-if="checkIfDataIsNotEmpty(rawCases)">
         <div class="cases-diagrams">
-            <content-tabs-component :translation="translation" :tabsNumber="4"
-                                    :tabsNames="[
-                                        translation.all,
-                                        translation.confirmed,
-                                        translation.deaths,
-                                        translation.active
+            <diagram-tabs-component :translation="translation"
+                                    :tabs="[{
+                                            tabName: translation.all,
+                                            title: translation.all + ' ' + translation.cases,
+                                            names: ['confirmed','active','deaths','recovered'],
+                                            cases: formattedCases,
+                                            type: 'line',
+                                            canvasId: 'casesChart',
+                                            colors: {
+                                                 confirmed: colors.confirmed,
+                                                 active: colors.active,
+                                                 deaths: colors.deaths,
+                                                 recovered: colors.recovered,
+                                            }
+                                        },{
+                                            tabName: translation.new,
+                                            title: translation.new + ' ' + translation.cases + ' ' + translation.per_day,
+                                            names: ['new_confirmed','new_active','new_deaths','new_recovered'],
+                                            labels: ['confirmed','active','deaths','recovered'],
+                                            cases: formattedCases,
+                                            type: 'line',
+                                            canvasId: 'newCasesChart',
+                                            colors: {
+                                                 new_confirmed: colors.confirmed,
+                                                 new_active: colors.active,
+                                                 new_deaths: colors.deaths,
+                                                 new_recovered: colors.recovered,
+                                            }
+                                        },{
+                                            tabName: translation.confirmed,
+                                            title: translation.confirmed + ' ' + translation.cases,
+                                            names: ['confirmed'],
+                                            cases: formattedCases,
+                                            type: 'bar',
+                                            canvasId: 'casesConfirmed',
+                                            colors: {
+                                                 confirmed: colors.confirmed
+                                            }
+                                        },{
+                                            tabName: translation.deaths,
+                                            title: translation.death_plural + ' ' + translation.cases,
+                                            names: ['deaths'],
+                                            cases: formattedCases,
+                                            type: 'bar',
+                                            canvasId: 'casesDeaths',
+                                            colors: {
+                                                 deaths: colors.deaths
+                                            }
+                                        },{
+                                            tabName: translation.active,
+                                            title: translation.active,
+                                            names: ['active'],
+                                            cases: formattedCases,
+                                            type: 'bar',
+                                            canvasId: 'casesActive',
+                                            colors: {
+                                                 active: colors.active,
+                                            }
+                                        },{
+                                            tabName: translation.recovered,
+                                            title: translation.recovered,
+                                            names: ['recovered'],
+                                            cases: formattedCases,
+                                            type: 'bar',
+                                            canvasId: 'casesRecovered',
+                                            colors: {
+                                                 recovered: colors.recovered,
+                                            }
+                                        }
                                     ]">
-                <cases-diagram-component slot="tab-1" :cases="formattedCases" :translation="translation"
-                                         canvas-id="casesChart" chartType="line"
-                                         :title="translation.all+' '+translation.cases">
-                </cases-diagram-component>
-                <cases-diagram-component slot="tab-2" :cases="formattedCases" :translation="translation"
-                                         canvas-id="casesPerDayConfirmed" chartType="bar" filter="confirmed"
-                                         :title="translation.confirmed+' '+translation.cases+' '+translation.per_day">
-                </cases-diagram-component>
-                <cases-diagram-component slot="tab-3" :cases="formattedCases" :translation="translation"
-                                         canvas-id="casesPerDayDeaths" chartType="bar" filter="deaths"
-                                         :title="translation.death_plural+' '+translation.cases+' '+translation.per_day"
-                                         :colors="colorsForCases">
-                </cases-diagram-component>
-                <cases-diagram-component slot="tab-4" :cases="formattedCases" :translation="translation"
-                                         canvas-id="casesPerDayActive" chartType="bar" filter="active"
-                                         :title="translation.active+' '+translation.per_day">
-                </cases-diagram-component>
-            </content-tabs-component>
+            </diagram-tabs-component>
         </div>
         <cases-table-component :cases="rawCases" :translation="translation">
         </cases-table-component>
@@ -58,10 +106,11 @@ export default {
             rawCases: [],
             loading: false,
             error: false,
-            colorsForCases: {
+            colors: {
                 confirmed: '#EE0A0A',
                 active: '#055EF6',
-                deaths: '#000'
+                deaths: '#000',
+                recovered: '#0d9820',
             }
         }
     },

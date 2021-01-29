@@ -28,9 +28,9 @@ export default {
             type: String,
             default: 'bar',
         },
-        filter: {
-            type: String,
-            default: 'all'
+        names: {
+            type: Array,
+            required: true
         },
         title: {
             type: String,
@@ -38,17 +38,14 @@ export default {
         },
         colors: {
             type: Object,
-            default() {
-                return {
-                    confirmed: '#EE0A0A',
-                    active: '#055EF6',
-                    deaths: '#000'
-                }
-            }
+            required: true
         },
         cases: {
             type: Object,
             required: true
+        },
+        labels: {
+            type: Array,
         },
         translation: {
             type: Object,
@@ -144,23 +141,31 @@ export default {
         },
         addDatasets(cases) {
             let datasets = [];
-            let names = ['confirmed', 'deaths', 'active'];
-            let namesCount = names.length;
-            let pointRadius = [];
+            const names = this.names;
+            let pointRadius = null;
+            let borderWidth = null;
             if (this.chartType === 'line') {
                 let casesCount = cases.date.length;
                 pointRadius = this.setPointRadius(casesCount);
+                borderWidth = 1.5;
             }
 
-            for (let i = 0; i < namesCount; i++) {
-                if (cases[names[i]].length && (this.filter === names[i] || this.filter === 'all')) {
+            const namesLength = names.length;
+            for (let i = 0; i < namesLength; i++) {
+                if (cases[names[i]].length) {
                     let blueprint = {}
-                    blueprint.label = this.translation[names[i]];
+                    if (this.labels){
+                        blueprint.label = this.translation[this.labels[i]];
+                    } else {
+                        blueprint.label = this.translation[names[i]];
+                    }
+
                     blueprint.backgroundColor = this.colors[names[i]];
                     if (this.chartType === 'line') {
                         blueprint.fill = false;
                         blueprint.pointRadius = pointRadius;
                         blueprint.pointHoverRadius = pointRadius;
+                        blueprint.borderWidth = borderWidth;
                     }
 
                     blueprint.borderColor = this.colors[names[i]];
