@@ -14,10 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::name('corona.')->group(function () {
+Route::group(['as' => 'corona.'], function () {
     Route::get('/', [CoronaController::class, 'index'])->name('index');
-    Route::get('cases/{slug}', [CoronaController::class, 'cases'])
-        ->where(['slug' => '^[\p{Latin}-]+$'])->name('cases');
     Route::get('/{slug}', [CoronaController::class, 'show'])
         ->where('slug', '^[\p{Latin}-]+$')->name('show');
 });
