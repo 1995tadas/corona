@@ -275,7 +275,7 @@ return [
     'Central America' => 'Centrinė Amerika',
     'Eastern Asia' => 'Rytų Azija',
     'Melanesia' => 'Melanezija',
-    'Middle Africa' => 'Vidurio Azija',
+    'Middle Africa' => 'Vidurio Afrika',
     'Australia and New Zealand' => 'Australija ir Naujoji Zelandija',
 
     'Cayenne' => 'Kajena',
