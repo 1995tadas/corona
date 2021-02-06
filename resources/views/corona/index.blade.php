@@ -8,9 +8,7 @@
         <slider-component :number-of-slots="{{ 2 }}">
             <section class="summary-global" slot="1">
                 @foreach($globalSummary as $summaryIndex => $summaryValue)
-                    @if($summaryIndex === 'total_confirmed' || $summaryIndex === 'new_confirmed'||
-                    $summaryIndex === 'total_deaths' || $summaryIndex === 'new_deaths'||
-                    $summaryIndex === 'total_recovered' || $summaryIndex === 'new_recovered')
+                @if(in_array($summaryIndex, ['total_confirmed', 'new_confirmed', 'total_deaths', 'new_deaths','total_recovered', 'new_recovered']))
                         <div class="summary-category">
                             <h2 class="summary-category-title">
                                 {{__('summary.'.$summaryIndex)}}

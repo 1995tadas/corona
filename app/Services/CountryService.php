@@ -9,42 +9,42 @@ class CountryService
     private const API_QUERY_FOR_COUNTRIES = 'countries';
     private const API_QUERY_FOR_COUNTRIES_INFO = 'all';
 
-    public function fetchCountriesFromApi(): array
+    public function fetchFromApi(): array
     {
         $requestService = new RequestService();
         return $requestService->performGetRequestCovidApi(self::API_QUERY_FOR_COUNTRIES);
     }
 
-    public function fetchCountriesInfoFromApi(): array
+    public function fetchDetailsFromApi(): array
     {
         $requestService = new RequestService();
         return $requestService->performGetRequestCountriesApi(self::API_QUERY_FOR_COUNTRIES_INFO);
     }
 
-    public function getCountries(): object
+    public function getAll(): object
     {
-        $countriesFromDatabase = $this->fetchCountriesFromDatabase();
+        $countriesFromDatabase = $this->fetchAllFromDatabase();
         if (!$countriesFromDatabase->isEmpty()) {
             return $countriesFromDatabase;
         }
 
-        return (object)$this->fetchCountriesFromApiAndStore();
+        return (object)$this->fetchFromApiAndStore();
     }
 
-    public function getCountry(string $slug): \App\Models\Country
+    public function getSingle(string $slug): \App\Models\Country
     {
-        if ($this->checkIfCountryTableIsEmpty()) {
-            $this->fetchCountriesFromApiAndStore();
+        if ($this->checkIfEmptyTable()) {
+            $this->fetchFromApiAndStore();
         }
 
-        return $this->fetchCountryFromDatabase($slug);
+        return $this->fetchFromDatabase($slug);
     }
 
-    public function addAdditionalInfoToCountriesArray(array $countries): array
+    public function addAdditionalCountyDetailsToArray(array $countries): array
     {
-        $countriesInfoFromApi = $this->fetchCountriesInfoFromApi();
-        if ($countriesInfoFromApi) {
-            foreach ($countriesInfoFromApi as $countryInfo) {
+        $countryDetailsFromApi = $this->fetchDetailsFromApi();
+        if ($countryDetailsFromApi) {
+            foreach ($countryDetailsFromApi as $countryInfo) {
                 foreach ($countries as $index => $country) {
                     if ($countryInfo->alpha2Code === $country->ISO2) {
                         $countries[$index]->region['continent'] = $countryInfo->region;
@@ -63,26 +63,26 @@ class CountryService
         return [];
     }
 
-    public function fetchCountriesFromApiAndStore(): array
+    public function fetchFromApiAndStore(): array
     {
-        $countriesFromApi = $this->fetchCountriesFromApi();
-        $countriesFromApi = $this->addAdditionalInfoToCountriesArray($countriesFromApi);
+        $countriesFromApi = $this->fetchFromApi();
+        $countriesFromApi = $this->addAdditionalCountyDetailsToArray($countriesFromApi);
         if ($countriesFromApi) {
             $arrayService = new ArrayService();
             $lowercaseCountries = $arrayService->multiArrayKeyCaseChange($countriesFromApi);
-            $this->storeCountries($lowercaseCountries);
+            $this->store($lowercaseCountries);
             return $lowercaseCountries;
         }
 
         return [];
     }
 
-    public function fetchCountriesFromDatabase(): \Illuminate\Database\Eloquent\Collection
+    public function fetchAllFromDatabase(): \Illuminate\Database\Eloquent\Collection
     {
         return Country::all(['country', 'slug', 'iso2']);
     }
 
-    public function storeCountries(array $countries): void
+    public function store(array $countries): void
     {
         $countryModel = new Country();
         foreach ($countries as $country) {
@@ -90,17 +90,17 @@ class CountryService
         }
     }
 
-    public function checkIfCountryExistsInDatabase(string $slug): bool
+    public function checkIfExistsInDatabase(string $slug): bool
     {
         return Country::where('slug', $slug)->exists();
     }
 
-    public function checkIfCountryTableIsEmpty(): bool
+    public function checkIfEmptyTable(): bool
     {
         return Country::all()->isEmpty();
     }
 
-    public function fetchCountryFromDatabase(string $slug): \App\Models\Country
+    public function fetchFromDatabase(string $slug): \App\Models\Country
     {
         return Country::where('slug', $slug)->firstOrFail();
     }

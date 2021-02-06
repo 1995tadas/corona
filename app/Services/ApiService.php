@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class ApiService
 {
-    protected function performRequest(string $method, string $url, string $query = '', array $parameters = []): string
+    private function performRequest(string $method, string $url, string $query = '', array $parameters = []): string
     {
         $finalUrl = $url . $query;
         if ($method === 'GET') {
@@ -42,7 +42,7 @@ class ApiService
         return json_decode($content);
     }
 
-    public function rateLimitReset(Response $response): void
+    private function rateLimitReset(Response $response): void
     {
         $rateLimitRemaining = $response->header('X-Ratelimit-Remaining');
         if ($rateLimitRemaining && $rateLimitRemaining <= 1) {

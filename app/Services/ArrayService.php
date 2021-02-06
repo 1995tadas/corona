@@ -58,7 +58,7 @@ class ArrayService
 
         return array_map(function ($singleArray) use ($countryId, $countryService) {
             if (isset($singleArray['slug'])) {
-                $countryId = $countryService->getCountry($singleArray['slug'])->id;
+                $countryId = $countryService->getSingle($singleArray['slug'])->id;
             }
 
             if ($countryId) {
@@ -73,7 +73,7 @@ class ArrayService
     {
         if ($update) {
             $countryService = new CountryService();
-            $country = $countryService->getCountry($slug);
+            $country = $countryService->getSingle($slug);
             $lastCase = $country->lastCase->first();
             $lastDayCases = [
                 'new_confirmed' => $lastCase->confirmed,
@@ -115,7 +115,7 @@ class ArrayService
     {
         $countryService = new CountryService();
         if ($slug) {
-            $countryId = $countryService->getCountry($slug)->id;
+            $countryId = $countryService->getSingle($slug)->id;
         }
 
         $cases = $this->multiArrayKeysToSnakeCase($cases);

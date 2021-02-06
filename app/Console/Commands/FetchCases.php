@@ -57,7 +57,7 @@ class FetchCases extends Command
                 }
 
                 if ($caseService->checkIfEmpty($summary['slug'])) {
-                    $cases = $caseService->fetchAndStoreCases($summary['slug']);
+                    $cases = $caseService->fetchAndStore($summary['slug']);
                     if ($cases) {
                         $this->newLine();
                         $this->info($country . ' ' . __('cases.saved'));

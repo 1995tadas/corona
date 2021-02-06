@@ -31,8 +31,8 @@ class CoronaController extends Controller
         }
 
         $caseService = new CaseService();
-        $allCases = $caseService->getAllCases();
-        $allCases = $this->caseService->formatCasesForDiagram($allCases);
+        $allCases = $caseService->getAll();
+        $allCases = $this->caseService->formatDataForDiagram($allCases);
         $regionService = new RegionService();
         $regions = $regionService->getRegionsWithSubRegions();
         return view('corona.index', compact('globalSummary', 'lastUpdated', 'countriesSummary', 'regions', 'allCases'));
@@ -40,14 +40,14 @@ class CoronaController extends Controller
 
     public function show(string $slug)
     {
-        $country = $this->countryService->getCountry($slug);
+        $country = $this->countryService->getSingle($slug);
         return view('corona.show', compact('country'));
     }
 
     public function cases(string $slug): \Illuminate\Http\JsonResponse
     {
-        $cases = $this->caseService->fetchCasesFromDatabase($slug);
-        $formattedCases = $this->caseService->formatCasesForDiagram($cases);
+        $cases = $this->caseService->fetchFromDatabase($slug);
+        $formattedCases = $this->caseService->formatDataForDiagram($cases);
         foreach ($formattedCases as $index => $case) {
             $formattedCases[$index] = array_reverse($case);
         }

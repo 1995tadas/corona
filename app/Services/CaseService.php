@@ -9,28 +9,28 @@ class CaseService
 {
     private const API_QUERY_FOR_DAY_ONE_TOTAL_CASES = 'total/country/';
 
-    public function fetchCasesFromApi(string $countrySlug): array
+    public function fetchFromApi(string $countrySlug): array
     {
         $requestService = new RequestService();
         return $requestService->performGetRequestCovidApi(self::API_QUERY_FOR_DAY_ONE_TOTAL_CASES . $countrySlug);
     }
 
-    public function fetchCasesFromApiByInterval(string $countrySlug, array $intervalDates): array
+    public function fetchFromApiByInterval(string $countrySlug, array $intervalDates): array
     {
         $requestService = new RequestService();
         return $requestService->performGetRequestCovidApi(self::API_QUERY_FOR_DAY_ONE_TOTAL_CASES . $countrySlug, $intervalDates);
     }
 
-    public function fetchCasesFromDatabase(string $countrySlug): object
+    public function fetchFromDatabase(string $countrySlug): object
     {
         $countryService = new CountryService();
-        $country = $countryService->getCountry($countrySlug);
+        $country = $countryService->getSingle($countrySlug);
         return $country->allCases;
     }
 
     public function updateCases(string $countrySlug): bool
     {
-        $startingDate = $this->getLatestCountryCaseDate($countrySlug);
+        $startingDate = $this->getLatestCountryDate($countrySlug);
         $dateTimeService = new DateTimeService();
         if ($startingDate && $countrySlug) {
             $endingDate = Carbon::today()->toIso8601String();
@@ -38,7 +38,7 @@ class CaseService
             $needsUpdate = $dateTimeService->compareTwoDates($startingDate, '<', $endingDate, true);
             if ($needsUpdate) {
                 $intervalDates = $dateTimeService->prepareIntervalDates($startingDate, $endingDate);
-                $newCases = $this->fetchCasesFromApiByInterval($countrySlug, $intervalDates);
+                $newCases = $this->fetchFromApiByInterval($countrySlug, $intervalDates);
                 if ($newCases) {
                     $arrayService = new ArrayService();
                     $preparedCases = $arrayService->prepareCasesArrayForStoring($newCases, $countrySlug, true);
@@ -54,18 +54,18 @@ class CaseService
     public function checkIfEmpty(string $slug): bool
     {
         $countryService = new CountryService();
-        $country = $countryService->getCountry($slug);
-        return Corona::where('country_id', $country->id)->get()->isEmpty();
+        $country = $countryService->getSingle($slug);
+        return Corona::where('country_id', $country->id)->isEmpty();
     }
 
-    public function fetchAndStoreCases(string $slug): object
+    public function fetchAndStore(string $slug): object
     {
-        $cases = $this->fetchCasesFromApi($slug);
+        $cases = $this->fetchFromApi($slug);
         if ($cases) {
             $arrayService = new ArrayService();
             $cases = $arrayService->prepareCasesArrayForStoring($cases, $slug);
             $this->store($cases);
-            return $this->fetchCasesFromDatabase($slug);
+            return $this->fetchFromDatabase($slug);
         }
 
         return collect([]);
@@ -79,16 +79,16 @@ class CaseService
         }
     }
 
-    public function getLatestCountryCaseDate(string $slug): string
+    public function getLatestCountryDate(string $slug): string
     {
         $countryService = new CountryService();
-        $country = $countryService->getCountry($slug);
+        $country = $countryService->getSingle($slug);
         $cases = $country->allCases;
         $latestCase = $cases->first();
         return $latestCase->date;
     }
 
-    public function getAllCases(): object
+    public function getAll(): object
     {
         return Corona::selectRaw(
         'SUM(confirmed) AS confirmed,
@@ -103,7 +103,7 @@ class CaseService
             ->groupBy('date')->get();
     }
 
-    public function formatCasesForDiagram(object $cases): array
+    public function formatDataForDiagram(object $cases): array
     {
         $fields = [
             'active',
