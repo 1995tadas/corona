@@ -11,14 +11,14 @@ class CountryService
 
     public function fetchFromApi(): array
     {
-        $requestService = new RequestService();
-        return $requestService->performGetRequestCovidApi(self::API_QUERY_FOR_COUNTRIES);
+        $requestService = new RequestService('covid',self::API_QUERY_FOR_COUNTRIES);
+        return $requestService->MakeRequest();
     }
 
     public function fetchDetailsFromApi(): array
     {
-        $requestService = new RequestService();
-        return $requestService->performGetRequestCountriesApi(self::API_QUERY_FOR_COUNTRIES_INFO);
+        $requestService = new RequestService('country',self::API_QUERY_FOR_COUNTRIES_INFO);
+        return $requestService->MakeRequest();
     }
 
     public function getAll(): object

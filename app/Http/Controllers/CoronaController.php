@@ -35,7 +35,10 @@ class CoronaController extends Controller
         $allCases = $this->caseService->formatDataForDiagram($allCases);
         $regionService = new RegionService();
         $regions = $regionService->getRegionsWithSubRegions();
-        return view('corona.index', compact('globalSummary', 'lastUpdated', 'countriesSummary', 'regions', 'allCases'));
+        return view('corona.index', compact(
+                'globalSummary', 'lastUpdated',
+                'countriesSummary', 'regions', 'allCases'
+            ));
     }
 
     public function show(string $slug)

@@ -10,18 +10,18 @@ class SummaryService
 
     public function fetchSummaryFromApi(): object
     {
-        $requestService = new RequestService();
-        return $requestService->performGetRequestCovidApi(self::API_QUERY_FOR_SUMMARY);
+        $requestService = new RequestService('Covid',self::API_QUERY_FOR_SUMMARY );
+        return $requestService->MakeRequest();
     }
 
     public function fetchAndStoreOrUpdateSummary(): array
     {
         $summary = $this->fetchSummaryFromApi();
         if ($summary && isset($summary->Global) && isset($summary->Countries)) {
-            $arrayService = new ArrayService();
             $globalCases[] = $summary->Global;
             $countriesCases = $summary->Countries;
             $summaryCases = array_merge($globalCases, $countriesCases);
+            $arrayService = new ArrayService();
             $preparedSummary = $arrayService->prepareSummaryArrayForStoring($summaryCases);
             $this->updateOrStore($preparedSummary);
             return $preparedSummary;

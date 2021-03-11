@@ -11,14 +11,14 @@ class CaseService
 
     public function fetchFromApi(string $countrySlug): array
     {
-        $requestService = new RequestService();
-        return $requestService->performGetRequestCovidApi(self::API_QUERY_FOR_DAY_ONE_TOTAL_CASES . $countrySlug);
+        $requestService = new RequestService('covid', self::API_QUERY_FOR_DAY_ONE_TOTAL_CASES . $countrySlug);
+        return $requestService->MakeRequest();
     }
 
     public function fetchFromApiByInterval(string $countrySlug, array $intervalDates): array
     {
-        $requestService = new RequestService();
-        return $requestService->performGetRequestCovidApi(self::API_QUERY_FOR_DAY_ONE_TOTAL_CASES . $countrySlug, $intervalDates);
+        $requestService = new RequestService('covid', self::API_QUERY_FOR_DAY_ONE_TOTAL_CASES . $countrySlug, $intervalDates);
+        return $requestService->MakeRequest();
     }
 
     public function fetchFromDatabase(string $countrySlug): object
@@ -55,7 +55,7 @@ class CaseService
     {
         $countryService = new CountryService();
         $country = $countryService->getSingle($slug);
-        return Corona::where('country_id', $country->id)->isEmpty();
+        return Corona::where('country_id', $country->id)->doesntExist();
     }
 
     public function fetchAndStore(string $slug): object
